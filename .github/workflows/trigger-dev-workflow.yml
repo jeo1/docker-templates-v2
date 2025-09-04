@@ -1,41 +1,73 @@
-name: Dev Tests
+name: Main Branch Workflow
 
 on:
-  repository_dispatch:
-    types: [trigger-dev-tests]
   push:
-    branches: [ dev ]
+    branches: [ main ]
 
 jobs:
-  test:
+  trigger-dev-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Log trigger info
-        run: |
-          echo "Triggered by: ${{ github.event_name }}"
-          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            echo "Main run ID: ${{ github.event.client_payload.main_run_id }}"
-            echo "Trigger time: ${{ github.event.client_payload.trigger_time }}"
-          fi
-
-      - uses: actions/checkout@v4
+      - name: Trigger dev workflow and wait for result
+        uses: actions/github-script@v7
         with:
-          ref: dev
+          script: |
+            // Trigger dev workflow with unique identifier
+            const runId = context.runId;
+            const triggerTime = Date.now();
+            
+            await github.rest.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              event_type: 'trigger-dev-tests',
+              client_payload: {
+                main_run_id: runId,
+                trigger_time: triggerTime
+              }
+            });
+            
+            console.log(`Triggered dev tests with run ID: ${runId}`);
+            
+            // Wait for completion by polling recent workflow runs
+            const maxWait = 10 * 60 * 1000; // 10 minutes
+            const startTime = Date.now();
+            
+            while (Date.now() - startTime < maxWait) {
+              await new Promise(resolve => setTimeout(resolve, 15000)); // Wait 15 seconds
+              
+              const runs = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'dev-tests.yml',
+                branch: 'dev',
+                per_page: 5
+              });
+              
+              // Look for run triggered after our trigger time
+              const targetRun = runs.data.workflow_runs.find(run => 
+                new Date(run.created_at).getTime() > triggerTime - 30000 // 30 sec buffer
+              );
+              
+              if (targetRun) {
+                console.log(`Found run: ${targetRun.html_url}, status: ${targetRun.status}`);
+                
+                if (targetRun.status === 'completed') {
+                  if (targetRun.conclusion === 'success') {
+                    console.log('✅ Dev tests passed!');
+                    core.setOutput('dev_result', 'success');
+                    return;
+                  } else {
+                    console.log('❌ Dev tests failed!');
+                    core.setOutput('dev_result', 'failed');
+                    throw new Error(`Dev workflow failed: ${targetRun.html_url}`);
+                  }
+                }
+              }
+            }
+            
+            throw new Error('Dev workflow did not complete within timeout');
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Install and test
+      - name: Deploy to production
         run: |
-          npm install
-          npm test
-
-      - name: Build
-        run: npm run build
-
-      - name: Report completion
-        if: always()
-        run: |
-          echo "Dev tests completed with status: ${{ job.status }}"
+          echo "🚀 Deploying to production..."
+          echo "Dev tests passed, safe to deploy!"
