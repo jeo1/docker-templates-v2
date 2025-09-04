@@ -1,4 +1,4 @@
-name: Renovate Package Update Trigger
+name: Renovate Package Update Trigger (main)
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  detect-renovate-update:
+  main-detect-renovate-update:
     if: startsWith(github.actor, 'renovate')
     runs-on: ubuntu-latest
     steps:

@@ -1,4 +1,4 @@
-name: Merge Action
+name: Merge Action (main)
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - closed
 
 jobs:
-  merged-action:
+  main-merged-action:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
