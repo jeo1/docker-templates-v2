@@ -20,3 +20,7 @@ jobs:
           echo "Triggered by: ${{ github.event.client_payload.ref }}"
           echo "From commit: ${{ github.event.client_payload.sha }}"
           # Your dev workflow steps here
+          
+      - name: fail
+        run: |
+          exit 1
