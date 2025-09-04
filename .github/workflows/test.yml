@@ -1,9 +1,9 @@
 name: Format Python Code and Create PR
 
 on:
-  workflow_dispatch:  # Manual trigger
-  schedule:
-    - cron: '0 2 * * 1'  # Weekly on Monday at 2 AM UTC (optional)
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Manual trigger (optional)
 
 jobs:
   format-and-pr:
