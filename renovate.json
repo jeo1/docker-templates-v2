@@ -17,7 +17,7 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["nginx"],
-      "allowedVersions": "<=1.12"
+      "allowedVersions": "<=1.13"
     },
     {
       "matchDatasources": ["docker"],
