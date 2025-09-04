@@ -1,0 +1,15 @@
+name: Main Branch Workflow
+on:
+  push:
+    branches: [main]
+
+jobs:
+  trigger-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger dev branch workflow
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: trigger-dev-workflow
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
