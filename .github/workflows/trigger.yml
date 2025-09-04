@@ -1,0 +1,14 @@
+name: Main Branch Workflow
+on:
+  push:
+    branches: [main]
+
+jobs:
+  trigger-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger dev workflow
+        run: |
+          gh workflow run dev.yml --ref dev
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
