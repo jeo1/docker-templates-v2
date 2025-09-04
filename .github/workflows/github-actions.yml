@@ -1,4 +1,4 @@
-name: Renovate Package Update Trigger v2
+name: Renovate Package Update Trigger
 
 on:
   pull_request:
@@ -18,3 +18,10 @@ jobs:
         id: extract
         run: |
           echo "${{ github.event.pull_request.title }}"
+          IMAGE_NAME=$(echo "${{ github.event.pull_request.title }}" | grep -oP '\[\K[^\]]*')
+          echo $IMAGE_NAME
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_OUTPUT
+
+      - name: Use output
+        run: |
+          echo "${{ steps.extract.outputs.IMAGE_NAME }}"
