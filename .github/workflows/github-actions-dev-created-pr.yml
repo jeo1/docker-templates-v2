@@ -1,0 +1,22 @@
+name: Renovate Package Update Trigger (dev)
+
+on:
+  pull_request:
+    types: [opened]
+    branches:
+      - dev
+
+jobs:
+  dev-detect-renovate-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+      
+      - name: show actor
+        run: |
+          echo "${{ github.actor }}"
+
+      - name: print PR title
+        run: |
+          echo "${{ github.event.pull_request.title }}"
