@@ -25,3 +25,7 @@ jobs:
       - name: Use output
         run: |
           echo "${{ steps.extract.outputs.IMAGE_NAME }}"
+      
+      - name: show actor
+        run: |
+          echo "${{ github.actor }}"
