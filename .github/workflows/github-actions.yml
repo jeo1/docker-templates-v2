@@ -1,0 +1,20 @@
+name: Renovate Package Update Trigger v2
+
+on:
+  pull_request:
+    types: [opened]
+    branches:
+      - main
+
+jobs:
+  detect-renovate-update:
+    if: startsWith(github.actor, 'renovate')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+
+      - name: Extract package name from PR title
+        id: extract
+        run: |
+          echo "${{ github.event.pull_request.title }}"
