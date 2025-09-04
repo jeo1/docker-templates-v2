@@ -50,5 +50,4 @@ jobs:
         if: steps.check.outputs.result == 'failed'
         run: |
           echo "❌ Dev tests failed!"
-          exit 1
-          
+          exit 1    
