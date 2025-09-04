@@ -1,0 +1,38 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "prHourlyLimit": 0,
+  "extends": [
+    "config:recommended"
+  ],
+  "enabledManagers": [
+    "docker-compose"
+  ],
+  "automergeType": "pr",
+  "automerge": true,
+  "commitMessageSuffix": "[{{depName}}]",
+  "baseBranches": [
+    "main"
+  ],
+  "packageRules": [
+    {
+      "automerge": true,
+      "automergeType": "pr",
+      "matchManagers": [
+        "docker-compose"
+      ],
+      "matchPackageNames": [
+        "lscr.io/linuxserver/jackett"
+      ]
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["nginx"],
+      "allowedVersions": "<=1.24"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["lscr.io/linuxserver/sonarr"],
+      "allowedVersions": "<=4.0.15"
+    }
+  ]
+}
