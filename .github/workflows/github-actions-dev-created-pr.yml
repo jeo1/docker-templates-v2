@@ -20,3 +20,7 @@ jobs:
       - name: print PR title
         run: |
           echo "${{ github.event.pull_request.title }}"
+      
+      - name: Fail
+        run: |
+          exit 1
