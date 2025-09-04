@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: nginx:1.11
+    image: nginx:1.12
   jacket:
     image: lscr.io/linuxserver/jackett@sha256:301dd39a8ac0d3145482febcbf7fc55422745703dd43f1c7e36add4dc3f00025
   sonarr:
