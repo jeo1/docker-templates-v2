@@ -17,12 +17,12 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["nginx"],
-      "allowedVersions": "<=1.24"
+      "allowedVersions": "<=1.11"
     },
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["lscr.io/linuxserver/sonarr"],
-      "allowedVersions": "<=4.0.15"
+      "allowedVersions": "<=4.0.11"
     }
   ]
 }
