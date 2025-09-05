@@ -33,7 +33,7 @@ jobs:
             const response = await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'dev.yml', // Name of your dev workflow file
+              workflow_id: '${{ steps.extract.outputs.WORKFLOW_ID }}', // Using dynamic value
               ref: 'dev',
               inputs: {
                 triggered_by: 'main-branch',
@@ -60,7 +60,7 @@ jobs:
               const runs = await github.rest.actions.listWorkflowRuns({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                workflow_id: 'dev.yml',
+                workflow_id: '${{ steps.extract.outputs.WORKFLOW_ID }}',
                 branch: 'dev',
                 per_page: 1
               });
