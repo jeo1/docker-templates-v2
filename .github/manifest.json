@@ -1,0 +1,10 @@
+{
+  "dev": {
+    "branch": "dev",
+    "workflow_id": "dev.yml"
+  },
+  "nginx": {
+    "branch": "nginx",
+    "workflow_id": "test.yml"
+  }
+}
