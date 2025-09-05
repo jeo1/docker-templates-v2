@@ -11,8 +11,9 @@
 # Notes
 - cadvisor
     - missing from `renovate.json` and `renovate/docker-compose.test.yml`
+- duckdns
+    - missing from `renovate.json` and `renovate/docker-compose.test.yml`
     - needs `DUCKDNS_SUBDOMAIN` and `DUCKDNS_TOKEN` add to runner vars
-
 
 
 <!--
