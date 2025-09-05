@@ -23,7 +23,10 @@
 - duckdns
     - missing from `renovate.json` and `renovate/docker-compose.test.yml`
     - needs `DUCKDNS_SUBDOMAIN` and `DUCKDNS_TOKEN` add to runner vars
-
+- sonarr
+    - have a change to `qbittorrent` trigger the branch
+- radarr
+    - have a change to `qbittorrent` trigger the branch
 
 <!--
     | [audiobooks](https://github.com/jeo1/docker-templates-v2/tree/audiobooks) | ❌ |  |
