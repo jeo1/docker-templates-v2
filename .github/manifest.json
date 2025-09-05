@@ -31,6 +31,10 @@
     "branch": "sonarr",
     "workflow_id": "github-actions-sonarr.yml"
   },
+  "lscr.io/linuxserver/radarr": {
+    "branch": "radarr",
+    "workflow_id": "github-actions-radarr.yml"
+  },
   "quay.io/prometheus/node-exporter": {
     "branch": "node-exporter",
     "workflow_id": "github-actions-node-exporter.yml"

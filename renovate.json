@@ -38,6 +38,7 @@
         "louislam/uptime-kuma",
         "lscr.io/linuxserver/jackett",
         "lscr.io/linuxserver/jellyfin",
+        "lscr.io/linuxserver/radarr",
         "lscr.io/linuxserver/sonarr",
         "portainer/portainer-ce",
         "quay.io/prometheus/node-exporter"
