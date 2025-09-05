@@ -2,6 +2,7 @@
 | Compose | Github-Action | Setup for Renovate | Notes |
 | ------- | :-----------: | :----------------: | ----- |
 | [audiobooks](https://github.com/jeo1/docker-templates-v2/tree/audiobooks) | ❌ |  |
+| [cadvisor](https://github.com/jeo1/docker-templates-v2/tree/cadvisor) | ✅ | ⚠️ | latest did not match (may be out of date) |
 | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ |
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
 | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | allowedVersions |
@@ -9,7 +10,7 @@
 
 <!--
     | [audiobooks](https://github.com/jeo1/docker-templates-v2/tree/audiobooks) | ❌ |  |
-| [cadvisor](https://github.com/jeo1/docker-templates-v2/tree/cadvisor) | ✅ |  |
+    | [cadvisor](https://github.com/jeo1/docker-templates-v2/tree/cadvisor) | ✅ |  |
 | [duckdns](https://github.com/jeo1/docker-templates-v2/tree/duckdns) | ✅ |  |
     | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ |
 | [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ |
