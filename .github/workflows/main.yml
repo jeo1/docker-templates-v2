@@ -2,11 +2,16 @@
 name: zMain
 
 on:
-  push:
+  #push:
+  #  branches:
+  #    - main
+  #  paths:
+  #    - 'README.md'
+  pull_request:
+    types: 
+      - opened
     branches:
       - main
-    paths:
-      - 'README.md'
 
 env:
   MANIFEST: .github/manifest.json
@@ -14,15 +19,25 @@ env:
 
 jobs:
   trigger-branch-workflow:
+    if: startsWith(github.actor, 'renovate')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      #- name: Get branch info
+      #  id: info
+      #  run: |
+      #    IMAGE_NAME=$(echo "${{ env.PR_TITLE }}" | grep -oP '\[\K[^\]]*')
+      #    BRANCH_NAME=$(jq -r --arg k "$IMAGE_NAME" '.[$k].branch' ${{ env.MANIFEST }})
+      #    WORKFLOW_ID=$(jq -r --arg k "$IMAGE_NAME" '.[$k].workflow_id' ${{ env.MANIFEST }})
+      #    echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_OUTPUT
+      #    echo "WORKFLOW_ID=$WORKFLOW_ID" >> $GITHUB_OUTPUT
+
       - name: Get branch info
         id: info
         run: |
-          IMAGE_NAME=$(echo "${{ env.PR_TITLE }}" | grep -oP '\[\K[^\]]*')
+          IMAGE_NAME=$(echo "${{ github.event.pull_request.title }}" | grep -oP '\[\K[^\]]*')
           BRANCH_NAME=$(jq -r --arg k "$IMAGE_NAME" '.[$k].branch' ${{ env.MANIFEST }})
           WORKFLOW_ID=$(jq -r --arg k "$IMAGE_NAME" '.[$k].workflow_id' ${{ env.MANIFEST }})
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_OUTPUT
