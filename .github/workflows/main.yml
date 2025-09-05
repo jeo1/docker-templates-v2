@@ -14,35 +14,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Extract workflow ID
+      - name: Extract package name from PR title
         id: extract
         run: |
-          WORKFLOW_ID="dev.yml" # Replace with dynamic extraction logic if needed
+          WORKFLOW_ID=$(echo "dev.yml")
+          echo $WORKFLOW_ID
           echo "WORKFLOW_ID=$WORKFLOW_ID" >> $GITHUB_OUTPUT
 
-      - name: Show extracted workflow ID
+      - name: Use output
         run: |
-          echo "Workflow to trigger: ${{ steps.extract.outputs.WORKFLOW_ID }}"
+          echo "${{ steps.extract.outputs.WORKFLOW_ID }}"
 
       - name: Trigger dev branch workflow
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          env: WORKFLOW_ID=${{ steps.extract.outputs.WORKFLOW_ID }}
           script: |
-            const workflowId = process.env.WORKFLOW_ID;
             const response = await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: workflowId,
+              workflow_id: 'dev.yml', // Name of your dev workflow file
               ref: 'dev',
               inputs: {
                 triggered_by: 'main-branch',
                 run_id: context.runId.toString()
               }
             });
-
-            console.log(`Triggered workflow: ${workflowId}`);
+            
+            console.log('Triggered dev workflow');
             return response;
 
       - name: Wait for dev workflow completion
@@ -50,42 +49,42 @@ jobs:
         id: wait-for-dev
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          env: WORKFLOW_ID=${{ steps.extract.outputs.WORKFLOW_ID }}
           script: |
-            const workflowId = process.env.WORKFLOW_ID;
+            // Wait a moment for the workflow to start
             await new Promise(resolve => setTimeout(resolve, 10000));
-
+            
             let attempts = 0;
-            const maxAttempts = 60;
-
+            const maxAttempts = 60; // Wait up to 30 minutes (60 * 30s)
+            
             while (attempts < maxAttempts) {
               const runs = await github.rest.actions.listWorkflowRuns({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                workflow_id: workflowId,
+                workflow_id: 'dev.yml',
                 branch: 'dev',
                 per_page: 1
               });
-
+              
               if (runs.data.workflow_runs.length > 0) {
                 const latestRun = runs.data.workflow_runs[0];
-                console.log(`Workflow ${workflowId} status: ${latestRun.status}, conclusion: ${latestRun.conclusion}`);
-
+                console.log(`Dev workflow status: ${latestRun.status}, conclusion: ${latestRun.conclusion}`);
+                
                 if (latestRun.status === 'completed') {
                   if (latestRun.conclusion === 'success') {
-                    console.log('Workflow completed successfully');
+                    console.log('Dev workflow completed successfully');
                     return 'success';
                   } else {
-                    throw new Error(`Workflow failed: ${latestRun.conclusion}`);
+                    console.log(`Dev workflow failed with conclusion: ${latestRun.conclusion}`);
+                    throw new Error(`Dev workflow failed: ${latestRun.conclusion}`);
                   }
                 }
               }
-
+              
               attempts++;
-              await new Promise(resolve => setTimeout(resolve, 30000));
+              await new Promise(resolve => setTimeout(resolve, 30000)); // Wait 30 seconds
             }
-
-            throw new Error('Timeout waiting for workflow to complete');
+            
+            throw new Error('Timeout waiting for dev workflow to complete');
 
   main-workflow-steps:
     runs-on: ubuntu-latest
@@ -93,8 +92,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        
       - name: Main workflow logic
         run: |
           echo "Dev workflow passed, continuing with main workflow..."
           # Add your main workflow steps here
+          
+      # Add more steps for your main workflow here
