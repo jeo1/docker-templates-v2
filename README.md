@@ -15,6 +15,7 @@
 | [node-exporter-alpine](https://github.com/jeo1/docker-templates-v2/tree/node-exporter-alpine) | ⚠️ |  | need to setup github-action to run on alpine (not ubuntu)
 | [node-exporter](https://github.com/jeo1/docker-templates-v2/tree/node-exporter) | ✅ | ✅ |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
+| [plex](https://github.com/jeo1/docker-templates-v2/tree/plex) | ⚠️ |  | needs to add http check
 
 # Notes
 - cadvisor
@@ -38,7 +39,7 @@
     | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ |
     | [node-exporter-alpine](https://github.com/jeo1/docker-templates-v2/tree/node-exporter-alpine) | ⚠️ |  |
     | [node-exporter](https://github.com/jeo1/docker-templates-v2/tree/node-exporter) | ✅ | ✅ |
-| [plex](https://github.com/jeo1/docker-templates-v2/tree/plex) | ⚠️ |  |
+    | [plex](https://github.com/jeo1/docker-templates-v2/tree/plex) | ⚠️ |  |
 | [portainer](https://github.com/jeo1/docker-templates-v2/tree/portainer) | ✅ | ✅ |
 | [prometheus](https://github.com/jeo1/docker-templates-v2/tree/prometheus) | ✅ | ✅ |
 | [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ |  |
