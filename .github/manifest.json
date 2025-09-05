@@ -30,5 +30,9 @@
   "lscr.io/linuxserver/sonarr": {
     "branch": "sonarr",
     "workflow_id": "github-actions-sonarr.yml"
+  },
+  "quay.io/prometheus/node-exporter": {
+    "branch": "node-exporter",
+    "workflow_id": "github-actions-node-exporter.yml"
   }
 }
