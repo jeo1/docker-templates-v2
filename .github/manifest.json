@@ -1,7 +1,7 @@
 {
-  "dev": {
-    "branch": "dev",
-    "workflow_id": "dev.yml"
+  "jackett": {
+    "branch": "jackett",
+    "workflow_id": "github-actions-jackett.yml"
   },
   "nginx": {
     "branch": "nginx",
