@@ -14,6 +14,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Extract package name from PR title
+        id: extract
+        run: |
+          WORKFLOW_ID=$(echo "dev.yml")
+          echo $WORKFLOW_ID
+          echo "WORKFLOW_ID=$WORKFLOW_ID" >> $GITHUB_OUTPUT
+
+      - name: Use output
+        run: |
+          echo "${{ steps.extract.outputs.WORKFLOW_ID }}"
+
       - name: Trigger dev branch workflow
         uses: actions/github-script@v7
         with:
