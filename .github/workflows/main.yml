@@ -32,15 +32,15 @@ jobs:
         id: extract
         run: |
           IMAGE_NAME=$(echo "${{ env.PR_TITLE }}" | grep -oP '\[\K[^\]]*')
-          TARGET_BRANCH=$(jq -r --arg k "$IMAGE_NAME" '.[$k].branch' ${{ env.MANIFEST }})
+          BRANCH_NAME=$(jq -r --arg k "$IMAGE_NAME" '.[$k].branch' ${{ env.MANIFEST }})
           WORKFLOW_ID=$(jq -r --arg k "$IMAGE_NAME" '.[$k].workflow_id' ${{ env.MANIFEST }})
-          echo "TARGET_BRANCH=$TARGET_BRANCH" >> $GITHUB_OUTPUT
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_OUTPUT
           echo "WORKFLOW_ID=$WORKFLOW_ID" >> $GITHUB_OUTPUT
 
       - name: Use output
         run: |
           echo "${{ steps.extract.outputs.WORKFLOW_ID }}"
-          echo "${{ steps.extract.outputs.TARGET_BRANCH }}"
+          echo "${{ steps.extract.outputs.BRANCH_NAME }}"
 
       - name: Trigger dev branch workflow
         uses: actions/github-script@v7
@@ -51,7 +51,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: '${{ steps.extract.outputs.WORKFLOW_ID }}',
-              ref: '${{ steps.extract.outputs.TARGET_BRANCH }}',
+              ref: '${{ steps.extract.outputs.BRANCH_NAME }}',
               inputs: {
                 triggered_by: 'main-branch',
                 run_id: context.runId.toString()
@@ -74,7 +74,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 workflow_id: '${{ steps.extract.outputs.WORKFLOW_ID }}',
-                branch: '${{ steps.extract.outputs.TARGET_BRANCH }}',
+                branch: '${{ steps.extract.outputs.BRANCH_NAME }}',
                 per_page: 1
               });
               
