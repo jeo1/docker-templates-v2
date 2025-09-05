@@ -19,10 +19,9 @@
         "docker"
       ],
       "matchPackageNames": [
-        "docker.gitea.com/gitea",
-        "lscr.io/linuxserver/jackett",
-        "lscr.io/linuxserver/sonarr"
-      ]
+        "nginx"
+      ],
+      "allowedVersions": "<=1.18"
     },
     {
       "automergeType": "pr",
@@ -34,9 +33,10 @@
         "docker"
       ],
       "matchPackageNames": [
-        "nginx"
-      ],
-      "allowedVersions": "<=1.18"
+        "docker.gitea.com/gitea",
+        "lscr.io/linuxserver/jackett",
+        "lscr.io/linuxserver/sonarr"
+      ]
     }
   ]
 }
