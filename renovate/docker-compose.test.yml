@@ -5,7 +5,8 @@ services:
     image: grafana/grafana@sha256:a1701c2180249361737a99a01bc770db39381640e4d631825d38ff4535efa47d
   jackett:
     image: lscr.io/linuxserver/jackett@sha256:0c8e5ddea2cf26a5d630222a5d61a9e56d0c173f4c139e775dd41aa1b2d9a715
-
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin@sha256:7ae36aab93ef9b6aaff02b37f8bb23df84bb2d7a3f6054ec8fc466072a648ce2
   nginx:
     image: nginx:1.18
   sonarr:

@@ -15,6 +15,10 @@
     "branch": "jackett",
     "workflow_id": "github-actions-jackett.yml"
   },
+  "lscr.io/linuxserver/jellyfin": {
+    "branch": "jellyfin",
+    "workflow_id": "github-actions-jellyfin.yml"
+  },
   "nginx": {
     "branch": "nginx",
     "workflow_id": "github-actions-nginx.yml"
