@@ -19,6 +19,19 @@
         "docker"
       ],
       "matchPackageNames": [
+        "lscr.io/linuxserver/jackett"
+      ]
+    },
+    {
+      "automergeType": "pr",
+      "automerge": true,
+      "baseBranches": [
+        "main"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
         "nginx"
       ],
       "allowedVersions": "<=1.17"
@@ -36,20 +49,6 @@
         "lscr.io/linuxserver/sonarr"
       ],
       "allowedVersions": "<=4.0.13"
-    },
-    {
-      "automergeType": "pr",
-      "automerge": true,
-      "baseBranches": [
-        "main"
-      ],
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchPackageNames": [
-        "lscr.io/linuxserver/jackett"
-      ],
-      "allowedVersions": "<=0.22.2412"
     }
   ]
 }
