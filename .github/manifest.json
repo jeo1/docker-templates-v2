@@ -34,5 +34,9 @@
   "quay.io/prometheus/node-exporter": {
     "branch": "node-exporter",
     "workflow_id": "github-actions-node-exporter.yml"
+  },
+  "portainer/portainer-ce": {
+    "branch": "portainer",
+    "workflow_id": "github-actions-portainer.yml"
   }
 }
