@@ -4,4 +4,4 @@ services:
   jackett:
     image: lscr.io/linuxserver/jackett@sha256:0c8e5ddea2cf26a5d630222a5d61a9e56d0c173f4c139e775dd41aa1b2d9a715
   sonarr:
-    image: lscr.io/linuxserver/sonarr:4.0.12
+    image: lscr.io/linuxserver/sonarr:4.0.13
