@@ -7,6 +7,10 @@
     "branch": "gitea",
     "workflow_id": "github-actions-gitea.yml"
   },
+  "grafana/grafana": {
+    "branch": "grafana",
+    "workflow_id": "github-actions-grafana.yml"
+  },
   "lscr.io/linuxserver/jackett": {
     "branch": "jackett",
     "workflow_id": "github-actions-jackett.yml"

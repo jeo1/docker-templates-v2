@@ -5,6 +5,7 @@
 | [cadvisor](https://github.com/jeo1/docker-templates-v2/tree/cadvisor) | ✅ | ⚠️ | latest did not match (may be out of date)
 | [duckdns](https://github.com/jeo1/docker-templates-v2/tree/duckdns) | ✅ | ⚠️ | no merge created - testing with latest
 | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ |
+| [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ |
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
 | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | allowedVersions |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
@@ -22,7 +23,7 @@
     | [cadvisor](https://github.com/jeo1/docker-templates-v2/tree/cadvisor) | ✅ |  |
     | [duckdns](https://github.com/jeo1/docker-templates-v2/tree/duckdns) | ✅ |  |
     | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ |
-| [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ |
+    | [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ |
 | [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ |  |
 | [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ |  |
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
