@@ -16,8 +16,9 @@ jobs:
         id: extract
         run: |
           WORKFLOW_ID=$(echo "dev.yml")
-          echo $WORKFLOW_ID
+          TARGET_BRANCH=$(echo "dev")
           echo "WORKFLOW_ID=$WORKFLOW_ID" >> $GITHUB_OUTPUT
+          echo "TARGET_BRANCH=$TARGET_BRANCH" >> $GITHUB_OUTPUT
 
       - name: Use output
         run: |
@@ -32,7 +33,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: '${{ steps.extract.outputs.WORKFLOW_ID }}',
-              ref: 'dev',
+              ref: '${{ steps.extract.outputs.TARGET_BRANCH }}',
               inputs: {
                 triggered_by: 'main-branch',
                 run_id: context.runId.toString()
@@ -55,7 +56,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 workflow_id: '${{ steps.extract.outputs.WORKFLOW_ID }}',
-                branch: 'dev',
+                branch: '${{ steps.extract.outputs.TARGET_BRANCH }}',
                 per_page: 1
               });
               
@@ -89,4 +90,3 @@ jobs:
         run: echo "Dev workflow passed, continuing with main workflow..."
           
       # Add more steps for your main workflow here
-      
