@@ -1,7 +1,10 @@
 services:
-  nginx:
-    image: nginx:1.18
+  gitea:
+    image: docker.gitea.com/gitea@sha256:137a322f0308056415bc1a14a4ca8607b2e8efcb8154dfc5049b1f7f8b0a9b71
   jackett:
     image: lscr.io/linuxserver/jackett@sha256:0c8e5ddea2cf26a5d630222a5d61a9e56d0c173f4c139e775dd41aa1b2d9a715
+
+  nginx:
+    image: nginx:1.18
   sonarr:
     image: lscr.io/linuxserver/sonarr:4.0.13

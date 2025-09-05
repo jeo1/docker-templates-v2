@@ -1,4 +1,37 @@
 # Compose included
-| Compose | Github-Action | Setup for Renovate |
-| ------- | :------------ | :----------------: |
+| Compose | Github-Action | Setup for Renovate | Notes |
+| ------- | :-----------: | :----------------: | ----- |
 | [audiobooks](https://github.com/jeo1/docker-templates-v2/tree/audiobooks) | ❌ |  |
+| [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ |
+| [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
+| [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | allowedVersions |
+| [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
+
+<!--
+    | [audiobooks](https://github.com/jeo1/docker-templates-v2/tree/audiobooks) | ❌ |  |
+| [cadvisor](https://github.com/jeo1/docker-templates-v2/tree/cadvisor) | ✅ |  |
+| [duckdns](https://github.com/jeo1/docker-templates-v2/tree/duckdns) | ✅ |  |
+    | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ |
+| [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ |
+| [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ |  |
+| [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ |  |
+| [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
+| [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ |  |
+| [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma) | ✅ | ✅ |
+    | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ |
+| [node-exporter-alpine](https://github.com/jeo1/docker-templates-v2/tree/node-exporter-alpine) | ⚠️ |  |
+| [node-exporter](https://github.com/jeo1/docker-templates-v2/tree/node-exporter) | ✅ | ✅ |
+| [plex](https://github.com/jeo1/docker-templates-v2/tree/plex) | ⚠️ |  |
+| [portainer](https://github.com/jeo1/docker-templates-v2/tree/portainer) | ✅ | ✅ |
+| [prometheus](https://github.com/jeo1/docker-templates-v2/tree/prometheus) | ✅ | ✅ |
+| [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ |  |
+| [radarr](https://github.com/jeo1/docker-templates-v2/tree/radarr) | ✅ | ✅ |
+    | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
+| [tautulli](https://github.com/jeo1/docker-templates-v2/tree/tautulli) | ✅ |  |
+| [tdarr](https://github.com/jeo1/docker-templates-v2/tree/tdarr) | ✅ |  |
+| [twitch-dvr](https://github.com/jeo1/docker-templates-v2/tree/twitch-dvr) | ❌ |  |
+
+✅
+❌
+⚠️
+-->

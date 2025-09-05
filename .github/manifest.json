@@ -1,4 +1,8 @@
 {
+  "docker.gitea.com/gitea": {
+    "branch": "gitea",
+    "workflow_id": "github-actions-gitea.yml"
+  },
   "lscr.io/linuxserver/jackett": {
     "branch": "jackett",
     "workflow_id": "github-actions-jackett.yml"
@@ -10,9 +14,5 @@
   "lscr.io/linuxserver/sonarr": {
     "branch": "sonarr",
     "workflow_id": "github-actions-sonarr.yml"
-  },
-  "docker.gitea.com/gitea": {
-    "branch": "gitea",
-    "workflow_id": "github-actions-gitea.yml"
   }
 }
