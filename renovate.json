@@ -35,7 +35,7 @@
       "matchPackageNames": [
         "lscr.io/linuxserver/sonarr"
       ],
-      "allowedVersions": "<=4.0.12"
+      "allowedVersions": "<=4.0.13"
     },
     {
       "automergeType": "pr",
