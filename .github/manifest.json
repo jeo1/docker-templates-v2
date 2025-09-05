@@ -1,5 +1,5 @@
 {
-  "jackett": {
+  "lscr.io/linuxserver/jackett": {
     "branch": "jackett",
     "workflow_id": "github-actions-jackett.yml"
   },
