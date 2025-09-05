@@ -1,0 +1,90 @@
+# .github/workflows/main.yml
+name: Main Branch Workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  trigger-dev-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger dev branch workflow
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const response = await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'dev.yml', // Name of your dev workflow file
+              ref: 'dev',
+              inputs: {
+                triggered_by: 'main-branch',
+                run_id: context.runId.toString()
+              }
+            });
+            
+            console.log('Triggered dev workflow');
+            return response;
+
+      - name: Wait for dev workflow completion
+        uses: actions/github-script@v7
+        id: wait-for-dev
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Wait a moment for the workflow to start
+            await new Promise(resolve => setTimeout(resolve, 10000));
+            
+            let attempts = 0;
+            const maxAttempts = 60; // Wait up to 30 minutes (60 * 30s)
+            
+            while (attempts < maxAttempts) {
+              const runs = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'dev.yml',
+                branch: 'dev',
+                per_page: 1
+              });
+              
+              if (runs.data.workflow_runs.length > 0) {
+                const latestRun = runs.data.workflow_runs[0];
+                console.log(`Dev workflow status: ${latestRun.status}, conclusion: ${latestRun.conclusion}`);
+                
+                if (latestRun.status === 'completed') {
+                  if (latestRun.conclusion === 'success') {
+                    console.log('Dev workflow completed successfully');
+                    return 'success';
+                  } else {
+                    console.log(`Dev workflow failed with conclusion: ${latestRun.conclusion}`);
+                    throw new Error(`Dev workflow failed: ${latestRun.conclusion}`);
+                  }
+                }
+              }
+              
+              attempts++;
+              await new Promise(resolve => setTimeout(resolve, 30000)); // Wait 30 seconds
+            }
+            
+            throw new Error('Timeout waiting for dev workflow to complete');
+
+  main-workflow-steps:
+    runs-on: ubuntu-latest
+    needs: trigger-dev-workflow
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Main workflow logic
+        run: |
+          echo "Dev workflow passed, continuing with main workflow..."
+          # Add your main workflow steps here
+          
+      # Add more steps for your main workflow here
