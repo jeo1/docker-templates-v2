@@ -5,6 +5,6 @@
   },
   "nginx": {
     "branch": "nginx",
-    "workflow_id": "test.yml"
+    "workflow_id": "github-actions-nginx.yml"
   }
 }
