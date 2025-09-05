@@ -10,7 +10,6 @@ on:
 
 env:
   MANIFEST: .github/manifest.json
-  PR_TITLE: Update nginx Docker tag to v1.11 [lscr.io/linuxserver/sonarr]
 
 jobs:
   trigger-branch-workflow:
