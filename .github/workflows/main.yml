@@ -12,7 +12,6 @@ env:
   MANIFEST: .github/manifest.json
   PR_TITLE: Update nginx Docker tag to v1.11 [dev]
 
-
 jobs:
   trigger-branch-workflow:
     runs-on: ubuntu-latest
