@@ -20,6 +20,7 @@
 | [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ |  | make sure latest tag works
 | [radarr](https://github.com/jeo1/docker-templates-v2/tree/radarr) | ✅ | ✅ |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
+| [tautulli](https://github.com/jeo1/docker-templates-v2/tree/tautulli) | ✅ |  |
 
 # Notes
 - cadvisor
@@ -35,6 +36,8 @@
     - have a change to `qbittorrent` trigger the branch
 - radarr
     - have a change to `qbittorrent` trigger the branch
+- tautulli
+    - missing from `renovate.json`,  `renovate/docker-compose.test.yml`, `.github/manifest.json`
 
 <!--
     | [audiobooks](https://github.com/jeo1/docker-templates-v2/tree/audiobooks) | ❌ |  |
@@ -56,7 +59,7 @@
     | [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ |  |
     | [radarr](https://github.com/jeo1/docker-templates-v2/tree/radarr) | ✅ | ✅ |
     | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
-| [tautulli](https://github.com/jeo1/docker-templates-v2/tree/tautulli) | ✅ |  |
+    | [tautulli](https://github.com/jeo1/docker-templates-v2/tree/tautulli) | ✅ |  |
 | [tdarr](https://github.com/jeo1/docker-templates-v2/tree/tdarr) | ✅ |  |
 | [twitch-dvr](https://github.com/jeo1/docker-templates-v2/tree/twitch-dvr) | ❌ |  |
 
