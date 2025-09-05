@@ -34,7 +34,7 @@
       "matchPackageNames": [
         "nginx"
       ],
-      "allowedVersions": "<=1.17"
+      "allowedVersions": "<=1.18"
     },
     {
       "automergeType": "pr",
