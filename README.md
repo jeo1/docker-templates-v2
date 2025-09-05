@@ -16,6 +16,7 @@
 | [node-exporter](https://github.com/jeo1/docker-templates-v2/tree/node-exporter) | ✅ | ✅ |
 | [plex](https://github.com/jeo1/docker-templates-v2/tree/plex) | ⚠️ |  | needs to add http check
 | [portainer](https://github.com/jeo1/docker-templates-v2/tree/portainer) | ✅ | ✅ |
+| [prometheus](https://github.com/jeo1/docker-templates-v2/tree/prometheus) | ✅ |  |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
 
 # Notes
@@ -24,6 +25,8 @@
 - duckdns
     - missing from `renovate.json` and `renovate/docker-compose.test.yml`
     - needs `DUCKDNS_SUBDOMAIN` and `DUCKDNS_TOKEN` add to runner vars
+- prometheus
+    - missing from `renovate.json`,  `renovate/docker-compose.test.yml`, `.github/manifest.json`
 - sonarr
     - have a change to `qbittorrent` trigger the branch
 - radarr
@@ -45,7 +48,7 @@
     | [node-exporter](https://github.com/jeo1/docker-templates-v2/tree/node-exporter) | ✅ | ✅ |
     | [plex](https://github.com/jeo1/docker-templates-v2/tree/plex) | ⚠️ |  |
     | [portainer](https://github.com/jeo1/docker-templates-v2/tree/portainer) | ✅ | ✅ |
-| [prometheus](https://github.com/jeo1/docker-templates-v2/tree/prometheus) | ✅ | ✅ |
+    | [prometheus](https://github.com/jeo1/docker-templates-v2/tree/prometheus) | ✅ | ✅ |
 | [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ |  |
 | [radarr](https://github.com/jeo1/docker-templates-v2/tree/radarr) | ✅ | ✅ |
     | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
