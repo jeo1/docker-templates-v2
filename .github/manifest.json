@@ -10,5 +10,9 @@
   "lscr.io/linuxserver/sonarr": {
     "branch": "sonarr",
     "workflow_id": "github-actions-sonarr.yml"
+  },
+  "docker.gitea.com/gitea": {
+    "branch": "gitea",
+    "workflow_id": "github-actions-gitea.yml"
   }
 }
