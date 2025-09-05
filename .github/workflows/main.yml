@@ -3,7 +3,10 @@ name: zMain
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+    paths:
+      - 'README.md'
 
 jobs:
   trigger-branch-workflow:
