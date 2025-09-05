@@ -7,6 +7,7 @@
 | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ |
 | [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ |
 | [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ |  |
+| [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ |  |
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
 | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | currently limited by `allowedVersions` |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
@@ -26,8 +27,8 @@
     | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ |
     | [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ |
     | [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ |  |
-| [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ |  |
-| [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
+    | [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ |  |
+    | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
 | [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ |  |
 | [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma) | ✅ | ✅ |
     | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ |
