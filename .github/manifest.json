@@ -11,6 +11,10 @@
     "branch": "grafana",
     "workflow_id": "github-actions-grafana.yml"
   },
+  "louislam/uptime-kuma": {
+    "branch": "kuma",
+    "workflow_id": "github-actions-kuma.yml"
+  },
   "lscr.io/linuxserver/jackett": {
     "branch": "jackett",
     "workflow_id": "github-actions-jackett.yml"

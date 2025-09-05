@@ -1,13 +1,21 @@
 services:
   gitea:
     image: docker.gitea.com/gitea@sha256:137a322f0308056415bc1a14a4ca8607b2e8efcb8154dfc5049b1f7f8b0a9b71
+    # latest
   grafana:
     image: grafana/grafana@sha256:a1701c2180249361737a99a01bc770db39381640e4d631825d38ff4535efa47d
+    # latest
   jackett:
     image: lscr.io/linuxserver/jackett@sha256:0c8e5ddea2cf26a5d630222a5d61a9e56d0c173f4c139e775dd41aa1b2d9a715
+    # latest
   jellyfin:
     image: lscr.io/linuxserver/jellyfin@sha256:7ae36aab93ef9b6aaff02b37f8bb23df84bb2d7a3f6054ec8fc466072a648ce2
+    # latest
+  kuma:
+    image: louislam/uptime-kuma@sha256:431fee3be822b04861cf0e35daf4beef6b7cb37391c5f26c3ad6e12ce280fe18
+    # latest
   nginx:
     image: nginx:1.18
   sonarr:
     image: lscr.io/linuxserver/sonarr:4.0.15
+    # latest

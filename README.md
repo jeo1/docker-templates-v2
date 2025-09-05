@@ -8,8 +8,9 @@
 | [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ |
 | [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ |  |
 | [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ |  |
-| [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ |  | using latest sha (untested)
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
+| [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ |  | using latest sha (untested)
+| [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma) | ✅ | ✅ |
 | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | currently limited by `allowedVersions` |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
 
@@ -31,7 +32,7 @@
     | [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ |  |
     | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
     | [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ |  |
-| [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma) | ✅ | ✅ |
+    | [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma) | ✅ | ✅ |
     | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ |
 | [node-exporter-alpine](https://github.com/jeo1/docker-templates-v2/tree/node-exporter-alpine) | ⚠️ |  |
 | [node-exporter](https://github.com/jeo1/docker-templates-v2/tree/node-exporter) | ✅ | ✅ |

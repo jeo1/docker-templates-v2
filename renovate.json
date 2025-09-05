@@ -35,6 +35,7 @@
       "matchPackageNames": [
         "docker.gitea.com/gitea",
         "grafana/grafana",
+        "louislam/uptime-kuma",
         "lscr.io/linuxserver/jackett",
         "lscr.io/linuxserver/jellyfin",
         "lscr.io/linuxserver/sonarr"
