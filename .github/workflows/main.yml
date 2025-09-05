@@ -1,12 +1,7 @@
 # .github/workflows/main.yml
-name: zMain
+name: Trigger docker-compose
 
 on:
-  #push:
-  #  branches:
-  #    - main
-  #  paths:
-  #    - 'README.md'
   pull_request:
     types: 
       - opened
@@ -24,15 +19,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      #- name: Get branch info
-      #  id: info
-      #  run: |
-      #    IMAGE_NAME=$(echo "${{ env.PR_TITLE }}" | grep -oP '\[\K[^\]]*')
-      #    BRANCH_NAME=$(jq -r --arg k "$IMAGE_NAME" '.[$k].branch' ${{ env.MANIFEST }})
-      #    WORKFLOW_ID=$(jq -r --arg k "$IMAGE_NAME" '.[$k].workflow_id' ${{ env.MANIFEST }})
-      #    echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_OUTPUT
-      #    echo "WORKFLOW_ID=$WORKFLOW_ID" >> $GITHUB_OUTPUT
 
       - name: Get branch info
         id: info
@@ -58,7 +44,6 @@ jobs:
                 run_id: context.runId.toString()
               }
             });
-            
             console.log('Triggered dev workflow');
             
       - name: Wait for dev workflow completion
@@ -69,7 +54,6 @@ jobs:
           script: |
             // Wait a moment for the workflow to start
             await new Promise(resolve => setTimeout(resolve, 10000));
-            
             for (let i = 0; i < 60; i++) {
               const { data } = await github.rest.actions.listWorkflowRuns({
                 owner: context.repo.owner,
@@ -78,7 +62,6 @@ jobs:
                 branch: '${{ steps.info.outputs.BRANCH_NAME }}',
                 per_page: 1
               });
-              
               if (data.workflow_runs.length > 0) {
                 const run = data.workflow_runs[0];
                 console.log(`Status: ${run.status}, Conclusion: ${run.conclusion}`);
@@ -92,10 +75,8 @@ jobs:
                   }
                 }
               }
-              
               await new Promise(resolve => setTimeout(resolve, 30000));
             }
-            
             throw new Error('Timeout waiting for dev workflow to complete');
 
   #main-workflow-steps:
