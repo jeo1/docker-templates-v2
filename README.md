@@ -8,6 +8,12 @@
 | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | allowedVersions |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
 
+# Notes
+- cadvisor
+    - missing from `renovate.json` and `renovate/docker-compose.test.yml`
+
+
+
 <!--
     | [audiobooks](https://github.com/jeo1/docker-templates-v2/tree/audiobooks) | ❌ |  |
     | [cadvisor](https://github.com/jeo1/docker-templates-v2/tree/cadvisor) | ✅ |  |

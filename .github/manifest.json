@@ -1,4 +1,8 @@
 {
+  "lscr.io/linuxserver/duckdns": {
+    "branch": "duckdns",
+    "workflow_id": "github-actions-duckdns.yml"
+  },
   "docker.gitea.com/gitea": {
     "branch": "gitea",
     "workflow_id": "github-actions-gitea.yml"
