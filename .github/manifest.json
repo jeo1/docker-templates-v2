@@ -39,10 +39,6 @@
     {
       "branch": "nginx",
       "workflow_id": "github-actions-nginx.yml"
-    },
-    {
-      "branch": "duckdns",
-      "workflow_id": "github-actions-duckdns.yml"
     }
   ],
   "lscr.io/linuxserver/sonarr": [
