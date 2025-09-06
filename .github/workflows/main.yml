@@ -6,6 +6,7 @@ on:
       - opened
     branches:
       - main
+
 env:
   MANIFEST: .github/manifest.json
 
@@ -29,7 +30,7 @@ jobs:
         id: set-key
         run: |
           echo "key_name=${{ steps.info.outputs.IMAGE_NAME  }}" >> $GITHUB_ENV
-          
+
       - name: testing
         shell: python
         run: |
@@ -76,6 +77,6 @@ jobs:
   #  steps:
   #    - name: Checkout repository
   #      uses: actions/checkout@v4
-  #      
+  #
   #    - name: Final summary step
   #      run: echo "All matrix jobs completed successfully. Finalizing workflow."
