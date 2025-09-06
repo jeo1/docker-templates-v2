@@ -12,7 +12,7 @@ services:
     image: lscr.io/linuxserver/jellyfin@sha256:104ca69d833f1b9bc0efe55f56e8202b7b374f1b38431da91757e551e26ca96e
     # latest
   nginx:
-    image: nginx:1.19
+    image: nginx:1.21
   node-exporter:
     image: quay.io/prometheus/node-exporter@sha256:d00a542e409ee618a4edc67da14dd48c5da66726bbd5537ab2af9c1dfc442c8a
     # latest
