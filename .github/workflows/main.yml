@@ -7,7 +7,7 @@ on:
         
 env:
   MANIFEST: .github/manifest.json
-  PR_TITLE: nginx
+  PR_TITLE: hello [nginx]
   
 jobs:
   prepare-matrix:
@@ -17,11 +17,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      
+      - name: Get branch info
+        id: info
+        run: |
+          IMAGE_NAME=$(echo "${{ env.PR_TITLE }}" | grep -oP '\[\K[^\]]*')
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_OUTPUT
 
       - name: Set dynamic key name
         id: set-key
         run: |
-          echo "key_name=${{ env.PR_TITLE }}" >> $GITHUB_ENV
+          echo "key_name=${{ steps.info.outputs.IMAGE_NAME  }}" >> $GITHUB_ENV
 
       - name: Read manifest.json and extract matrix
         id: set-matrix
