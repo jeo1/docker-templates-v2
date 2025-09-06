@@ -54,7 +54,7 @@ jobs:
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
               print(f"matrix={json.dumps(matrix)}", file=output)
 
-  run-action:
+  run-compose-test:
     needs: prepare-matrix
     runs-on: ubuntu-latest
     strategy:
@@ -71,7 +71,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   #finalize:
-  #  needs: run-action
+  #  needs: run-compose-test
   #  runs-on: ubuntu-latest
   #  if: success()
   #  steps:
