@@ -6,6 +6,8 @@ on:
       - opened
     branches:
       - main
+env:
+  MANIFEST: .github/manifest.json
 
 jobs:
   prepare-matrix:
