@@ -1,25 +1,20 @@
 services:
   gitea:
     image: docker.gitea.com/gitea@sha256:137a322f0308056415bc1a14a4ca8607b2e8efcb8154dfc5049b1f7f8b0a9b71
-    # latest
   grafana:
     image: grafana/grafana@sha256:a1701c2180249361737a99a01bc770db39381640e4d631825d38ff4535efa47d
-    # latest
   jackett:
     image: lscr.io/linuxserver/jackett@sha256:0d16da33152b3a21fc03d7094c8629e1b7aa7418b22ac387a1c9afdb0fd2697d
-    # latest
   jellyfin:
     image: lscr.io/linuxserver/jellyfin@sha256:104ca69d833f1b9bc0efe55f56e8202b7b374f1b38431da91757e551e26ca96e
-    # latest
-  nginx:
-    image: nginx:1.26
   node-exporter:
     image: quay.io/prometheus/node-exporter@sha256:d00a542e409ee618a4edc67da14dd48c5da66726bbd5537ab2af9c1dfc442c8a
-    # latest
   portainer:
     image: portainer/portainer-ce@sha256:f4c59b58fd64499295e59b1665bbd9af0cf9e823258f84859510db3263718142
   radarr:
     image: lscr.io/linuxserver/sonarr@sha256:e00e87e0e7c24fdc992093756f120a6ab292790b6a637ff3641bf813091cd726
   sonarr:
     image: lscr.io/linuxserver/sonarr@sha256:e00e87e0e7c24fdc992093756f120a6ab292790b6a637ff3641bf813091cd726
-    # latest
+  nginx:
+    image: nginx:1.26
+    
