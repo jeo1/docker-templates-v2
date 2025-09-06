@@ -1,4 +1,4 @@
-name: Dynamic Key Matrix Workflow
+name: Renovate trigger docker-compose
 
 on:
   pull_request:
@@ -11,6 +11,7 @@ env:
 
 jobs:
   prepare-matrix:
+    if: startsWith(github.actor, 'renovate')
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -35,7 +36,7 @@ jobs:
           import os
           for key, value in os.environ.items():
             print(f"{key}={value}")
-            
+
       - name: Read manifest.json and extract matrix
         id: set-matrix
         shell: python
@@ -68,13 +69,13 @@ jobs:
           workflow_id: ${{ matrix.key.workflow_id }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  finalize:
-    needs: run-action
-    runs-on: ubuntu-latest
-    if: success()
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Final summary step
-        run: echo "All matrix jobs completed successfully. Finalizing workflow."
+  #finalize:
+  #  needs: run-action
+  #  runs-on: ubuntu-latest
+  #  if: success()
+  #  steps:
+  #    - name: Checkout repository
+  #      uses: actions/checkout@v4
+  #      
+  #    - name: Final summary step
+  #      run: echo "All matrix jobs completed successfully. Finalizing workflow."
