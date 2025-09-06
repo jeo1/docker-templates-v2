@@ -3,7 +3,7 @@ name: Trigger docker-compose
 
 on:
   pull_request:
-    types: 
+    types:
       - opened
     branches:
       - main
@@ -12,7 +12,7 @@ env:
   MANIFEST: .github/manifest.json
 
 jobs:
-  trigger-branch-workflow:
+  prepare-matrix:
     if: startsWith(github.actor, 'renovate')
     runs-on: ubuntu-latest
     steps:
@@ -23,69 +23,52 @@ jobs:
         id: info
         run: |
           IMAGE_NAME=$(echo "${{ github.event.pull_request.title }}" | grep -oP '\[\K[^\]]*')
-          BRANCH_NAME=$(jq -r --arg k "$IMAGE_NAME" '.[$k].branch' ${{ env.MANIFEST }})
-          WORKFLOW_ID=$(jq -r --arg k "$IMAGE_NAME" '.[$k].workflow_id' ${{ env.MANIFEST }})
-          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_OUTPUT
-          echo "WORKFLOW_ID=$WORKFLOW_ID" >> $GITHUB_OUTPUT
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_OUTPUT
 
-      - name: Trigger dev branch workflow
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: '${{ steps.info.outputs.WORKFLOW_ID }}',
-              ref: '${{ steps.info.outputs.BRANCH_NAME }}',
-              inputs: {
-                triggered_by: 'main-branch',
-                run_id: context.runId.toString()
-              }
-            });
-            console.log('Triggered dev workflow');
-            
-      - name: Wait for dev workflow completion
-        uses: actions/github-script@v7
-        id: wait-for-dev
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            // Wait a moment for the workflow to start
-            await new Promise(resolve => setTimeout(resolve, 10000));
-            for (let i = 0; i < 60; i++) {
-              const { data } = await github.rest.actions.listWorkflowRuns({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: '${{ steps.info.outputs.WORKFLOW_ID }}',
-                branch: '${{ steps.info.outputs.BRANCH_NAME }}',
-                per_page: 1
-              });
-              if (data.workflow_runs.length > 0) {
-                const run = data.workflow_runs[0];
-                console.log(`Status: ${run.status}, Conclusion: ${run.conclusion}`);
-                
-                if (run.status === 'completed') {
-                  if (run.conclusion === 'success') {
-                    console.log('Dev workflow completed successfully');
-                    return;
-                  } else {
-                    throw new Error(`Dev workflow failed: ${run.conclusion}`);
-                  }
-                }
-              }
-              await new Promise(resolve => setTimeout(resolve, 30000));
-            }
-            throw new Error('Timeout waiting for dev workflow to complete');
+      - name: Set dynamic key name
+        id: set-key
+        run: |
+          echo "key_name=${{ steps.info.outputs.IMAGE_NAME }}" >> $GITHUB_ENV
 
-  #main-workflow-steps:
-  #  runs-on: ubuntu-latest
-  #  needs: trigger-branch-workflow
-  #  steps:
-  #    - name: Checkout code
-  #      uses: actions/checkout@v4
-  #      
-  #    - name: Main workflow logic
-  #      run: echo "Dev workflow passed, continuing with main workflow..."
-  #        
-  #    # Add more steps for your main workflow here
+      - name: Read manifest.json and extract matrix
+        id: set-matrix
+        run: |
+          import json
+          import os
+
+          key_name = os.getenv("key_name")
+          manifest_path = os.getenv("MANIFEST")
+          with open(manifest_path) as f:
+              data = json.load(f)
+
+          matrix = {"key": data[key_name]}
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              print(f"matrix={json.dumps(matrix)}", file=output)
+        shell: python
+
+  run-action:
+    needs: prepare-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.prepare-matrix.outputs.matrix) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run custom action
+        uses: ./.github/actions
+        with:
+          branch: ${{ matrix.key.branch }}
+          workflow_id: ${{ matrix.key.workflow_id }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  finalize:
+    needs: run-action
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Final summary step
+        run: echo "All matrix jobs completed successfully. Finalizing workflow."

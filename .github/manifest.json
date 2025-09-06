@@ -1,46 +1,8 @@
 {
-  "lscr.io/linuxserver/duckdns": {
-    "branch": "duckdns",
-    "workflow_id": "github-actions-duckdns.yml"
-  },
-  "docker.gitea.com/gitea": {
-    "branch": "gitea",
-    "workflow_id": "github-actions-gitea.yml"
-  },
-  "grafana/grafana": {
-    "branch": "grafana",
-    "workflow_id": "github-actions-grafana.yml"
-  },
-  "louislam/uptime-kuma": {
-    "branch": "kuma",
-    "workflow_id": "github-actions-kuma.yml"
-  },
-  "lscr.io/linuxserver/jackett": {
-    "branch": "jackett",
-    "workflow_id": "github-actions-jackett.yml"
-  },
-  "lscr.io/linuxserver/jellyfin": {
-    "branch": "jellyfin",
-    "workflow_id": "github-actions-jellyfin.yml"
-  },
-  "nginx": {
-    "branch": "nginx",
-    "workflow_id": "github-actions-nginx.yml"
-  },
-  "lscr.io/linuxserver/sonarr": {
-    "branch": "sonarr",
-    "workflow_id": "github-actions-sonarr.yml"
-  },
-  "lscr.io/linuxserver/radarr": {
-    "branch": "radarr",
-    "workflow_id": "github-actions-radarr.yml"
-  },
-  "quay.io/prometheus/node-exporter": {
-    "branch": "node-exporter",
-    "workflow_id": "github-actions-node-exporter.yml"
-  },
-  "portainer/portainer-ce": {
-    "branch": "portainer",
-    "workflow_id": "github-actions-portainer.yml"
-  }
+  "nginx": [
+    {
+      "branch": "nginx",
+      "workflow_id": "github-actions-nginx.yml"
+    }
+  ]
 }
