@@ -29,8 +29,17 @@ jobs:
         run: |
           echo "key_name=${{ steps.info.outputs.IMAGE_NAME  }}" >> $GITHUB_ENV
 
+      - name: testing
+        shell: python
+        run: |
+          import os
+          key_name = os.getenv("key_name")
+          print(key_name)
+
+
       - name: Read manifest.json and extract matrix
         id: set-matrix
+        shell: python
         run: |
           import json
           import os
@@ -43,7 +52,7 @@ jobs:
           matrix = {"key": data[key_name]}
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
               print(f"matrix={json.dumps(matrix)}", file=output)
-        shell: python
+        
 
   run-action:
     needs: prepare-matrix
