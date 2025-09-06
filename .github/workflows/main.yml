@@ -28,7 +28,14 @@ jobs:
         id: set-key
         run: |
           echo "key_name=${{ steps.info.outputs.IMAGE_NAME  }}" >> $GITHUB_ENV
-
+          
+      - name: testing
+        shell: python
+        run: |
+          import os
+          for key, value in os.environ.items():
+            print(f"{key}={value}")
+            
       - name: Read manifest.json and extract matrix
         id: set-matrix
         shell: python
