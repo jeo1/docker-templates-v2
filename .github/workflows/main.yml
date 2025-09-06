@@ -33,7 +33,7 @@ jobs:
         shell: python
         run: |
           import os
-          key_name = os.getenv("key_name")
+          key_name = os.getenv("IMAGE_NAME")
           print(key_name)
 
 
