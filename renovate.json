@@ -21,7 +21,7 @@
       "matchPackageNames": [
         "nginx"
       ],
-      "allowedVersions": "<=1.19"
+      "allowedVersions": "<=1.20"
     },
     {
       "automergeType": "pr",
