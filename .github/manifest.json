@@ -39,6 +39,10 @@
     {
       "branch": "nginx",
       "workflow_id": "github-actions-nginx.yml"
+    },
+    {
+      "branch": "sonarr",
+      "workflow_id": "github-actions-sonarr.yml"
     }
   ],
   "lscr.io/linuxserver/sonarr": [
