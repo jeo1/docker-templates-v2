@@ -19,38 +19,33 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Get branch info
-        id: info
-        run: |
-          IMAGE_NAME=$(echo "${{ github.event.pull_request.title }}" | grep -oP '\[\K[^\]]*')
-          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_OUTPUT
-
-      - name: Set dynamic key name
-        id: set-key
-        run: |
-          echo "key_name=${{ steps.info.outputs.IMAGE_NAME  }}" >> $GITHUB_ENV
-
-      - name: testing
-        shell: python
-        run: |
-          import os
-          for key, value in os.environ.items():
-            print(f"{key}={value}")
-
-      - name: Read manifest.json and extract matrix
+        
+      - name: Extract image name and set matrix
         id: set-matrix
         shell: python
         run: |
           import json
           import os
-
-          key_name = os.getenv("key_name")
-          manifest_path = os.getenv("MANIFEST")
-          with open(manifest_path) as f:
+          import re
+          
+          # Extract image name from PR title
+          pr_title = "${{ github.event.pull_request.title }}"
+          match = re.search(r'\[([^\]]*)\]', pr_title)
+          if not match:
+              raise ValueError("Could not extract image name from PR title")
+          
+          image_name = match.group(1)
+          
+          # Read manifest and create matrix
+          with open("${{ env.MANIFEST }}") as f:
               data = json.load(f)
-
-          matrix = {"key": data[key_name]}
+          
+          if image_name not in data:
+              raise ValueError(f"Image '{image_name}' not found in manifest")
+          
+          matrix = {"key": data[image_name]}
+          
+          # Output matrix
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
               print(f"matrix={json.dumps(matrix)}", file=output)
 
@@ -61,8 +56,8 @@ jobs:
       matrix: ${{ fromJson(needs.prepare-matrix.outputs.matrix) }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-
+        uses: actions/checkout@v4
+        
       - name: Run custom action
         uses: ./.github/actions
         with:
