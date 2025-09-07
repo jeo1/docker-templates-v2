@@ -1,0 +1,75 @@
+name: Docker-compose (Node-Exporter-Alpine)
+
+on:
+  push:
+    branches: [node-exporter-alpine]
+    paths-ignore:
+      - README.md
+      - .gitignore
+  workflow_dispatch:
+    inputs:
+      triggered_by:
+        description: 'What triggered this workflow'
+        required: false
+        default: 'manual'
+      run_id:
+        description: 'Main workflow run ID'
+        required: false
+
+env:
+  MANIFEST: .github/manifest.json
+  
+jobs:
+  docker-compose-test:
+    runs-on: ubuntu-latest
+    
+    container:
+      image: alpine:latest
+
+    services:
+      docker:
+        image: docker:dind
+
+    steps:
+      - name: Install dependencies
+        run: |
+          apk update
+          apk add \
+            docker-cli \
+            docker-compose \
+            bash \
+            curl \
+            python3 \
+            py3-pip \
+            jq
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Create .env
+        run: |
+          python3 -m venv .venv
+          . .venv/bin/activate
+          pip3 install jinja-cli
+          jinja env.j2 --data ${{ env.MANIFEST }} > .env
+
+      - name: Docker Compose up
+        run: |
+          docker compose up -d
+
+      #- name: Test HTTP response
+      #  run: |
+      #    NODE_EXPORTER_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.NODE_EXPORTER_PORT')
+      #    URL=http://localhost:$NODE_EXPORTER_PORT
+      #    for i in {1..30}; do
+      #      if curl --silent --fail $URL > /dev/null; then
+      #        echo "Service is up!"
+      #        break
+      #      fi
+      #      echo "Waiting for Service... ($i)"
+      #      sleep 1
+      #    done
+      #    curl --fail $URL || (echo "Service did not respond" && exit 1)
+
+      - name: Tear down Docker Compose
+        run: docker compose down --volumes
