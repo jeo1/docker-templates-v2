@@ -79,8 +79,8 @@ jobs:
             sleep 1
           done
 
-          echo "CONTAINER_IP=$(docker exec ${{ env.TEST_CONTAINER_NAME }} hostname -i)" >> $GITHUB_ENV
-          echo "CONTAINER_IP2=$(docker exec ${{ env.TEST_CONTAINER_NAME2 }} hostname -i)" >> $GITHUB_ENV
+          echo "PLEX_CONTAINER_IP=$(docker exec ${{ env.TEST_CONTAINER_NAME }} hostname -i)" >> $GITHUB_ENV
+          echo "CURL_CONTAINER_IP=$(docker exec ${{ env.TEST_CONTAINER_NAME2 }} hostname -i)" >> $GITHUB_ENV
           docker stop ${{ env.TEST_CONTAINER_NAME }}
           docker rm ${{ env.TEST_CONTAINER_NAME }}
           docker stop ${{ env.TEST_CONTAINER_NAME2 }}
@@ -93,7 +93,7 @@ jobs:
       - name: Create .envs
         run: |
           jinja env.j2 \
-            --define PLEX_IP_ADDRESS ${{ env.CONTAINER_IP }} \
+            --define PLEX_IP_ADDRESS ${{ env.PLEX_CONTAINER_IP }} \
             --data ${{ env.MANIFEST }} > .env
           mkdir -p private
           jinja env-private.j2 --data ${{ env.MANIFEST }} > private/.env
@@ -104,12 +104,11 @@ jobs:
 
       - name: Test HTTP response
         run: |
-          sleep 600
           PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
-          URL=http://${{ env.CONTAINER_IP }}:$PLEX_PORT/web
+          URL=http://${{ env.PLEX_CONTAINER_IP }}:$PLEX_PORT/web
           docker run --rm \
             --network ${{ env.DOCKER_NETWORK_NAME }} \
-            --ip ${{ env.CONTAINER_IP2 }} \
+            --ip ${{ env.CURL_CONTAINER_IP }} \
             curlimages/curl \
             curl $URL
 
