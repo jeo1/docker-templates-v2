@@ -116,7 +116,7 @@ jobs:
             --network ${{ env.DOCKER_NETWORK_NAME }} \
             --ip 10.1.0.99 \
             curlimages/curl \
-            curl http://${{ env.CONTAINER_IP }}:32400/web
+            curl http://${{ env.CONTAINER_IP }}:32401/web
 
       #- name: Test Plex connectivity (dev)
       #  run: |
