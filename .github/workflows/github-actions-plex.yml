@@ -54,6 +54,15 @@ jobs:
             -o parent=$DEFAULT_INTERFACE \
             ${{ env.DOCKER_NETWORK_NAME }}
 
+      - name: temp
+        run: |
+          docker network create -d macvlan \
+            --subnet=$SUBNET \
+            --gateway=$GATEWAY \
+            -o parent=$DEFAULT_INTERFACE \
+            test
+
+
       - name: Test macvlan network with container and get valid ip
         run: |
           docker run -d --name ${{ env.TEST_CONTAINER_NAME }} \
