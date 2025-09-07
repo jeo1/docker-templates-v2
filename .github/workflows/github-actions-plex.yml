@@ -86,7 +86,7 @@ jobs:
           docker stop ${{ env.TEST_CONTAINER_NAME2 }}
           docker rm ${{ env.TEST_CONTAINER_NAME2 }}
 
-      - name:
+      - name: debug
         run: |
           echo ${{ env.CONTAINER_IP }}
           echo ${{ env.CONTAINER_IP2 }}
