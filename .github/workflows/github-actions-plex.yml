@@ -108,21 +108,17 @@ jobs:
           URL=http://${{ env.PLEX_CONTAINER_IP }}:$PLEX_PORT/web
           #!/bin/bash
 
-          MAX_RETRIES=10
-          COUNT=0
-          SUCCESS=false
-
-          while [ $COUNT -lt $MAX_RETRIES ]; do
-              echo "Attempt $((COUNT+1))..."
+          for i in {1..10}; do
+              echo "Attempt $i..."
               
               docker run --rm \
                   --network "${DOCKER_NETWORK_NAME}" \
                   --ip "${CURL_CONTAINER_IP}" \
                   curlimages/curl \
                   curl "$URL"
-
-              COUNT=$((COUNT+1))
-              sleep 10  # Optional: wait before retrying
+              
+              echo "Finished attempt $i"
+              sleep 2  # Optional pause between runs
           done
 
 
