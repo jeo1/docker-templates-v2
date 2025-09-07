@@ -1,0 +1,14 @@
+services:
+  graphite:
+    image: graphiteapp/graphite-statsd
+    pull_policy: always
+    container_name: "${CONTAINER_NAME}"
+    restart: always
+    network_mode: "host" 
+    volumes:
+      - "${GRAPHITE_CONFIG}:/opt/graphite/conf"
+      - "${GRAPHITE_STORAGE}:/opt/graphite/storage"
+      - "${GRAPHITE_CUSTOM_FUNCTIONS}:/opt/graphite/webapp/graphite/functions/custom"
+      - "${STATSD_CONFIG}:/opt/statsd/config"
+      - "${GRAPHITE_LOG_CONFIG}:/etc/logrotate.d"
+      - "${GRAPHITE_LOG}:/var/log"

@@ -1,0 +1,10 @@
+{
+    "GRAPHITE_CONFIG": "./config",
+    "GRAPHITE_STORAGE": "./data",
+    "GRAPHITE_CUSTOM_FUNCTIONS": "./custom_functions",
+    "GRAPHITE_NGINX": "./nginx",
+    "STATSD_CONFIG": "./statsd",
+    "GRAPHITE_LOG_CONFIG": "./log_config",
+    "GRAPHITE_LOG": "./log",
+    "GRAPHITE_PORT": 80
+}
