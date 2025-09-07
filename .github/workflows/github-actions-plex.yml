@@ -110,13 +110,13 @@ jobs:
           docker network inspect second_macvlan_network
 
 
-      - name: test
+      - name: Test connectivity from another container
         run: |
-          docker run --rm   \
-          --network second_macvlan_network   \
-          --ip 10.2.0.2   \
+          docker run --rm \
+            --network ${{ env.DOCKER_NETWORK_NAME }} \
+            --ip 10.1.0.99 \
             curlimages/curl \
-            curl http://10.1.0.2:32400/web
+            curl http://${{ env.CONTAINER_IP }}:32400/web
 
       #- name: Test Plex connectivity (dev)
       #  run: |
