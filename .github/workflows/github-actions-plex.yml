@@ -106,6 +106,9 @@ jobs:
         run: |
           PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
           URL=http://${{ env.PLEX_CONTAINER_IP }}:$PLEX_PORT/web
+
+          sleep 10
+
           docker run --rm \
             --network ${{ env.DOCKER_NETWORK_NAME }} \
             --ip ${{ env.CURL_CONTAINER_IP }} \
