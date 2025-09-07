@@ -13,7 +13,7 @@
       "automergeType": "pr",
       "automerge": true,
       "baseBranches": [
-        "main"
+        "_new"
       ],
       "matchDatasources": [
         "docker"
@@ -27,7 +27,7 @@
       "automergeType": "pr",
       "automerge": true,
       "baseBranches": [
-        "main"
+        "_new"
       ],
       "matchDatasources": [
         "docker"
