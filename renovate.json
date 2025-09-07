@@ -20,6 +20,7 @@
       ],
       "matchPackageNames": [
         "docker.gitea.com/gitea",
+        "ghcr.io/haveagitgat/tdarr",
         "grafana/grafana",
         "louislam/uptime-kuma",
         "lscr.io/linuxserver/jackett",

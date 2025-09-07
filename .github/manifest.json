@@ -78,5 +78,11 @@
       "branch": "radarr",
       "workflow_id": "github-actions-radarr.yml"
     }
+  ],
+  "ghcr.io/haveagitgat/tdarr": [
+    {
+      "branch": "tdarr",
+      "workflow_id": "github-actions-tdarr.yml"
+    }
   ]
 }
