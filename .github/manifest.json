@@ -1,0 +1,7 @@
+{
+    "JELLYFIN_CONFIG": "./config",
+    "JELLYFIN_MEDIA_MOUNT": "./meida",
+    "JELLYFIN_WEB_PORT": 8096,
+    "JELLYFIN_LOCAL_PORT": 7359,
+    "JELLYFIN_DNLA_PORT": 1900
+}
