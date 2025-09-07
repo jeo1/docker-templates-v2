@@ -1,0 +1,27 @@
+---
+services:
+  portainer-setup:
+    build: ./build/
+    image: portainer-setup
+    pull_policy: build
+    container_name: "${SETUP_CONTAINER_NAME}"
+    volumes:
+      - "${PORTAINER_SSL}:/ssl"
+
+  portainer:
+    container_name: "${CONTAINER_NAME}"
+    image: portainer/portainer-ce:latest
+    pull_policy: always
+    restart: always
+    ports:
+      - "${PORTAINER_TCP_PORT}:8000"
+      - "${PORTAINER_LEGACY_HTTP_PORT}:9000"
+      - "${PORTAINER_SSL_PORT}:9443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${PORTAINER_CONFIG}:/data"
+      - "${PORTAINER_SSL}:/certs"
+    command: --ssl --sslcert /certs/portainer.crt --sslkey /certs/portainer.key
+    depends_on:
+      portainer-setup:
+        condition: service_completed_successfully
