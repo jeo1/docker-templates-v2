@@ -1,0 +1,8 @@
+{
+    "TDARR_SERVER": "./server",
+    "TDARR_CONFIG": "./configs",
+    "TDARR_MEDIA_MNT": "./media",
+    "TDARR_TRANSCODE_CACHE": "./temp",
+    "TDARR_WEB_PORT": 8266,
+    "TDARR_SERVER_PORT": 8265
+}

@@ -1,0 +1,22 @@
+services:
+  tdarr:
+    container_name: "${CONTAINER_NAME}"
+    image: ghcr.io/haveagitgat/tdarr:latest
+    pull_policy: always
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=Europe/London
+      - UMASK_SET=002
+      - serverIP=0.0.0.0
+      - serverPort=8266
+      - webUIPort=8265
+      - internalNode=true
+      - inContainer=true
+      - ffmpegVersion=6
+      - nodeName=MyInternalNode
+    volumes:
+      - "${TDARR_SERVER}:/app/server"
+      - "${TDARR_CONFIG}:/app/configs"
+      - "${TDARR_MEDIA_MNT}:/media"
+      - "${TDARR_TRANSCODE_CACHE}:/temp"
