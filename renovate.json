@@ -7,32 +7,42 @@
   "enabledManagers": [
     "docker-compose"
   ],
-  "automergeType": "pr",
-  "automerge": true,
   "commitMessageSuffix": "[{{depName}}]",
-  "baseBranches": [
-    "main"
-  ],
   "packageRules": [
     {
-      "automerge": true,
       "automergeType": "pr",
-      "matchManagers": [
-        "docker-compose"
+      "automerge": true,
+      "baseBranches": [
+        "main"
+      ],
+      "matchDatasources": [
+        "docker"
       ],
       "matchPackageNames": [
-        "lscr.io/linuxserver/jackett"
+        "nginx"
+      ],
+      "allowedVersions": "<=1.27"
+    },
+    {
+      "automergeType": "pr",
+      "automerge": true,
+      "baseBranches": [
+        "main"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "docker.gitea.com/gitea",
+        "grafana/grafana",
+        "louislam/uptime-kuma",
+        "lscr.io/linuxserver/jackett",
+        "lscr.io/linuxserver/jellyfin",
+        "lscr.io/linuxserver/radarr",
+        "lscr.io/linuxserver/sonarr",
+        "portainer/portainer-ce",
+        "quay.io/prometheus/node-exporter"
       ]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["nginx"],
-      "allowedVersions": "<=1.24"
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["lscr.io/linuxserver/sonarr"],
-      "allowedVersions": "<=4.0.15"
     }
   ]
 }
