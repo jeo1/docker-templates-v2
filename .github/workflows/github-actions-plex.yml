@@ -2,29 +2,32 @@ name: Docker-compose (Plex)
 
 on:
   push:
-    branches: [plex]
+    branches:
+      - plex
+      - plex-dev
     paths-ignore:
       - README.md
       - .gitignore
   workflow_dispatch:
     inputs:
       triggered_by:
-        description: 'What triggered this workflow'
+        description: "What triggered this workflow"
         required: false
-        default: 'manual'
+        default: "manual"
       run_id:
-        description: 'Main workflow run ID'
+        description: "Main workflow run ID"
         required: false
 
 env:
   MANIFEST: .github/manifest.json
   TEST_CONTAINER_NAME: test-container
+  TEST_CONTAINER_NAME2: test-container2
   PLEX_IP_ADDRESS_KEY: PLEX_IP_ADDRESS
 
 jobs:
   docker-compose-test:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -64,9 +67,24 @@ jobs:
             echo "Waiting for container to start... ($i)"
             sleep 1
           done
-          echo "CONTAINER_IP=$(docker exec ${{ env.TEST_CONTAINER_NAME }} hostname -i)" >> $GITHUB_ENV
+
+          docker run -d --name ${{ env.TEST_CONTAINER_NAME2 }} \
+            --network ${{ env.DOCKER_NETWORK_NAME }} alpine:latest sleep 300
+          for i in {1..10}; do
+            if docker exec ${{ env.TEST_CONTAINER_NAME2 }} hostname -i >/dev/null 2>&1; then
+              echo "Container is ready"
+              break
+            fi
+            echo "Waiting for container to start... ($i)"
+            sleep 1
+          done
+
+          echo "PLEX_CONTAINER_IP=$(docker exec ${{ env.TEST_CONTAINER_NAME }} hostname -i)" >> $GITHUB_ENV
+          echo "CURL_CONTAINER_IP=$(docker exec ${{ env.TEST_CONTAINER_NAME2 }} hostname -i)" >> $GITHUB_ENV
           docker stop ${{ env.TEST_CONTAINER_NAME }}
           docker rm ${{ env.TEST_CONTAINER_NAME }}
+          docker stop ${{ env.TEST_CONTAINER_NAME2 }}
+          docker rm ${{ env.TEST_CONTAINER_NAME2 }}
 
       - name: Install jinja-cli
         run: |
@@ -75,7 +93,7 @@ jobs:
       - name: Create .envs
         run: |
           jinja env.j2 \
-            --define PLEX_IP_ADDRESS ${{ env.CONTAINER_IP }} \
+            --define PLEX_IP_ADDRESS ${{ env.PLEX_CONTAINER_IP }} \
             --data ${{ env.MANIFEST }} > .env
           mkdir -p private
           jinja env-private.j2 --data ${{ env.MANIFEST }} > private/.env
@@ -84,23 +102,21 @@ jobs:
         run: |
           docker compose up -d
 
-      #- name: Test HTTP response
-      #  run: |
-      #    PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
-      #    URL=http://${{ env.CONTAINER_IP }}:$PLEX_PORT
-      #    for i in {1..30}; do
-      #      if curl --silent --fail $URL > /dev/null; then
-      #        echo "Service is up!"
-      #        break
-      #      fi
-      #      echo "Waiting for Service... ($i)"
-      #      sleep 1
-      #    done
-      #    curl --fail $URL || (echo "Service did not respond" && exit 1)
+      - name: Test HTTP response
+        run: |
+          PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
+          URL=http://${{ env.PLEX_CONTAINER_IP }}:$PLEX_PORT/web
+
+          sleep 10
+
+          docker run --rm \
+            --network ${{ env.DOCKER_NETWORK_NAME }} \
+            --ip ${{ env.CURL_CONTAINER_IP }} \
+            curlimages/curl \
+            curl $URL
 
       - name: Cleanup
         if: always()
         run: |
           docker compose down --volumes
           docker network rm ${{ env.DOCKER_NETWORK_NAME }} || true
-          
