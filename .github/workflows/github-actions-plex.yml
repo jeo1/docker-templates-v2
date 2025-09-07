@@ -60,7 +60,7 @@ jobs:
             --subnet=$SUBNET \
             --gateway=$GATEWAY \
             -o parent=$DEFAULT_INTERFACE \
-            test
+            macvlan_net
 
 
       - name: Test macvlan network with container and get valid ip
@@ -98,9 +98,13 @@ jobs:
 
       - name: dev
         run: |
-          echo ${{ env.CONTAINER_IP }}
-          docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' plex
-      - name: debug
+          docker run -it --rm \
+          --network macvlan_net \
+          --ip 10.1.0.3 \
+          curlimages/curl \
+          curl http://${{ env.CONTAINER_IP }}:$PLEX_PORT
+      
+          - name: debug
         run: |
           docker inspect plex
 
