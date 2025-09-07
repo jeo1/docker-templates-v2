@@ -82,9 +82,7 @@ jobs:
           echo "CONTAINER_IP=$(docker exec ${{ env.TEST_CONTAINER_NAME }} hostname -i)" >> $GITHUB_ENV
           echo "CONTAINER_IP2=$(docker exec ${{ env.TEST_CONTAINER_NAME2 }} hostname -i)" >> $GITHUB_ENV
           docker stop ${{ env.TEST_CONTAINER_NAME }}
-          docker stop ${{ env.TEST_CONTAINER_NAME2 }}
           docker rm ${{ env.TEST_CONTAINER_NAME }}
-          docker rm ${{ env.TEST_CONTAINER_NAME2 }}
 
       - name: Install jinja-cli
         run: |
@@ -102,13 +100,8 @@ jobs:
         run: |
           docker compose up -d
 
-      - name: get plex ip
-        run: |
-          docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' plex
-
       - name: Test connectivity from another container
         run: |
-          ${{ env.CONTAINER_IP2 }}
           docker run --rm \
             --network ${{ env.DOCKER_NETWORK_NAME }} \
             --ip 10.1.0.3 \
