@@ -112,11 +112,11 @@ jobs:
 
       - name: test
         run: |
-          docker run -it --rm   \
-          --network macvlan_work   \
+          docker run --rm   \
+          --network second_macvlan_network   \
           --ip 10.2.0.2   \
             curlimages/curl \
-            curl http://10.1.0.2:32400
+            curl http://10.1.0.2:32400/web
 
       #- name: Test Plex connectivity (dev)
       #  run: |
