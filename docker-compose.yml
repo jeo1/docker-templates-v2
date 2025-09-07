@@ -1,0 +1,22 @@
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    pull_policy: always
+    container_name: "${CONTAINER_NAME}"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: always
+    command:
+      - '--housekeeping_interval=15s'
+      - '--docker_only=true'
+      - '--disable_metrics=cpu_topology,disk,memory_numa,tcp,udp,percpu,sched,process,hugetlb,referenced_memory,resctrl,cpuset,advtcp,memory_numa'
+    ports:
+      - "${CADVISOR_PORT}:8080"
+    #deploy:
+    #  resources:
+    #    limits:
+    #      cpus: "${CADVISOR_CPU_LIMIT}"
+    #      memory: "${CADVISOR_MEM_LIMIT}"
