@@ -106,19 +106,28 @@ jobs:
         run: |
           PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
           URL=http://${{ env.PLEX_CONTAINER_IP }}:$PLEX_PORT/web
-          #!/bin/bash
 
-          for i in {1..10}; do
-              echo "Attempt $i..."
-              
-              docker run --rm \
+          MAX_TRIES=10
+          COUNT=0
+
+          while [ $COUNT -lt $MAX_TRIES ]; do
+              echo "Attempt $((COUNT+1))..."
+
+              STATUS=$(docker run --rm \
                   --network "${DOCKER_NETWORK_NAME}" \
                   --ip "${CURL_CONTAINER_IP}" \
                   curlimages/curl \
-                  curl "$URL"
-              
-              echo "Finished attempt $i"
-              sleep 2  # Optional pause between runs
+                  -s -o /dev/null -w "%{http_code}" "$URL")
+
+              echo "Status code: $STATUS"
+
+              if [ "$STATUS" == "503" ]; then
+                  echo "Received 503. Stopping retries."
+                  break
+              fi
+
+              COUNT=$((COUNT+1))
+              sleep 2  # Optional delay between attempts
           done
 
 
