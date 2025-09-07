@@ -1,6 +1,6 @@
 services:
   influxdb2:
-    image: influxdb:2
+    image: influxdb:latest
     container_name: "${CONTAINER_NAME}"
     pull_policy: always
     ports:
