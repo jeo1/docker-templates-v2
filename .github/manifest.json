@@ -1,0 +1,8 @@
+{
+    "influx_password": "DefaultInfluxDBPassword",
+    "influx_token": "DefaultInfluxToken123==",
+    "influx_username": "admin",
+    "INFLUXDB_PORT": 8086,
+    "INFLUXDB_DATA": "./data",
+    "INFLUXDB_CONFIG":  "./config"
+}
