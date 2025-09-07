@@ -121,20 +121,9 @@ jobs:
                   curlimages/curl \
                   curl "$URL"
 
-              if [ $? -eq 0 ]; then
-                  echo "Success on attempt $((COUNT+1))"
-                  SUCCESS=true
-                  break
-              fi
-
               COUNT=$((COUNT+1))
               sleep 10  # Optional: wait before retrying
           done
-
-          if [ "$SUCCESS" = false ]; then
-              echo "All $MAX_RETRIES attempts failed."
-              exit 1
-          fi
 
 
       #- name: Test HTTP response
