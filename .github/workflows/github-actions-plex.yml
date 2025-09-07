@@ -103,6 +103,7 @@ jobs:
             --subnet=10.2.0.0/24 \
             --gateway=10.2.0.1 \
             -o parent=eth0 \
+            second_macvlan_network
   
 
 
