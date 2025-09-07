@@ -1,0 +1,8 @@
+{
+    "sonarr_media": "./media",
+    "sonarr_downloads": "./downloads",
+    "sonarr_config": "./config/sonarr",
+    "sonarr_qbittorrent_config": "./config/qbittorrent",
+    "sonarr_port": 8989,
+    "sonarr_qbittorent_port": 8080
+}
