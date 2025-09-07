@@ -1,0 +1,13 @@
+services:
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    pull_policy: always
+    container_name: "${CONTAINER_NAME}"
+    command:
+      - '--path.rootfs=/host'
+    pid: host
+    restart: always
+    volumes:
+      - '/:/host:ro,rslave'
+    ports:
+      - "${NODE_EXPORTER_PORT}:9100"
