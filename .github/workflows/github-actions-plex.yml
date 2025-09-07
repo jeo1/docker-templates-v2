@@ -97,13 +97,11 @@ jobs:
 
       - name: Test connectivity from another container
         run: |
-          PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
-          URL=http://${{ env.CONTAINER_IP }}:$PLEX_PORT    
           docker run --rm \
             --network ${{ env.DOCKER_NETWORK_NAME }} \
             --ip 10.1.0.99 \
             curlimages/curl \
-            curl http://$URL:32400/web
+            curl http://${{ env.CONTAINER_IP }}:32400/web
 
 
 
