@@ -1,0 +1,5 @@
+{
+    "JACKETT_PORT": 9117,
+    "JACKETT_CONFIG": "./config",
+    "JACKETT_DOWNLOADS": "./downloads"
+}
