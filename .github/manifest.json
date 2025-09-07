@@ -1,0 +1,4 @@
+{
+    "GRAFANA_CONFIG": "./config",
+    "GRAFANA_PORT": 3000
+}
