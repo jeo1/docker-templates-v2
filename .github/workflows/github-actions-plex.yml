@@ -21,6 +21,7 @@ on:
 env:
   MANIFEST: .github/manifest.json
   TEST_CONTAINER_NAME: test-container
+  TEST_CONTAINER_NAME2: test-container2
   PLEX_IP_ADDRESS_KEY: PLEX_IP_ADDRESS
 
 jobs:
@@ -66,9 +67,24 @@ jobs:
             echo "Waiting for container to start... ($i)"
             sleep 1
           done
+
+          docker run -d --name ${{ env.TEST_CONTAINER_NAME2 }} \
+            --network ${{ env.DOCKER_NETWORK_NAME }} alpine:latest sleep 300
+          for i in {1..10}; do
+            if docker exec ${{ env.TEST_CONTAINER_NAME2 }} hostname -i >/dev/null 2>&1; then
+              echo "Container is ready"
+              break
+            fi
+            echo "Waiting for container to start... ($i)"
+            sleep 1
+          done
+
           echo "CONTAINER_IP=$(docker exec ${{ env.TEST_CONTAINER_NAME }} hostname -i)" >> $GITHUB_ENV
+          echo "CONTAINER_IP2=$(docker exec ${{ env.TEST_CONTAINER_NAME2 }} hostname -i)" >> $GITHUB_ENV
           docker stop ${{ env.TEST_CONTAINER_NAME }}
+          docker stop ${{ env.TEST_CONTAINER_NAME2 }}
           docker rm ${{ env.TEST_CONTAINER_NAME }}
+          docker rm ${{ env.TEST_CONTAINER_NAME2 }}
 
       - name: Install jinja-cli
         run: |
@@ -92,6 +108,7 @@ jobs:
 
       - name: Test connectivity from another container
         run: |
+          ${{ env.CONTAINER_IP2 }}
           docker run --rm \
             --network ${{ env.DOCKER_NETWORK_NAME }} \
             --ip 10.1.0.3 \
