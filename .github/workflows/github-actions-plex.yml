@@ -86,16 +86,12 @@ jobs:
         run: |
           docker compose up -d
 
-      - name: Install Nmap
-        run: sudo apt-get update && sudo apt-get install -y nmap
 
-      - name: Run Nmap Scan
-        run: nmap -Pn -sV example.com
       - name: dev
         run: |
-          nmap ${{ env.CONTAINER_IP }} -p 32400
-          nmap ${{ env.CONTAINER_IP }}
-          nmap ${{ env.CONTAINER_IP }}
+          curl http://${{ env.CONTAINER_IP }}:32400/web
+          curl http://${{ env.CONTAINER_IP }}:32400
+          curl http://${{ env.CONTAINER_IP }}:32401
 
       #- name: Test HTTP response
       #  run: |
