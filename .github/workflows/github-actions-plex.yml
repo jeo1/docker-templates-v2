@@ -54,15 +54,6 @@ jobs:
             -o parent=$DEFAULT_INTERFACE \
             ${{ env.DOCKER_NETWORK_NAME }}
 
-      - name: temp
-        run: |
-          docker network create -d macvlan \
-            --subnet=$SUBNET \
-            --gateway=$GATEWAY \
-            -o parent=$DEFAULT_INTERFACE \
-            macvlan_net
-
-
       - name: Test macvlan network with container and get valid ip
         run: |
           docker run -d --name ${{ env.TEST_CONTAINER_NAME }} \
@@ -98,14 +89,26 @@ jobs:
       - name: debug
         run: |
           docker inspect plex
+      
+      - name: debug1
+        run: |
+          docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' plex
+
+      - name: temp
+        run: |
+          docker network create -d macvlan \
+            --subnet=10.1.0.0/24 \
+            --gateway=10.1.0.1 \
+            -o parent=eth0 \
+            macvlan_net
 
       - name: dev
         run: |
           docker run --rm \
-            --network macvlan_net \
-            --ip 10.1.0.3 \
-            curlimages/curl \
-            curl http://10.1.0.2:32400
+          --network macvlan_net \
+          --ip 10.1.0.3 \
+          curlimages/curl \
+          curl http://10.1.0.2:32400
 
 
 
