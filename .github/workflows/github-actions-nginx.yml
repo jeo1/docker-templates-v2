@@ -1,0 +1,162 @@
+name: Docker-compose (Nginx)
+
+on:
+  push:
+    branches: [nginx]
+    paths-ignore:
+      - README.md
+      - .gitignore
+  workflow_dispatch:
+    inputs:
+      triggered_by:
+        description: 'What triggered this workflow'
+        required: false
+        default: 'manual'
+      run_id:
+        description: 'Main workflow run ID'
+        required: false
+
+env:
+  NGINX_TEST_SERVER_FILE: .github/nginx/server.conf
+  NGINX_TEST_UPSTREAM_FILE: .github/nginx/upstream.conf
+  MANIFEST: .github/manifest.json
+
+
+jobs:
+  docker-compose-test:
+    runs-on: ubuntu-latest
+
+    env:
+      HTTP_MSG: "Hello there"
+
+    services:
+      backend:
+        image: hashicorp/http-echo
+        options: --name backend
+        ports:
+          - 5678:5678
+        env:
+          ECHO_TEXT: ${{ env.HTTP_MSG }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install jinja-cli
+        run: |
+          pip3 install jinja-cli
+
+      - name: Create .env
+        run: |
+          jinja env.j2 --data $MANIFEST > .env
+
+      - name: Create dirs and config
+        run: |
+          NGINX_SERVERS=$(cat $MANIFEST | jq -r '.NGINX_SERVERS')
+          NGINX_UPSTREAM=$(cat $MANIFEST | jq -r '.NGINX_UPSTREAM')
+          mkdir -p $NGINX_SERVERS
+          mkdir -p $NGINX_UPSTREAM
+          cp $NGINX_TEST_SERVER_FILE $NGINX_SERVERS/test.conf
+          cp $NGINX_TEST_UPSTREAM_FILE $NGINX_UPSTREAM/test.conf
+
+      - name: Docker Compose up
+        run: |
+          docker compose up -d
+          
+      - name: Test HTTP response
+        run: |
+          NGINX_PORT=$(cat $MANIFEST | jq -r '.NGINX_PORT')
+          URL=http://localhost:$NGINX_PORT
+          for i in {1..30}; do
+            if curl --silent --fail $URL > /dev/null; then
+              echo "Service is up!"
+              break
+            fi
+            echo "Waiting for Service... ($i)"
+            sleep 1
+          done
+          
+          response=$(curl --insecure --location --fail $URL)
+          if [[ "$response" == "${{ env.HTTP_MSG }}" ]]; then
+            echo "✅ Response matches"
+          else
+            echo "❌ Expected: ${{ env.HTTP_MSG }}, Got: $response"
+            exit 1
+          fi
+
+      - name: Tear down Docker Compose
+        run: docker compose down --volumes
+
+
+  ansible-tools-test:
+    runs-on: ubuntu-latest
+
+    env:
+      HTTP_MSG: "Hello there"
+      NGINX_TEST_SERVER_URL: "https://raw.githubusercontent.com/jeo1/ansible-tools/refs/heads/main/roles/setup_nginx/templates/server.j2"
+      NGINX_TEST_UPSTREAM_URL: "https://raw.githubusercontent.com/jeo1/ansible-tools/refs/heads/main/roles/setup_nginx/templates/upstream.j2"
+      ANSIBLE_MANIFEST: .github/ansible-tools/manifest-ansible.json
+
+    services:
+      backend:
+        image: hashicorp/http-echo
+        options: --name backend
+        ports:
+          - 5678:5678
+        env:
+          ECHO_TEXT: ${{ env.HTTP_MSG }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get templates
+        run: |
+          curl ${{ env.NGINX_TEST_SERVER_URL }} -o server.j2
+          curl ${{ env.NGINX_TEST_UPSTREAM_URL }} -o upstream.j2
+
+      - name: Install jinja-cli
+        run: |
+          pip3 install jinja-cli
+
+      - name: Create .env
+        run: |
+          jinja env.j2 --data $MANIFEST > .env
+
+      - name: Create nginx confs
+        run: |
+          NGINX_SERVERS=$(cat $MANIFEST | jq -r '.NGINX_SERVERS')
+          NGINX_UPSTREAM=$(cat $MANIFEST | jq -r '.NGINX_UPSTREAM')
+          mkdir -p $NGINX_SERVERS
+          mkdir -p $NGINX_UPSTREAM
+          jinja server.j2 --data ${{ env.ANSIBLE_MANIFEST }} > $NGINX_SERVERS/test.conf
+          jinja upstream.j2 --data ${{ env.ANSIBLE_MANIFEST }} > $NGINX_UPSTREAM/test.conf
+
+      - name: Docker Compose up
+        run: |
+          docker compose up -d
+          
+      - name: Test HTTP response
+        run: |
+          NGINX_PORT=$(cat $MANIFEST | jq -r '.NGINX_PORT')
+          URL=http://localhost:$NGINX_PORT
+          for i in {1..30}; do
+            if curl --silent --fail $URL > /dev/null; then
+              echo "Service is up!"
+              break
+            fi
+            echo "Waiting for Service... ($i)"
+            sleep 1
+          done
+          
+          response=$(curl --insecure --location --fail $URL)
+          if [[ "$response" == "${{ env.HTTP_MSG }}" ]]; then
+            echo "✅ Response matches"
+          else
+            echo "❌ Expected: ${{ env.HTTP_MSG }}, Got: $response"
+            exit 1
+          fi
+
+      - name: Tear down Docker Compose
+        run: docker compose down --volumes
+        

@@ -1,0 +1,22 @@
+services:
+  nginx-setup:
+    build: ./build
+    image: nginx-setup
+    pull_policy: build
+    container_name: "${SETUP_CONTAINER_NAME}"
+    volumes:
+      - "${SSL}:/ssl"
+      - "${NGINX}:/nginx"
+
+  nginx:
+    image: nginx:latest
+    pull_policy: always
+    container_name: "${NGINX_CONTAINER_NAME}"
+    restart: always
+    volumes:
+      - "${NGINX}:/etc/nginx"
+      - "${SSL}:/ssl"
+    network_mode: "host"
+    depends_on:
+      nginx-setup:
+        condition: service_completed_successfully

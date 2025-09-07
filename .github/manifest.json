@@ -1,0 +1,7 @@
+{
+    "SSL_CONFIG": "./ssl",
+    "NGINX_CONFIG": "./nginx",
+    "NGINX_SERVERS": "./nginx/servers",
+    "NGINX_UPSTREAM": "./nginx/upstream",
+    "NGINX_PORT": 80
+}

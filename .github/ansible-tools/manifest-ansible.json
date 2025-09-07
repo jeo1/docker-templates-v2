@@ -1,0 +1,6 @@
+{
+    "service_url": "test.home",
+    "service_name": "test",
+    "service_ip": "localhost",
+    "service_port": "5678"
+}
