@@ -64,5 +64,19 @@
       "branch": "portainer",
       "workflow_id": "github-actions-portainer.yml"
     }
+  ],
+  "lscr.io/linuxserver/qbittorrent": [
+    {
+      "branch": "qbittorrent",
+      "workflow_id": "github-actions-qbittorrent.yml"
+    },
+    {
+      "branch": "sonarr",
+      "workflow_id": "github-actions-sonarr.yml"
+    },
+    {
+      "branch": "radarr",
+      "workflow_id": "github-actions-radarr.yml"
+    }
   ]
 }
