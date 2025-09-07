@@ -105,6 +105,8 @@ jobs:
           curl http://${{ env.CONTAINER_IP }}:$PLEX_PORT
       
           - name: debug
+
+      - name: test
         run: |
           docker inspect plex
 
