@@ -104,18 +104,14 @@ jobs:
 
       - name: Test HTTP response
         run: |
+          PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
+          URL=http://${{ env.CONTAINER_IP }}:$PLEX_PORT/web
           docker run --rm \
             --network ${{ env.DOCKER_NETWORK_NAME }} \
             --ip ${{ env.CONTAINER_IP2 }} \
             curlimages/curl \
-            curl http://${{ env.CONTAINER_IP }}:32400/web
-
-      - name: Debug
-        run: |
-          PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
-          URL=http://${{ env.CONTAINER_IP }}:$PLEX_PORT/web
-          echo $URL
-
+            curl $URL
+            
 
       #- name: Test HTTP response
       #  run: |
