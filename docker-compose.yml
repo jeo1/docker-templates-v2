@@ -1,6 +1,6 @@
 services:
   graphite:
-    image: graphiteapp/graphite-statsd
+    image: graphiteapp/graphite-statsd:latest
     pull_policy: always
     container_name: "${CONTAINER_NAME}"
     restart: always
