@@ -108,5 +108,11 @@
       "branch": "graphite",
       "workflow_id": "github-actions-graphite.yml"
     }
+  ],
+  "lscr.io/linuxserver/plex": [
+    {
+      "branch": "plex",
+      "workflow_id": "github-actions-plex.yml"
+    }
   ]
 }

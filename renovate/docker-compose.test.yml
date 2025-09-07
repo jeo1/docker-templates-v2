@@ -27,3 +27,5 @@ services:
     image: prom/prometheus@sha256:63805ebb8d2b3920190daf1cb14a60871b16fd38bed42b857a3182bc621f4996
   graphite:
     image: graphiteapp/graphite-statsd@sha256:2d61228771119ddaee2f62d65739d3b5e903de36666e899703e47be1def571fe
+  plex:
+    image: lscr.io/linuxserver/plex@sha256:28f18c27b6822328df994154dbf7c0f511032d9f91bbd10881030b706afd8593
