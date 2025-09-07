@@ -23,3 +23,22 @@
 | [tautulli](https://github.com/jeo1/docker-templates-v2/tree/tautulli) | ✅ |  |
 | [tdarr](https://github.com/jeo1/docker-templates-v2/tree/tdarr) | ✅ |  |
 | [twitch-dvr](https://github.com/jeo1/docker-templates-v2/tree/twitch-dvr) | ❌ |  |
+
+
+<!--
+# renovate version limit
+    {
+      "automergeType": "pr",
+      "automerge": true,
+      "baseBranches": [
+        "main"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "nginx"
+      ],
+      "allowedVersions": "<=1.29"
+    }
+-->

@@ -19,20 +19,6 @@
         "docker"
       ],
       "matchPackageNames": [
-        "nginx"
-      ],
-      "allowedVersions": "<=1.29"
-    },
-    {
-      "automergeType": "pr",
-      "automerge": true,
-      "baseBranches": [
-        "main"
-      ],
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchPackageNames": [
         "docker.gitea.com/gitea",
         "grafana/grafana",
         "louislam/uptime-kuma",
@@ -40,6 +26,7 @@
         "lscr.io/linuxserver/jellyfin",
         "lscr.io/linuxserver/radarr",
         "lscr.io/linuxserver/sonarr",
+        "nginx",
         "portainer/portainer-ce",
         "quay.io/prometheus/node-exporter"
       ]
