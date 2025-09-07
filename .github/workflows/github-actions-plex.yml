@@ -83,6 +83,13 @@ jobs:
           echo "CONTAINER_IP2=$(docker exec ${{ env.TEST_CONTAINER_NAME2 }} hostname -i)" >> $GITHUB_ENV
           docker stop ${{ env.TEST_CONTAINER_NAME }}
           docker rm ${{ env.TEST_CONTAINER_NAME }}
+          docker stop ${{ env.TEST_CONTAINER_NAME2 }}
+          docker rm ${{ env.TEST_CONTAINER_NAME2 }}
+
+      - name:
+        run: |
+          echo ${{ env.CONTAINER_IP }}
+          echo ${{ env.CONTAINER_IP2 }}
 
       - name: Install jinja-cli
         run: |
@@ -100,7 +107,7 @@ jobs:
         run: |
           docker compose up -d
 
-      - name: Test connectivity from another container
+      - name: Test HTTP response
         run: |
           docker run --rm \
             --network ${{ env.DOCKER_NETWORK_NAME }} \
