@@ -5,7 +5,7 @@ on:
     types:
       - opened
     branches:
-      - _new
+      - main
 
 env:
   MANIFEST: .github/manifest.json
