@@ -89,10 +89,10 @@ jobs:
 
       - name: dev
         run: |
-          curl http://${{ env.CONTAINER_IP }}:32401  
-          curl http://${{ env.CONTAINER_IP }}:32400/web
-          curl http://${{ env.CONTAINER_IP }}:32400
-          
+          docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' plex
+
+          docker inspect -f plex
+
 
       #- name: Test HTTP response
       #  run: |
