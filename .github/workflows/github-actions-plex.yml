@@ -1,0 +1,106 @@
+name: Docker-compose (Plex)
+
+on:
+  push:
+    branches: [plex]
+    paths-ignore:
+      - README.md
+      - .gitignore
+  workflow_dispatch:
+    inputs:
+      triggered_by:
+        description: 'What triggered this workflow'
+        required: false
+        default: 'manual'
+      run_id:
+        description: 'Main workflow run ID'
+        required: false
+
+env:
+  MANIFEST: .github/manifest.json
+  TEST_CONTAINER_NAME: test-container
+  PLEX_IP_ADDRESS_KEY: PLEX_IP_ADDRESS
+
+jobs:
+  docker-compose-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get Docker network name
+        run: |
+          DOCKER_MACVLAN_NETWORK=$(cat ${{ env.MANIFEST }} | jq -r '.DOCKER_MACVLAN_NETWORK')
+          echo "DOCKER_NETWORK_NAME=$DOCKER_MACVLAN_NETWORK" >> $GITHUB_ENV
+
+      - name: Create Docker macvlan network
+        run: |
+          DEFAULT_INTERFACE=$(ip route show default | awk '/default/ { print $5 }' | head -1)
+          SUBNET=$(ip addr show $DEFAULT_INTERFACE | grep -E 'inet [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | awk '{print $2}' | head -1)
+          if [ -z "$SUBNET" ] || [ "$SUBNET" = "default" ]; then
+            SUBNET="10.1.0.0/16"
+            GATEWAY="10.1.0.1"
+          else
+            NETWORK=$(echo $SUBNET | cut -d'/' -f1 | cut -d'.' -f1-3)
+            SUBNET="${NETWORK}.0/24"
+            GATEWAY="${NETWORK}.1"
+          fi
+          docker network create -d macvlan \
+            --subnet=$SUBNET \
+            --gateway=$GATEWAY \
+            -o parent=$DEFAULT_INTERFACE \
+            ${{ env.DOCKER_NETWORK_NAME }}
+
+      - name: Test macvlan network with container and get valid ip
+        run: |
+          docker run -d --name ${{ env.TEST_CONTAINER_NAME }} \
+            --network ${{ env.DOCKER_NETWORK_NAME }} alpine:latest sleep 300
+          for i in {1..10}; do
+            if docker exec ${{ env.TEST_CONTAINER_NAME }} hostname -i >/dev/null 2>&1; then
+              echo "Container is ready"
+              break
+            fi
+            echo "Waiting for container to start... ($i)"
+            sleep 1
+          done
+          echo "CONTAINER_IP=$(docker exec ${{ env.TEST_CONTAINER_NAME }} hostname -i)" >> $GITHUB_ENV
+          docker stop ${{ env.TEST_CONTAINER_NAME }}
+          docker rm ${{ env.TEST_CONTAINER_NAME }}
+
+      - name: Install jinja-cli
+        run: |
+          pip3 install jinja-cli
+
+      - name: Create .envs
+        run: |
+          jinja env.j2 \
+            --define PLEX_IP_ADDRESS ${{ env.CONTAINER_IP }} \
+            --data ${{ env.MANIFEST }} > .env
+          mkdir -p private
+          jinja env-private.j2 --data ${{ env.MANIFEST }} > private/.env
+
+      - name: Docker Compose up
+        run: |
+          docker compose up -d
+
+      #- name: Test HTTP response
+      #  run: |
+      #    PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
+      #    URL=http://${{ env.CONTAINER_IP }}:$PLEX_PORT
+      #    for i in {1..30}; do
+      #      if curl --silent --fail $URL > /dev/null; then
+      #        echo "Service is up!"
+      #        break
+      #      fi
+      #      echo "Waiting for Service... ($i)"
+      #      sleep 1
+      #    done
+      #    curl --fail $URL || (echo "Service did not respond" && exit 1)
+
+      - name: Cleanup
+        if: always()
+        run: |
+          docker compose down --volumes
+          docker network rm ${{ env.DOCKER_NETWORK_NAME }} || true
+          

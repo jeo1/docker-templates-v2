@@ -1,0 +1,24 @@
+---
+networks:
+  macvlan_network:
+    external: true
+    name: "${DOCKER_MACVLAN_NETWORK}"
+
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    pull_policy: always
+    container_name: "${CONTAINER_NAME}"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "VERSION=docker"
+    volumes:
+      - "${PLEX_CONFIG}:/config"
+      - "${PLEX_MEDIA_MOUNT}:/media_mnt:ro"
+    restart: always
+    networks:
+      macvlan_network:
+        ipv4_address: "${PLEX_IP_ADDRESS}"
+    env_file:
+      - ./private/.env

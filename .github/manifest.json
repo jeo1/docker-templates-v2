@@ -1,0 +1,7 @@
+{
+    "DOCKER_MACVLAN_NETWORK": "test_macvlan_network",
+    "PLEX_MEDIA_MOUNT": "./mnt",
+    "PLEX_CONFIG": "./config",
+    "PLEX_CLAIM_TOKEN": "claim-1a-bC34D5_eFaketoken",
+    "PLEX_PORT": 32400
+}
