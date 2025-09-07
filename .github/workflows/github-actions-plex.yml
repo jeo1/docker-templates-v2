@@ -86,11 +86,6 @@ jobs:
           docker stop ${{ env.TEST_CONTAINER_NAME2 }}
           docker rm ${{ env.TEST_CONTAINER_NAME2 }}
 
-      - name: debug
-        run: |
-          echo ${{ env.CONTAINER_IP }}
-          echo ${{ env.CONTAINER_IP2 }}
-
       - name: Install jinja-cli
         run: |
           pip3 install jinja-cli
@@ -115,7 +110,11 @@ jobs:
             curlimages/curl \
             curl http://${{ env.CONTAINER_IP }}:32400/web
 
-
+      - name: Debug
+        run: |
+          PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
+          URL=http://${{ env.CONTAINER_IP }}:$PLEX_PORT
+          echo $URL
 
 
       #- name: Test HTTP response
