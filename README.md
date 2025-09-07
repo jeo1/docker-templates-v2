@@ -20,7 +20,7 @@
 | [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ | ❕ | add with latest sha (untested, issue with named verison)
 | [radarr](https://github.com/jeo1/docker-templates-v2/tree/radarr) | ✅ | ✅ |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
-| [tautulli](https://github.com/jeo1/docker-templates-v2/tree/tautulli) | ✅ |  | compose not using latest yet
+| [tautulli](https://github.com/jeo1/docker-templates-v2/tree/tautulli) | ✅ | ✅ |
 | [tdarr](https://github.com/jeo1/docker-templates-v2/tree/tdarr) | ✅ | ✅ |
 | [twitch-dvr](https://github.com/jeo1/docker-templates-v2/tree/twitch-dvr) | ❌ |  |
 

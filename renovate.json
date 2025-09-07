@@ -30,7 +30,8 @@
         "lscr.io/linuxserver/sonarr",
         "nginx",
         "portainer/portainer-ce",
-        "quay.io/prometheus/node-exporter"
+        "quay.io/prometheus/node-exporter",
+        "tautulli/tautulli"
       ]
     }
   ]

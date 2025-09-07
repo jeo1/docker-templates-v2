@@ -21,4 +21,6 @@ services:
     image: lscr.io/linuxserver/qbittorrent@sha256:c6dd175c7bb8371ce62b6fd7abbeb082593a42df3b01716a4e6bb53a734bf6f2
   tdarr:
     image: ghcr.io/haveagitgat/tdarr@sha256:1376fc2c1bcbd8c3eabc210d1531cd4287334facfbf3a78e4b10387be0a4d223
+  tautulli:
+    image: tautulli/tautulli@sha256:d5493374e9b48b27d45f64262acad1430e523ee73b707d563b87fb79cc2c57d4
     

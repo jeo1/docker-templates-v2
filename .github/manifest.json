@@ -84,5 +84,11 @@
       "branch": "tdarr",
       "workflow_id": "github-actions-tdarr.yml"
     }
+  ],
+  "tautulli/tautulli": [
+    {
+      "branch": "tautulli",
+      "workflow_id": "github-actions-tautulli.yml"
+    }
   ]
 }
