@@ -1,0 +1,22 @@
+name: "Test HTTP Response"
+description: "Waits for service and validates HTTP response"
+inputs:
+  service_url:
+    required: true
+    description: "Url of service to be checked"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Test HTTP Response
+      shell: bash
+      run: |
+        for i in {1..30}; do
+          if curl --silent --fail $URL > /dev/null; then
+            echo "✅ Service is up!"
+            break
+          fi
+          echo "Waiting for Service... ($i)"
+          sleep 1
+        done
+        curl --fail $URL || (echo "Service did not respond" && exit 1)

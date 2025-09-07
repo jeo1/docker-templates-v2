@@ -1,0 +1,4 @@
+{
+    "kuma_config": "./data",
+    "kuma_port": 3001
+}

@@ -1,0 +1,24 @@
+name: "Generate .env file"
+description: "Generates .env using jinja-cli and manifest"
+inputs:
+  manifest:
+    required: true
+    description: "Path to manifest file"
+  env_template:
+    required: true
+    description: "Path to Jinja template"
+  env_file:
+    default: ".env"
+    description: ".env output"
+runs:
+  using: "composite"
+  steps:
+    - name: Install jinja-cli
+      run: pip3 install jinja-cli
+      shell: bash
+      
+    - name: Generate .env file
+      run: |
+        jinja "${{ inputs.env_template }}" --data "${{ inputs.manifest }}" > "${{ inputs.env_file }}"
+      shell: bash
+      

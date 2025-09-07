@@ -1,0 +1,7 @@
+name: "Docker Compose Up"
+description: "Runs docker compose up -d"
+runs:
+  using: "composite"
+  steps:
+    - run: docker compose up -d
+      shell: bash

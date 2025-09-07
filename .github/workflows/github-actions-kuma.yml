@@ -1,0 +1,46 @@
+name: Docker-compose (Kuma)
+
+on:
+  push:
+    branches: [kuma]
+    paths-ignore:
+      - README.md
+      - .gitignore
+  workflow_dispatch:
+    inputs:
+      triggered_by:
+        description: 'What triggered this workflow'
+        required: false
+        default: 'manual'
+      run_id:
+        description: 'Main workflow run ID'
+        required: false
+
+env:
+  MANIFEST: .github/manifest.json
+
+jobs:
+  docker-compose-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/generate-env-file
+        with:
+          manifest: ${{ env.MANIFEST }}
+          env_template: env.j2
+
+      - uses: ./.github/actions/docker-compose-up
+          
+      - name: Get service url
+        run: |
+          kuma_port=$(cat $MANIFEST | jq -r '.kuma_port')
+          echo "URL=http://localhost:$kuma_port" >> $GITHUB_ENV
+
+      - uses: ./.github/actions/test-http-response
+        with:
+          service_url: ${{ env.URL }}
+ 
+      - uses: ./.github/actions/docker-compose-down

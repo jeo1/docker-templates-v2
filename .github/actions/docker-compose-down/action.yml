@@ -1,0 +1,7 @@
+name: "Docker Compose Down"
+description: "Runs docker compose down --volumes"
+runs:
+  using: "composite"
+  steps:
+    - run: docker compose down --volumes
+      shell: bash
