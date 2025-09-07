@@ -101,11 +101,11 @@ jobs:
 
       - name: dev
         run: |
-          docker run -it --rm \
-          --network macvlan_net \
-          --ip 10.1.0.3 \
-          curlimages/curl \
-          curl http://${{ env.CONTAINER_IP }}:32400
+          docker run --rm \
+            --network macvlan_net \
+            --ip 10.1.0.3 \
+            curlimages/curl \
+            curl http://10.1.0.2:32400
 
 
 
