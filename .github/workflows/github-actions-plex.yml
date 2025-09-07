@@ -2,7 +2,7 @@ name: Docker-compose (Plex)
 
 on:
   push:
-    branches: 
+    branches:
       - plex
       - plex-dev
     paths-ignore:
@@ -11,11 +11,11 @@ on:
   workflow_dispatch:
     inputs:
       triggered_by:
-        description: 'What triggered this workflow'
+        description: "What triggered this workflow"
         required: false
-        default: 'manual'
+        default: "manual"
       run_id:
-        description: 'Main workflow run ID'
+        description: "Main workflow run ID"
         required: false
 
 env:
@@ -27,7 +27,7 @@ env:
 jobs:
   docker-compose-test:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -120,4 +120,3 @@ jobs:
         run: |
           docker compose down --volumes
           docker network rm ${{ env.DOCKER_NETWORK_NAME }} || true
-          
