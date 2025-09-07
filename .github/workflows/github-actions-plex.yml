@@ -104,6 +104,7 @@ jobs:
 
       - name: Test HTTP response
         run: |
+          sleep 600
           PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
           URL=http://${{ env.CONTAINER_IP }}:$PLEX_PORT/web
           docker run --rm \
@@ -111,21 +112,6 @@ jobs:
             --ip ${{ env.CONTAINER_IP2 }} \
             curlimages/curl \
             curl $URL
-            
-
-      #- name: Test HTTP response
-      #  run: |
-      #    PLEX_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.PLEX_PORT')
-      #    URL=http://${{ env.CONTAINER_IP }}:$PLEX_PORT
-      #    for i in {1..30}; do
-      #      if curl --silent --fail $URL > /dev/null; then
-      #        echo "Service is up!"
-      #        break
-      #      fi
-      #      echo "Waiting for Service... ($i)"
-      #      sleep 1
-      #    done
-      #    curl --fail $URL || (echo "Service did not respond" && exit 1)
 
       - name: Cleanup
         if: always()
