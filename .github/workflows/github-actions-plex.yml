@@ -2,7 +2,9 @@ name: Docker-compose (Plex)
 
 on:
   push:
-    branches: [plex]
+    branches: 
+      - plex
+      - plex-dev
     paths-ignore:
       - README.md
       - .gitignore
@@ -83,6 +85,13 @@ jobs:
       - name: Docker Compose up
         run: |
           docker compose up -d
+          
+      - name: dev
+        run: |
+          apt install -y nmap
+          nmap ${{ env.CONTAINER_IP }} -p 32400
+          nmap ${{ env.CONTAINER_IP }}
+          nmap ${{ env.CONTAINER_IP }}
 
       #- name: Test HTTP response
       #  run: |
