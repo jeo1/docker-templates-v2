@@ -82,21 +82,28 @@ jobs:
           mkdir -p private
           jinja env-private.j2 --data ${{ env.MANIFEST }} > private/.env
 
-      - name: Docker Compose up
-        run: |
-          docker compose up -d
+      #- name: Docker Compose up
+      #  run: |
+      #    docker compose up -d
 
-      - name: debug
-        run: |
-          docker inspect plex
-      
-      - name: get plex ip
-        run: |
-          docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' plex
+      #- name: debug
+      #  run: |
+      #    docker inspect plex
+      #- name: get plex ip
+      #  run: |
+      #    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' plex
 
       - name: debug network
         run: |
           docker network inspect ${{ env.DOCKER_NETWORK_NAME }}
+
+      - name: second network
+        run: |
+          docker network create -d macvlan \
+            --subnet=10.2.0.0/24 \
+            --gateway=10.2.0.1 \
+            -o parent=eth0 \
+  
 
 
 
