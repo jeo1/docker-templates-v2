@@ -54,6 +54,16 @@ jobs:
             -o parent=$DEFAULT_INTERFACE \
             ${{ env.DOCKER_NETWORK_NAME }}
 
+          # Create second macvlan network with offset subnet
+          SECOND_SUBNET=$(echo $SUBNET | sed 's/\.0\/24/.128\/25/')
+          SECOND_GATEWAY=$(echo $GATEWAY | sed 's/\.1$/.129/')
+
+          docker network create -d macvlan \
+            --subnet=$SECOND_SUBNET \
+            --gateway=$SECOND_GATEWAY \
+            -o parent=$DEFAULT_INTERFACE \
+            macvlan_net
+
       - name: Test macvlan network with container and get valid ip
         run: |
           docker run -d --name ${{ env.TEST_CONTAINER_NAME }} \
@@ -94,15 +104,7 @@ jobs:
         run: |
           docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' plex
 
-      - name: Create macvlan network (temp)
-        run: |
-          DEFAULT_INTERFACE=$(ip route show default | awk '/default/ { print $5 }' | head -1)
-          echo "Using interface: $DEFAULT_INTERFACE"
-          docker network create -d macvlan \
-            --subnet=10.1.0.0/24 \
-            --gateway=10.1.0.1 \
-            -o parent=$DEFAULT_INTERFACE \
-            macvlan_net
+
 
       - name: Test Plex connectivity (dev)
         run: |
