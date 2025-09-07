@@ -104,6 +104,10 @@ jobs:
             --gateway=10.2.0.1 \
             -o parent=eth0 \
             second_macvlan_network
+      
+      - name: debug network
+        run: |
+          docker network inspect second_macvlan_network
   
 
 
