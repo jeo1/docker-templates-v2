@@ -96,5 +96,11 @@
       "branch": "prometheus",
       "workflow_id": "github-actions-prometheus.yml"
     }
+  ],
+  "influxdb": [
+    {
+      "branch": "influxdb",
+      "workflow_id": "github-actions-influxdb.yml"
+    }
   ]
 }

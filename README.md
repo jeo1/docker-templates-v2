@@ -7,7 +7,7 @@
 | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ |
 | [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ |
 | [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ |  | compose not using latest yet
-| [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ |  | 	compose not using latest yet
+| [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ | ✅ |
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
 | [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ | ❕ | using latest sha (untested)
 | [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma) | ✅ | ✅ |
