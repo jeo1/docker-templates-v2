@@ -111,7 +111,7 @@ jobs:
         run: |
           docker run --rm \
             --network ${{ env.DOCKER_NETWORK_NAME }} \
-            --ip 10.1.0.3 \
+            --ip ${{ env.CONTAINER_IP2 }} \
             curlimages/curl \
             curl http://${{ env.CONTAINER_IP }}:32400/web
 
