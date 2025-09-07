@@ -1,0 +1,57 @@
+name: Docker-compose (DuckDNS)
+
+on:
+  push:
+    branches: [duckdns]
+    paths-ignore:
+      - README.md
+      - .gitignore
+  workflow_dispatch:
+    inputs:
+      triggered_by:
+        description: 'What triggered this workflow'
+        required: false
+        default: 'manual'
+      run_id:
+        description: 'Main workflow run ID'
+        required: false
+
+env:
+  MANIFEST: .github/manifest.json
+
+jobs:
+  docker-compose-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install jinja-cli
+        run: |
+          pip3 install jinja-cli
+
+      - name: Clear DuckDNS
+        run: |
+          DUCKDNS_RESPONSE=$(curl -s "https://www.duckdns.org/update?domains=${{ secrets.DUCKDNS_SUBDOMAIN }}&token=${{ secrets.DUCKDNS_TOKEN }}&verbose=true&clear=true")
+          [[ "$DUCKDNS_RESPONSE" == *"OK"* ]] && echo "DuckDNS cleared" || exit 1
+
+      - name: Create .env
+        run: |
+          jinja env.j2 \
+            -D duckdns_subdomains ${{ secrets.DUCKDNS_SUBDOMAIN }} \
+            -D duckdns_token ${{ secrets.DUCKDNS_TOKEN }} \
+            > .env
+
+      - name: Docker Compose up
+        run: |
+          docker compose up -d
+          sleep 20
+
+      - name: Validate DuckDNS
+        run: |
+          DUCKDNS_RESPONSE=$(curl -s "https://www.duckdns.org/update?domains=${{ secrets.DUCKDNS_SUBDOMAIN }}&token=${{ secrets.DUCKDNS_TOKEN }}&verbose=true&clear=true")
+          [[ "$DUCKDNS_RESPONSE" == *"OK"* && "$DUCKDNS_RESPONSE" != *"NOCHANGE"* ]] && echo "DuckDNS ran successfully" || exit 1
+
+      - name: Tear down Docker Compose
+        run: docker compose down --volumes

@@ -1,0 +1,14 @@
+---
+services:
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest
+    pull_policy: always
+    container_name: "${CONTAINER_NAME}"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - "SUBDOMAINS=${SUBDOMAINS}"
+      - "TOKEN=${TOKEN}"
+      - LOG_FILE=false
+    restart: always
+    
