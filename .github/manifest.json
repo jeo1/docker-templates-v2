@@ -1,0 +1,8 @@
+{
+    "RADARR_MEDIA": "./media",
+    "RADARR_DOWNLOADS": "./downloads",
+    "RADARR_CONFIG": "./config/sonarr",
+    "RADARR_QBITTORRENT_CONFIG": "./config/qbittorrent",
+    "RADARR_PORT": 7878,
+    "RADARR_QBITTORRENT_PORT": 8080
+}

@@ -1,0 +1,33 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    pull_policy: always
+    container_name: "${RADARR_CONTAINER_NAME}"
+    volumes:
+      - "${RADARR_CONFIG}:/config"
+      - "${RADARR_MEDIA}:/${ROOT_PATH}"
+      - "${RADARR_DOWNLOADS}:/downloads"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=${TIMEZONE}"
+    restart: always
+    ports:
+      - "${RADARR_PORT}:7878"
+      - "${RADARR_QBITTORRENT_PORT}:8080"
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    pull_policy: always
+    container_name: "${RADARR_QBITTORRENT_CONTAINER_NAME}"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=${TIMEZONE}"
+      - "WEBUI_PORT=8080"
+    restart: always
+    network_mode: "service:radarr"
+    volumes:
+      - "${RADARR_QBITTORRENT_CONFIG}:/config"
+      - "${RADARR_DOWNLOADS}:/downloads"
+      
