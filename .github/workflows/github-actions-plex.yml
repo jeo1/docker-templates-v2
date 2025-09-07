@@ -97,18 +97,6 @@ jobs:
         run: |
           docker network inspect ${{ env.DOCKER_NETWORK_NAME }}
 
-      - name: second network
-        run: |
-          docker network create -d macvlan \
-            --subnet=10.2.0.0/24 \
-            --gateway=10.2.0.1 \
-            -o parent=eth0 \
-            second_macvlan_network
-      
-      - name: debug network
-        run: |
-          docker network inspect second_macvlan_network
-
 
       - name: Test connectivity from another container
         run: |
