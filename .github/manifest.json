@@ -90,5 +90,11 @@
       "branch": "tautulli",
       "workflow_id": "github-actions-tautulli.yml"
     }
+  ],
+  "prom/prometheus": [
+    {
+      "branch": "prometheus",
+      "workflow_id": "github-actions-prometheus.yml"
+    }
   ]
 }
