@@ -1,0 +1,5 @@
+{
+"QBITTORRENT_DOWNLOADS": "./downloads",
+"QBITTORRENT_CONFIG": "./config",
+"QBITTORRENT_PORT": 8080
+}

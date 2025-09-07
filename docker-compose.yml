@@ -1,0 +1,16 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    pull_policy: always
+    container_name: "${CONTAINER_NAME}"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=${TIMEZONE}"
+      - "WEBUI_PORT=8080"
+    restart: always
+    ports:
+      - "${QBITTORRENT_PORT}:8080"
+    volumes:
+      - "${QBITTORRENT_CONFIG}:/config"
+      - "${QBITTORRENT_DOWNLOADS}:/downloads"
