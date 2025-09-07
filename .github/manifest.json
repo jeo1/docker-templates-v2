@@ -1,5 +1,0 @@
-{
-    "PROMETHEUS_CONFIG": "./config",
-    "PROMETHEUS_DATA": "./data",
-    "PROMETHEUS_PORT": 9090
-}
