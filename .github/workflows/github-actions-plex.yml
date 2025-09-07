@@ -82,16 +82,16 @@ jobs:
           mkdir -p private
           jinja env-private.j2 --data ${{ env.MANIFEST }} > private/.env
 
-      #- name: Docker Compose up
-      #  run: |
-      #    docker compose up -d
+      - name: Docker Compose up
+        run: |
+          docker compose up -d
 
       #- name: debug
       #  run: |
       #    docker inspect plex
-      #- name: get plex ip
-      #  run: |
-      #    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' plex
+      - name: get plex ip
+        run: |
+          docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' plex
 
       - name: debug network
         run: |
@@ -108,9 +108,15 @@ jobs:
       - name: debug network
         run: |
           docker network inspect second_macvlan_network
-  
 
 
+      - name: test
+        run: |
+          docker run -it --rm   \
+          --network macvlan_work   \
+          --ip 10.2.0.2   \
+            curlimages/curl \
+            curl http://10.1.0.2:32400
 
       #- name: Test Plex connectivity (dev)
       #  run: |
