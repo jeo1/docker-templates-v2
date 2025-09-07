@@ -9,7 +9,7 @@
 | [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ |  |
 | [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ |  |
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
-| [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ |  | using latest sha (untested)
+| [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ | ❕ | using latest sha (untested)
 | [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma) | ✅ | ✅ |
 | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | currently limited by `allowedVersions` 
 | [node-exporter-alpine](https://github.com/jeo1/docker-templates-v2/tree/node-exporter-alpine) | ⚠️ |  | need to setup github-action to run on alpine (not ubuntu)
