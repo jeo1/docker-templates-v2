@@ -25,4 +25,5 @@ services:
     image: tautulli/tautulli@sha256:d5493374e9b48b27d45f64262acad1430e523ee73b707d563b87fb79cc2c57d4
   prometheus:
     image: prom/prometheus@sha256:63805ebb8d2b3920190daf1cb14a60871b16fd38bed42b857a3182bc621f4996
-    
+  graphite:
+    image: graphiteapp/graphite-statsd@sha256:2d61228771119ddaee2f62d65739d3b5e903de36666e899703e47be1def571fe

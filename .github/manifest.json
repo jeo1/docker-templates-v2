@@ -102,5 +102,11 @@
       "branch": "influxdb",
       "workflow_id": "github-actions-influxdb.yml"
     }
+  ],
+  "graphiteapp/graphite-statsd": [
+    {
+      "branch": "graphite",
+      "workflow_id": "github-actions-graphite.yml"
+    }
   ]
 }

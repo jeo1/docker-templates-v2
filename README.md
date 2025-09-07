@@ -6,7 +6,7 @@
 | [duckdns](https://github.com/jeo1/docker-templates-v2/tree/duckdns) | ✅ | ❕ | no merge created - testing with latest
 | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ |
 | [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ |
-| [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ |  | look into switch to `sitespeedio/graphite`
+| [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ | ✅ | look into switch to `sitespeedio/graphite`
 | [influxdb](https://github.com/jeo1/docker-templates-v2/tree/influxdb) | ✅ | ✅ |
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ |
 | [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ | ❕ | using latest sha (untested)
