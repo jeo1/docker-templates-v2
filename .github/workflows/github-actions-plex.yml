@@ -103,7 +103,7 @@ jobs:
             --network ${{ env.DOCKER_NETWORK_NAME }} \
             --ip 10.1.0.99 \
             curlimages/curl \
-            curl http://$URLt:32400/web
+            curl http://$URL:32400/web
 
 
 
