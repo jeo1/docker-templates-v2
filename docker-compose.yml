@@ -1,0 +1,14 @@
+services:
+  tautulli:
+    image: tautulli/tautulli
+    pull_policy: always
+    container_name: "${CONTAINER_NAME}"
+    restart: always
+    volumes:
+      - "${TAUTULLI_CONFIG}:/config"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=${TIMEZONE}"
+    ports:
+      - "${TAUTULLI_PORT}:8181"
