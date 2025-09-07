@@ -89,9 +89,10 @@ jobs:
 
       - name: dev
         run: |
+          curl http://${{ env.CONTAINER_IP }}:32401  
           curl http://${{ env.CONTAINER_IP }}:32400/web
           curl http://${{ env.CONTAINER_IP }}:32400
-          curl http://${{ env.CONTAINER_IP }}:32401
+          
 
       #- name: Test HTTP response
       #  run: |
