@@ -39,12 +39,15 @@ jobs:
       
       - name: Run dind
         run: |
-          docker run -d --privileged --name dind-compose \
-            -v ./:/workspace \
+          docker run -d --privileged --name dind-node-exporter \
+            -v $(pwd):/workspace \
             -p 9100:9100 \
-            docker/compose:latest sleep infinity
+            docker:dind
           
-          docker exec -w /workspace dind-compose docker-compose up -d
+          sleep 15
+          docker exec dind-node-exporter sh -c "apk add --no-cache docker-compose"
+          
+          docker exec -w /workspace dind-node-exporter  docker-compose up -d
           docker ps
-          docker inspect dind-compose
+          docker inspect dind-node-exporter 
 
