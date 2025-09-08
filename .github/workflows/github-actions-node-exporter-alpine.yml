@@ -59,9 +59,9 @@ jobs:
         run: |
           docker compose up -d
 
-      - name: inspect
-        run: |
-          docker inspect node-exporter
+      #- name: inspect
+      #  run: |
+      #    docker inspect node-exporter
 
 
       - name: Test Node Exporter port 9100
@@ -74,7 +74,7 @@ jobs:
           echo "Container IP: $CONTAINER_IP"
           
           # Test using container IP
-          curl --fail http://$CONTAINER_IP:9100 || exit 1
+          curl --fail http://$CONTAINER_IP:9100
           
           echo "Node Exporter is responding on port 9100"
 
