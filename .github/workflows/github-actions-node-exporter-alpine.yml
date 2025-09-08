@@ -63,6 +63,18 @@ jobs:
         run: |
           docker inspect node-exporter
 
+
+      - name: Test Node Exporter port 9100
+        run: |
+          # Wait for container to be ready
+          sleep 10
+          
+          # Test if port 9100 is accessible
+          curl -f http://localhost:9100/metrics || exit 1
+          
+          # Optional: Check specific metrics
+          echo "Node Exporter is responding on port 9100"
+
       #- name: Test HTTP response
       #  run: |
       #    NODE_EXPORTER_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.NODE_EXPORTER_PORT')
