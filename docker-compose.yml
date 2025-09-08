@@ -2,7 +2,7 @@ services:
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
     pull_policy: always
-    container_name: node-exporter #"${CONTAINER_NAME}"
+    container_name: "${CONTAINER_NAME}"
     pid: host
     restart: always
     volumes:
@@ -14,4 +14,4 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points="^/(sys|proc|host|etc|rootfs)"'
     ports:
-      - "9100:9100" #"${NODE_EXPORTER_PORT}:9100"
+      - "${NODE_EXPORTER_PORT}:9100"
