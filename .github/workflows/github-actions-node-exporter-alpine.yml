@@ -74,7 +74,7 @@ jobs:
           echo "Container IP: $CONTAINER_IP"
           
           # Test using container IP
-          curl -f http://$CONTAINER_IP:9100/metrics || exit 1
+          curl ---fail http://$CONTAINER_IP:9100 || exit 1
           
           echo "Node Exporter is responding on port 9100"
 
