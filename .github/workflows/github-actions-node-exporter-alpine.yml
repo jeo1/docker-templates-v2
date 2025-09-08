@@ -63,34 +63,20 @@ jobs:
       #  run: |
       #    docker inspect node-exporter
 
-
-      - name: Test Node Exporter port 9100
+      - name: Test HTTP response
         run: |
-          # Wait for container to be ready
-          sleep 10
-          
-          # Get container IP
           CONTAINER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker compose ps -q node-exporter))
-          echo "Container IP: $CONTAINER_IP"
-          
-          # Test using container IP
-          curl --fail http://$CONTAINER_IP:9100
-          
-          echo "Node Exporter is responding on port 9100"
-
-      #- name: Test HTTP response
-      #  run: |
-      #    NODE_EXPORTER_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.NODE_EXPORTER_PORT')
-      #    URL=http://localhost:$NODE_EXPORTER_PORT
-      #    for i in {1..30}; do
-      #      if curl --silent --fail $URL > /dev/null; then
-      #        echo "Service is up!"
-      #        break
-      #      fi
-      #      echo "Waiting for Service... ($i)"
-      #      sleep 1
-      #    done
-      #    curl --fail $URL || (echo "Service did not respond" && exit 1)
+          NODE_EXPORTER_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.NODE_EXPORTER_PORT')
+          URL=http://$CONTAINER_IP:$NODE_EXPORTER_PORT
+          for i in {1..30}; do
+            if curl --silent --fail $URL > /dev/null; then
+              echo "Service is up!"
+              break
+            fi
+            echo "Waiting for Service... ($i)"
+            sleep 1
+          done
+          curl --fail $URL || (echo "Service did not respond" && exit 1)
 
       - name: Tear down Docker Compose
         run: docker compose down --volumes
