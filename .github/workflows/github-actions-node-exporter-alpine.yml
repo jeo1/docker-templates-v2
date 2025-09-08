@@ -20,6 +20,7 @@ on:
 
 env:
   MANIFEST: .github/manifest.json
+  DIND_CONTAINER_NAME: dind-compose
   
 jobs:
   docker-compose-test:
@@ -38,18 +39,23 @@ jobs:
           jinja env.j2 --data ${{ env.MANIFEST }} > .env
       
       - name: Run dind
+        id: setup-dind
         run: |
-          docker run -d --privileged --name dind-compose \
+          NODE_EXPORTER_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.NODE_EXPORTER_PORT')
+          docker run -d --privileged --name ${{ env.DIND_CONTAINER_NAME }} \
             -v $(pwd):/workspace \
-            -p 9100:9100 \
+            -p $NODE_EXPORTER_PORT:$NODE_EXPORTER_PORT \
             docker:dind
           
           sleep 5
-          docker exec dind-compose sh -c "apk add --no-cache docker-compose"
+          docker exec ${{ env.DIND_CONTAINER_NAME }} sh -c "apk add --no-cache docker-compose"
           
-          docker exec -w /workspace dind-compose docker-compose up -d
+          docker exec -w /workspace ${{ env.DIND_CONTAINER_NAME }} docker-compose up -d
+
+          echo "NODE_EXPORTER_PORT=$NODE_EXPORTER_PORT" >> $GITHUB_OUTPUT
+          
       
       - name: test
         run: |
           curl http://localhost:9100
-
+          echo ${{ steps.setup-dind.outputs.NODE_EXPORTER_PORT }}"
