@@ -52,10 +52,12 @@ jobs:
           
           docker exec -w /workspace ${{ env.DIND_CONTAINER_NAME }} docker-compose up -d
 
-          echo "NODE_EXPORTER_PORT=$NODE_EXPORTER_PORT" >> $GITHUB_OUTPUT
+          echo "A=$NODE_EXPORTER_PORT" >> $GITHUB_OUTPUT
           
       
       - name: test
         run: |
           curl http://localhost:9100
-          echo ${{ steps.setup-dind.outputs.NODE_EXPORTER_PORT }}"
+      - name: test2
+        run: |
+          echo ${{ steps.setup-dind.outputs.A }}"
