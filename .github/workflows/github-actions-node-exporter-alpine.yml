@@ -2,7 +2,9 @@ name: Docker-compose (Node-Exporter-Alpine)
 
 on:
   push:
-    branches: [node-exporter-alpine]
+    branches: 
+      - node-exporter-alpine
+      - node-exporter-alpine-dev
     paths-ignore:
       - README.md
       - .gitignore
