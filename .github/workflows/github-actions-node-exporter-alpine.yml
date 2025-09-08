@@ -39,15 +39,18 @@ jobs:
       
       - name: Run dind
         run: |
-          docker run -d --privileged --name dind-node-exporter \
+          docker run -d --privileged --name dind-compose \
             -v $(pwd):/workspace \
             -p 9100:9100 \
             docker:dind
           
           sleep 15
-          docker exec dind-node-exporter sh -c "apk add --no-cache docker-compose"
+          docker exec dind-compose sh -c "apk add --no-cache docker-compose"
           
-          docker exec -w /workspace dind-node-exporter  docker-compose up -d
-          docker ps
-          docker inspect dind-node-exporter 
+          docker exec -w /workspace dind-compose docker-compose up -d
+      
+      - name: test
+        run: |
+          CONTAINER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker compose ps -q dind-compose))
+          echo $CONTAINER_IP
 
