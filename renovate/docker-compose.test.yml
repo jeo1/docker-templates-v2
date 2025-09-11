@@ -1,12 +1,12 @@
 services:
   gitea:
-    image: docker.gitea.com/gitea@sha256:137a322f0308056415bc1a14a4ca8607b2e8efcb8154dfc5049b1f7f8b0a9b71
+    image: docker.gitea.com/gitea@sha256:2edc102cbb636ae1ddac5fa0c715aa5b03079dee13ac6800b2cef6d4e912e718
   grafana:
     image: grafana/grafana@sha256:a1701c2180249361737a99a01bc770db39381640e4d631825d38ff4535efa47d
   jackett:
-    image: lscr.io/linuxserver/jackett@sha256:dd8c55e33d3cc2192c846e3db3be04ed89ac58e388fb7f2b7743a128086a6a44
+    image: lscr.io/linuxserver/jackett@sha256:a772b470fcfc3eb11491ee07987d0df264d19b56b0a7e5d5e2542cd0ac67fd0f
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin@sha256:104ca69d833f1b9bc0efe55f56e8202b7b374f1b38431da91757e551e26ca96e
+    image: lscr.io/linuxserver/jellyfin@sha256:0844d7504c018b0b0b898914a3c48d9dfa76d8f51ac49d8c66a1108944743fe4
   node-exporter:
     image: quay.io/prometheus/node-exporter@sha256:d00a542e409ee618a4edc67da14dd48c5da66726bbd5537ab2af9c1dfc442c8a
   portainer:
@@ -22,7 +22,7 @@ services:
   tdarr:
     image: ghcr.io/haveagitgat/tdarr@sha256:1376fc2c1bcbd8c3eabc210d1531cd4287334facfbf3a78e4b10387be0a4d223
   tautulli:
-    image: tautulli/tautulli@sha256:d5493374e9b48b27d45f64262acad1430e523ee73b707d563b87fb79cc2c57d4
+    image: tautulli/tautulli@sha256:5fc33cf56fce13db1a73f91f7b1214950f9b96f72b69ae704e492e88b049c717
   prometheus:
     image: prom/prometheus@sha256:63805ebb8d2b3920190daf1cb14a60871b16fd38bed42b857a3182bc621f4996
   graphite:
