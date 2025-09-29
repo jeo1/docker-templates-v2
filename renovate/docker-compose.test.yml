@@ -10,7 +10,7 @@ services:
   node-exporter:
     image: quay.io/prometheus/node-exporter@sha256:d00a542e409ee618a4edc67da14dd48c5da66726bbd5537ab2af9c1dfc442c8a
   portainer:
-    image: portainer/portainer-ce@sha256:f4c59b58fd64499295e59b1665bbd9af0cf9e823258f84859510db3263718142
+    image: portainer/portainer-ce@sha256:264443d4063e0f2633f3ba210ccd69aacf07344dfc792128131dec8963df0f0a
   radarr:
     image: lscr.io/linuxserver/sonarr@sha256:328d322af2bb8d7211a9c43a26ff5e658ba3e6f47a695e8fb9ff806bfeab0f04
   sonarr:
