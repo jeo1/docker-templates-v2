@@ -24,6 +24,7 @@
         "graphiteapp/graphite-statsd",
         "influxdb",
         "louislam/uptime-kuma",
+        "lscr.io/linuxserver/duckdns",
         "lscr.io/linuxserver/jackett",
         "lscr.io/linuxserver/jellyfin",
         "lscr.io/linuxserver/plex",
