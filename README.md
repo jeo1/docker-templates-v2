@@ -17,7 +17,7 @@
 | [plex](https://github.com/jeo1/docker-templates-v2/tree/plex) | ✅ | ✅ | 
 | [portainer](https://github.com/jeo1/docker-templates-v2/tree/portainer) | ✅ | ✅ |
 | [prometheus](https://github.com/jeo1/docker-templates-v2/tree/prometheus) | ✅ | ✅ |
-| [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ | ❕ | add with latest sha (untested, issue with named verison)
+| [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ | ❕ | required manual pull
 | [radarr](https://github.com/jeo1/docker-templates-v2/tree/radarr) | ✅ | ✅ |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ |
 | [tautulli](https://github.com/jeo1/docker-templates-v2/tree/tautulli) | ✅ | ✅ |
@@ -42,3 +42,4 @@
       "allowedVersions": "<=1.29"
     }
 -->
+
