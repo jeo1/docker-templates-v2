@@ -30,4 +30,4 @@ services:
   graphite:
     image: graphiteapp/graphite-statsd@sha256:2d61228771119ddaee2f62d65739d3b5e903de36666e899703e47be1def571fe
   plex:
-    image: lscr.io/linuxserver/plex@sha256:57c690bb1a54685e626b730b01d8b40e25ddd468df1cf63374d85b0b16490f5c
+    image: lscr.io/linuxserver/plex@sha256:06f1ee577e910c8cd2dbd9a9bcca82750d1678f994f6d754e55bc3d5f0d699cb
