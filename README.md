@@ -11,13 +11,13 @@
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ | ✅ |
 | [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ | ✅ | ✅ | 
 | [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma) | ✅ | ✅ |  |
-| [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ |  |
+| [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | ⚠️ |
 | [node-exporter-alpine](https://github.com/jeo1/docker-templates-v2/tree/node-exporter-alpine) | ⚠️ |  |  | need to setup github-action to run on alpine (not ubuntu)
 | [node-exporter](https://github.com/jeo1/docker-templates-v2/tree/node-exporter) | ✅ | ✅ |  |
 | [plex](https://github.com/jeo1/docker-templates-v2/tree/plex) | ✅ | ✅ | ❕ | 
 | [portainer](https://github.com/jeo1/docker-templates-v2/tree/portainer) | ✅ | ✅ |  |
 | [prometheus](https://github.com/jeo1/docker-templates-v2/tree/prometheus) | ✅ | ✅ | ✅ |
-| [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ | ❕ | ⚠️ | required manual pull
+| [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ | ✅ | ✅ | 
 | [radarr](https://github.com/jeo1/docker-templates-v2/tree/radarr) | ✅ | ✅ |  |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ | ✅ |
 | [tautulli](https://github.com/jeo1/docker-templates-v2/tree/tautulli) | ✅ | ✅ |  |
