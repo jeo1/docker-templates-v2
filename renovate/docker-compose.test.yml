@@ -18,7 +18,7 @@ services:
   sonarr:
     image: lscr.io/linuxserver/sonarr@sha256:328d322af2bb8d7211a9c43a26ff5e658ba3e6f47a695e8fb9ff806bfeab0f04
   nginx:
-    image: nginx@sha256:8adbdcb969e2676478ee2c7ad333956f0c8e0e4c5a7463f4611d7a2e7a7ff5dc
+    image: nginx@sha256:f79cde317d4d172a392978344034eed6dff5728a8e6d7a42f507504c23ecf8b8
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent@sha256:032801369ba08f6a40e852f5334671c413c38036847927e1cf14b66784f74adb
   tdarr:
