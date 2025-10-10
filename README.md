@@ -11,7 +11,7 @@
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ | ✅ |
 | [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ | ✅ | ✅ | 
 | [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma) | ✅ | ✅ |  |
-| [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | ⚠️ |
+| [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | ✅ |
 | [node-exporter-alpine](https://github.com/jeo1/docker-templates-v2/tree/node-exporter-alpine) | ⚠️ |  |  | need to setup github-action to run on alpine (not ubuntu)
 | [node-exporter](https://github.com/jeo1/docker-templates-v2/tree/node-exporter) | ✅ | ✅ |  |
 | [plex](https://github.com/jeo1/docker-templates-v2/tree/plex) | ✅ | ✅ | ❕ | 
