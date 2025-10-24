@@ -10,7 +10,7 @@ services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin@sha256:0ffe47d268e9cb2665f52e56fd7756ed984b0f3e7eddaf3882ebdb677af1b341
   node-exporter:
-    image: quay.io/prometheus/node-exporter@sha256:d00a542e409ee618a4edc67da14dd48c5da66726bbd5537ab2af9c1dfc442c8a
+    image: quay.io/prometheus/node-exporter@sha256:d464a7e3af9bbd7748e6c48c5d10e646450d8aab2f4732fbac1ae54af9e87b0e
   portainer:
     image: portainer/portainer-ce@sha256:264443d4063e0f2633f3ba210ccd69aacf07344dfc792128131dec8963df0f0a
   radarr:
