@@ -14,9 +14,9 @@ services:
   portainer:
     image: portainer/portainer-ce@sha256:264443d4063e0f2633f3ba210ccd69aacf07344dfc792128131dec8963df0f0a
   radarr:
-    image: lscr.io/linuxserver/sonarr@sha256:69d72f525bc181728c8f4788992a28ae1cd797ddd978f48bc2e271c7acd02e9b
+    image: lscr.io/linuxserver/sonarr@sha256:fbe67c25693dc5f3de220c5691f374576ae265df782c16918cc071b630490bd7
   sonarr:
-    image: lscr.io/linuxserver/sonarr@sha256:69d72f525bc181728c8f4788992a28ae1cd797ddd978f48bc2e271c7acd02e9b
+    image: lscr.io/linuxserver/sonarr@sha256:fbe67c25693dc5f3de220c5691f374576ae265df782c16918cc071b630490bd7
   nginx:
     image: nginx@sha256:029d4461bd98f124e531380505ceea2072418fdf28752aa73b7b273ba3048903
   qbittorrent:
