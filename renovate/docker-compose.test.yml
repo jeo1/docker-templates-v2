@@ -22,7 +22,7 @@ services:
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent@sha256:7034f73a3c6fa4ea40fd67df462939d1665d765231b572523921c98c2db5362e
   tdarr:
-    image: ghcr.io/haveagitgat/tdarr@sha256:a20579b19d95d532153fe0f53300227f64f72192b108ee1fb18c455cc8f6d86d
+    image: ghcr.io/haveagitgat/tdarr@sha256:2a2a3a1bb1ae6664578be02e6190cd72d749e035f3c5d1eefda7766ae8bdb2a4
   tautulli:
     image: tautulli/tautulli@sha256:5fc33cf56fce13db1a73f91f7b1214950f9b96f72b69ae704e492e88b049c717
   prometheus:
