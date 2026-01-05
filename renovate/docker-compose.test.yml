@@ -20,7 +20,7 @@ services:
   nginx:
     image: nginx@sha256:fb01117203ff38c2f9af91db1a7409459182a37c87cced5cb442d1d8fcc66d19
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent@sha256:043498de39c3dd63eec94360c5ad966a51271d1581070f42cb73ab0cf4776f29
+    image: lscr.io/linuxserver/qbittorrent@sha256:e0cedcadd62f809efdeddfd32e4d1192f9a74e6e64ed6753bfc6e2c3ed4a714a
   tdarr:
     image: ghcr.io/haveagitgat/tdarr@sha256:20a5656c4af4854e1877046294f77113f949d27e35940a9a65f231423d063207
   tautulli:
