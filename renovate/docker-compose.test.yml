@@ -2,7 +2,7 @@ services:
   duckdns:
     image: lscr.io/linuxserver/duckdns@sha256:dd68d23ef64cfcd08eb9677b2714ab896302e4885abe4a194d5ff141baa7b8f9
   gitea:
-    image: docker.gitea.com/gitea@sha256:fee0e5e55da6d2d11186bf39023a772fe63d9deffc0a83283e3d8e5d11c2716a
+    image: docker.gitea.com/gitea@sha256:17d18218be2dad1f8ed402a4f906989505c90ab8b66ee9befcecfb5d470133e7
   grafana:
     image: grafana/grafana@sha256:2175aaa91c96733d86d31cf270d5310b278654b03f5718c59de12a865380a31f
   jackett:
