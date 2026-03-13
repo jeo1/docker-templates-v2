@@ -20,6 +20,7 @@
       "matchPackageNames": [
         "docker.gitea.com/gitea",
         "ghcr.io/haveagitgat/tdarr",
+        "ghcr.io/seerr-team/seerr",
         "grafana/grafana",
         "graphiteapp/graphite-statsd",
         "influxdb",

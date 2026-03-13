@@ -19,6 +19,7 @@
 | [prometheus](https://github.com/jeo1/docker-templates-v2/tree/prometheus) | ✅ | ✅ | ✅ |
 | [qbittorrent](https://github.com/jeo1/docker-templates-v2/tree/qbittorrent) | ✅ | ✅ | ✅ | 
 | [radarr](https://github.com/jeo1/docker-templates-v2/tree/radarr) | ✅ | ✅ |  |
+| [seerr](https://github.com/jeo1/docker-templates-v2/tree/seerr) | ✅ | ✅ |  |
 | [sonarr](https://github.com/jeo1/docker-templates-v2/tree/sonarr) | ✅ | ✅ | ✅ |
 | [tautulli](https://github.com/jeo1/docker-templates-v2/tree/tautulli) | ✅ | ✅ |  |
 | [tdarr](https://github.com/jeo1/docker-templates-v2/tree/tdarr) | ✅ | ✅ | ✅ |

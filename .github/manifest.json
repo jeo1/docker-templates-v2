@@ -114,5 +114,11 @@
       "branch": "plex",
       "workflow_id": "github-actions-plex.yml"
     }
+  ],
+  "ghcr.io/seerr-team/seerr": [
+    {
+      "branch": "seerr",
+      "workflow_id": "github-actions-seerr.yml"
+    }
   ]
 }
