@@ -39,6 +39,8 @@ jobs:
         run: |
           SEERR_CONFIG=$(cat ${{ env.MANIFEST }} | jq -r '.SEERR_CONFIG')
           mkdir $SEERR_CONFIG
+          ls
+          chown -R 1000:1000 $SEERR_CONFIG
 
       - name: Docker Compose up
         run: |
