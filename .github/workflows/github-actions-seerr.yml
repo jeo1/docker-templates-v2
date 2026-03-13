@@ -35,6 +35,11 @@ jobs:
         run: |
           jinja env.j2 --data ${{ env.MANIFEST }} > .env
 
+      - name: Create config dir
+        run: |
+          SEERR_CONFIG=$(cat ${{ env.MANIFEST }} | jq -r '.SEERR_CONFIG')
+          mkdir $SEERR_CONFIG
+
       - name: Docker Compose up
         run: |
           docker compose up -d
