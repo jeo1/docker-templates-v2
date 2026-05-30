@@ -61,5 +61,10 @@ jobs:
           done
           curl --fail $URL || (echo "Service did not respond" && exit 1)
       
+      - name: curl
+        run: |
+          echo $URL
+          curl $URL
+      
       - name: Tear down Docker Compose
         run: docker compose down --volumes
