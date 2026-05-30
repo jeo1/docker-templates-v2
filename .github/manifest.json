@@ -41,6 +41,12 @@
       "workflow_id": "github-actions-nginx.yml"
     }
   ],
+  "nginx:alpine": [
+    {
+      "branch": "file-server",
+      "workflow_id": "github-actions-file-server.yml"
+    }
+  ],
   "lscr.io/linuxserver/sonarr": [
     {
       "branch": "sonarr",

@@ -4,7 +4,7 @@
 | [audiobooks](https://github.com/jeo1/docker-templates-v2/tree/audiobooks) | ❌ |  |  |
 | [cadvisor](https://github.com/jeo1/docker-templates-v2/tree/cadvisor) | ✅ | ⚠️ |  | latest did not match (may be out of date)
 | [duckdns](https://github.com/jeo1/docker-templates-v2/tree/duckdns) | ✅ | ❕ |  | no merge created - testing with latest
-| [file-server](https://github.com/jeo1/docker-templates-v2/tree/file-server) | | | |
+| [file-server](https://github.com/jeo1/docker-templates-v2/tree/file-server) | ✅ | ✅ | |
 | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ | ✅ |
 | [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ | ❕ | [pr72](https://github.com/jeo1/docker-templates-v2/pull/72) required manual merge
 | [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ | ✅ |  | look into switch to `sitespeedio/graphite`
