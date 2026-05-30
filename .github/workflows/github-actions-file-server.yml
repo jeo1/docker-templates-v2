@@ -58,10 +58,10 @@ jobs:
               FILE_CONTENT=$(curl -s "$URL/$TEST_FILE_NAME")
               if [[ "$FILE_CONTENT" == "$TEST_FILE_CONTENT" ]]; then
                 echo "Variables are the same"
+                break
               else
-                echo "Variables are different"
+                echo "Variables are different" && exit 1
               fi
-              break
             fi
             echo "Waiting for Service... ($i)"
             sleep 1
