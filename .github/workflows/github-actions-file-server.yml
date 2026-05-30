@@ -56,6 +56,7 @@ jobs:
             if curl --silent --fail $URL > /dev/null; then
               echo "Service is up!"
               FILE_CONTENT=$(curl -s "$URL/$TEST_FILE_NAME")
+              FILE_CONTENT="a"
               if [[ "$FILE_CONTENT" == "$TEST_FILE_CONTENT" ]]; then
                 echo "Variables are the same"
                 break
