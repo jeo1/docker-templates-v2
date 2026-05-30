@@ -1,0 +1,65 @@
+name: Docker-compose (File-Server)
+
+on:
+  push:
+    branches: [file-server]
+    paths-ignore:
+      - README.md
+      - .gitignore
+  workflow_dispatch:
+    inputs:
+      triggered_by:
+        description: 'What triggered this workflow'
+        required: false
+        default: 'manual'
+      run_id:
+        description: 'Main workflow run ID'
+        required: false
+
+env:
+  MANIFEST: .github/manifest.json
+  TEST_FILE_NAME: test.txt
+  TEST_FILE_CONTENT: hello
+
+jobs:
+  docker-compose-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install jinja-cli
+        run: |
+          pip3 install jinja-cli
+
+      - name: Create .env
+        run: |
+          jinja env.j2 --data ${{ env.MANIFEST }} > .env
+
+      - name: Create dirs and test file
+        run: |
+          SHARE_DIR=$(cat $MANIFEST | jq -r '.SHARE_DIR')
+          mkdir -p $SHARE_DIR
+          echo $TEST_FILE_CONTENT > $SHARE_DIR/$TEST_FILE_NAME
+
+      - name: Docker Compose up
+        run: |
+          docker compose up -d
+          
+      - name: Test HTTP response
+        run: |
+          FILE_SERVER_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.FILE_SERVER_PORT')
+          URL=http://localhost:$FILE_SERVER_PORT
+          for i in {1..30}; do
+            if curl --silent --fail $URL > /dev/null; then
+              echo "Service is up!"
+              break
+            fi
+            echo "Waiting for Service... ($i)"
+            sleep 1
+          done
+          curl --fail $URL || (echo "Service did not respond" && exit 1)
+      
+      - name: Tear down Docker Compose
+        run: docker compose down --volumes
