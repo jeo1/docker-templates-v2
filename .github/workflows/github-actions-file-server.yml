@@ -67,6 +67,7 @@ jobs:
         run: |
           echo ${{ steps.test_http.outputs.url }}
           curl ${{ steps.test_http.outputs.url }}
+          curl ${{ steps.test_http.outputs.url }}/$TEST_FILE_NAME
       
       - name: Tear down Docker Compose
         run: docker compose down --volumes
