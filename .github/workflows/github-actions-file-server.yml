@@ -52,22 +52,17 @@ jobs:
         run: |
           FILE_SERVER_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.FILE_SERVER_PORT')
           URL=http://localhost:$FILE_SERVER_PORT
-          echo "url=$URL" >> $GITHUB_OUTPUT
           for i in {1..30}; do
             if curl --silent --fail $URL > /dev/null; then
               echo "Service is up!"
+              FILE_CONTENT=$(curl -s "$URL/$TEST_FILE_NAME")
+              echo $FILE_CONTENT
               break
             fi
             echo "Waiting for Service... ($i)"
             sleep 1
           done
           curl --fail $URL || (echo "Service did not respond" && exit 1)
-      
-      - name: curl
-        run: |
-          echo ${{ steps.test_http.outputs.url }}
-          curl ${{ steps.test_http.outputs.url }}
-          curl ${{ steps.test_http.outputs.url }}/$TEST_FILE_NAME
       
       - name: Tear down Docker Compose
         run: docker compose down --volumes
