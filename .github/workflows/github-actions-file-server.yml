@@ -48,9 +48,11 @@ jobs:
           docker compose up -d
           
       - name: Test HTTP response
+        id: test_http
         run: |
           FILE_SERVER_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.FILE_SERVER_PORT')
           URL=http://localhost:$FILE_SERVER_PORT
+          echo "url=$URL" >> $GITHUB_OUTPUT
           for i in {1..30}; do
             if curl --silent --fail $URL > /dev/null; then
               echo "Service is up!"
@@ -63,8 +65,8 @@ jobs:
       
       - name: curl
         run: |
-          echo $URL
-          curl $URL
+          echo ${{ steps.test_http.outputs.url }}
+          curl ${{ steps.test_http.outputs.url }}
       
       - name: Tear down Docker Compose
         run: docker compose down --volumes
