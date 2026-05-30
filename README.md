@@ -4,6 +4,7 @@
 | [audiobooks](https://github.com/jeo1/docker-templates-v2/tree/audiobooks) | ❌ |  |  |
 | [cadvisor](https://github.com/jeo1/docker-templates-v2/tree/cadvisor) | ✅ | ⚠️ |  | latest did not match (may be out of date)
 | [duckdns](https://github.com/jeo1/docker-templates-v2/tree/duckdns) | ✅ | ❕ |  | no merge created - testing with latest
+| [file-server](https://github.com/jeo1/docker-templates-v2/tree/file-server) | | | |
 | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea) | ✅ | ✅ | ✅ |
 | [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana) | ✅ | ✅ | ❕ | [pr72](https://github.com/jeo1/docker-templates-v2/pull/72) required manual merge
 | [graphite](https://github.com/jeo1/docker-templates-v2/tree/graphite) | ✅ | ✅ |  | look into switch to `sitespeedio/graphite`
@@ -31,6 +32,7 @@
 | -------                                                                         | --------- | -------------- | ------------ |
 | [audiobooks](https://github.com/jeo1/docker-templates-v2/tree/audiobooks)       | [qbittorrent](https://github.com/jeo1/docker-templates-v2/blob/audiobooks/docker-compose.yml)       | 8080 | [None](https://github.com/jeo1/docker-templates-v2/blob/audiobooks/env.j2) |
 | [cadvisor](https://github.com/jeo1/docker-templates-v2/tree/cadvisor)           | [cadvisor](https://github.com/jeo1/docker-templates-v2/blob/cadvisor/docker-compose.yml)            | 8080 | [8083](https://github.com/jeo1/docker-templates-v2/blob/cadvisor/env.j2)   |
+| [file-server](https://github.com/jeo1/docker-templates-v2/tree/file-server)     | [file-server](https://github.com/jeo1/docker-templates-v2/blob/file-server/docker-compose.yml) | 80 | [9200](https://github.com/jeo1/docker-templates-v2/blob/file-server/env.j2)
 | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea)                 | [gitea](https://github.com/jeo1/docker-templates-v2/blob/gitea/docker-compose.yml)                  | 3000 | [None](https://github.com/jeo1/docker-templates-v2/blob/gitea/env.j2) |
 | [gitea](https://github.com/jeo1/docker-templates-v2/tree/gitea)                 | [gitea](https://github.com/jeo1/docker-templates-v2/blob/gitea/docker-compose.yml)                  | 22   | [None](https://github.com/jeo1/docker-templates-v2/blob/gitea/env.j2) |
 | [grafana](https://github.com/jeo1/docker-templates-v2/tree/grafana)             | [grafana](https://github.com/jeo1/docker-templates-v2/blob/grafana/docker-compose.yml)              | 3000 | [None](https://github.com/jeo1/docker-templates-v2/blob/grafana/env.j2) |
