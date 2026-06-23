@@ -6,7 +6,7 @@ services:
   gitea:
     image: docker.gitea.com/gitea@sha256:8b388261a1ffd23fc49cf01400076d3d1781409280fa3b1f002ed5548422b2dd
   grafana:
-    image: grafana/grafana@sha256:5dad0df181cb644a14e13617b913b261a54f7d4fd4510721dba420929f35bea2
+    image: grafana/grafana@sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63
   jackett:
     image: lscr.io/linuxserver/jackett@sha256:235af6070371c279c51439080d0b5c0b5ef118703c583e085f3dd8bf9f376c1e
   jellyfin:
