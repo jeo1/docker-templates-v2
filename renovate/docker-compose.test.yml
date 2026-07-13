@@ -32,6 +32,6 @@ services:
   graphite:
     image: graphiteapp/graphite-statsd@sha256:2d61228771119ddaee2f62d65739d3b5e903de36666e899703e47be1def571fe
   plex:
-    image: lscr.io/linuxserver/plex@sha256:12008668bf8b79c6ffeb0c0a7878a0354aaaa032368da71a0ea5e84717453b11
+    image: lscr.io/linuxserver/plex@sha256:2785a6ad64d3a91529e31df678cf0f9fe8ddfe2718415222f270b8d1a6d765f0
   seerr:
     image: ghcr.io/seerr-team/seerr@sha256:c4cbd5121236ac2f70a843a0b920b68a27976be57917555f1c45b08a1e6b2aad
