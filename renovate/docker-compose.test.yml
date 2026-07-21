@@ -34,4 +34,4 @@ services:
   plex:
     image: lscr.io/linuxserver/plex@sha256:59c671e182563040092a2d0901e429dc15e0aba9883acd13ef97857372b79b21
   seerr:
-    image: ghcr.io/seerr-team/seerr@sha256:c4cbd5121236ac2f70a843a0b920b68a27976be57917555f1c45b08a1e6b2aad
+    image: ghcr.io/seerr-team/seerr@sha256:c92d2dc117f62185e7bcb88cd56efd374ea79210eaf433275449e8d5988eb5a8
