@@ -4,7 +4,7 @@ services:
   file-server:
     image: nginx@sha256:5a88c9c45479443d7be2eadc894b4ed0a9801bae03d97a5760ae13b5c2005942
   gitea:
-    image: docker.gitea.com/gitea@sha256:8b388261a1ffd23fc49cf01400076d3d1781409280fa3b1f002ed5548422b2dd
+    image: docker.gitea.com/gitea@sha256:7dff60d7ea6df9d0bdf78971cdb1350e9b7df3fda5f115c77afe12122887bd64
   grafana:
     image: grafana/grafana@sha256:1c1bd67c54c5fcf6e759897852b5a584191bd6796e8d328a5ace457799801261
   jackett:
