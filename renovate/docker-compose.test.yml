@@ -10,7 +10,7 @@ services:
   jackett:
     image: lscr.io/linuxserver/jackett@sha256:003f3e4586b068635481f4346ffe7e6c11c9887af7a16392ef029d49eb239138
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin@sha256:bb8d372e35d5c4a6cb61d830a06f5b5846528315b97cf5d38b80eea1e430efa7
+    image: lscr.io/linuxserver/jellyfin@sha256:b8dcc7b71d0ea872b74314da4b995c0cf282b1778438c295996e7be88c70fdda
   node-exporter:
     image: quay.io/prometheus/node-exporter@sha256:1b4e4438faca4dd7e001dd445d161a4a2091b0fededa84093b3a8dfeae1f1be0
   portainer:
