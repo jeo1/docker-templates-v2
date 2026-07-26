@@ -8,7 +8,7 @@ services:
   grafana:
     image: grafana/grafana@sha256:1c1bd67c54c5fcf6e759897852b5a584191bd6796e8d328a5ace457799801261
   jackett:
-    image: lscr.io/linuxserver/jackett@sha256:003f3e4586b068635481f4346ffe7e6c11c9887af7a16392ef029d49eb239138
+    image: lscr.io/linuxserver/jackett@sha256:4ace847a36741c85fe6f5095dbe41b936ae0c79868309e2f3874cc04a2e383b1
   jellyfin:
     image: lscr.io/linuxserver/jellyfin@sha256:b8dcc7b71d0ea872b74314da4b995c0cf282b1778438c295996e7be88c70fdda
   node-exporter:
