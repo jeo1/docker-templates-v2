@@ -1,6 +1,6 @@
 services:
   duckdns:
-    image: lscr.io/linuxserver/duckdns@sha256:c0ec22ecb89559477ff0ace991dd0e0e67b675636e35c6f50421680304484e0e
+    image: lscr.io/linuxserver/duckdns@sha256:46817d693c9ce137118504bc1642bb6384cff250705bfa0ffbc89fbe1530835b
   file-server:
     image: nginx@sha256:5a88c9c45479443d7be2eadc894b4ed0a9801bae03d97a5760ae13b5c2005942
   gitea:
