@@ -26,7 +26,7 @@ services:
   tdarr:
     image: ghcr.io/haveagitgat/tdarr@sha256:45742f00e51a58553844c8b13d97e7ae9b2ee9a056bd8e5993d9a8282a45a23f
   tautulli:
-    image: tautulli/tautulli@sha256:e88f431fa59b3e7eb24dee323357ec6e0851fbffc4425b92143cbc284de01278
+    image: tautulli/tautulli@sha256:670e68dd9efca538d508b0c5b222b7e41bd70a22dce0cb822941ea55c457f5d1
   prometheus:
     image: prom/prometheus@sha256:5ce7540c3c00ef4ab0c9d2c995c6a5b9c421f44b4a115d97a2c7af3b1c21cbb0
   graphite:
