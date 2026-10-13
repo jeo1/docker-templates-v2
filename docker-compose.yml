@@ -1,34 +1,17 @@
 ---
 services:
-  sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
-    pull_policy: always
-    container_name: "${SONARR_CONTAINER_NAME}"
-    volumes:
-      - "${SONARR_CONFIG}:/config"
-      - "${MEDIA}:/${ROOT_PATH}"
-      - "${DOWNLOADS}:/downloads"
-    environment:
-      - "PUID=1000"
-      - "PGID=1000"
-      - "TZ=${TIMEZONE}"
-    restart: always
-    ports:
-      - "${EXTERNAL_SONARR_PORT}:8989"
-      - "${EXTERNAL_QBITTORRENT_PORT}:8080"
-
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    pull_policy: always
-    container_name: "${SONARR_QBITTORRENT_CONTAINER_NAME}"
-    environment:
-      - "PUID=1000"
-      - "PGID=1000"
-      - "TZ=${TIMEZONE}"
-      - "WEBUI_PORT=8080"
-    restart: always
-    network_mode: "service:sonarr"
-    volumes:
-      - "${QBITTORRENT_CONFIG}:/config"
-      - "${DOWNLOADS}:/downloads"
-      
+    chaptarr:
+        image: chaptarr/chaptarr:latest
+        pull_policy: always
+        container_name: "${CHAPTARR_CONTAINER_NAME}"
+        environment:
+            - PUID=1000
+            - PGID=1000
+        restart: unless-stopped
+        ports:
+            - "${EXTERNAL_CHAPTARR_PORT}:8789"
+        volumes:
+            - "${CHAPTARR_CONFIG}:/config"
+            - "${CHAPTARR_AUDIOBOOKS}:/audiobooks"
+            - "${CHAPTARR_EBOOKS}:/ebooks"
+            - "${CHAPTARR_DOWNLOADS}:/downloads"
