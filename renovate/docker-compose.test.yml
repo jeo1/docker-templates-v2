@@ -2,7 +2,7 @@ services:
   duckdns:
     image: lscr.io/linuxserver/duckdns@sha256:cae32b5b29878e158e2a5c129e6090d65a2cb4659995888382b2264a729c7bab
   file-server:
-    image: nginx@sha256:f9ea18bfa4fad859e1ed38259d711da7ccad2c3516e875cec3351a57c859f571
+    image: nginx@sha256:332d0beea97cff8c0d5d27976c0778a4b00345b9d74c2feaaf8efde548314948
   gitea:
     image: docker.gitea.com/gitea@sha256:f505a0d3a41323b786e05942fc7a4075e07ae7c169fd9485649aa55ee543a21a
   grafana:
@@ -20,7 +20,7 @@ services:
   sonarr:
     image: lscr.io/linuxserver/sonarr@sha256:44b06045a98bc1f237b9ffefc4b28dab64cb29305e4a2a94875ae93b5224e4cc
   nginx:
-    image: nginx@sha256:f9ea18bfa4fad859e1ed38259d711da7ccad2c3516e875cec3351a57c859f571
+    image: nginx@sha256:332d0beea97cff8c0d5d27976c0778a4b00345b9d74c2feaaf8efde548314948
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent@sha256:caab2ebce30799ab342c374ea268fef4ec063a8ec3733a4e5d4a8e856ee32ce8
   tdarr:
