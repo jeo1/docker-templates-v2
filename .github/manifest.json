@@ -1,8 +1,10 @@
 {
-    "sonarr_media": "./media",
-    "sonarr_downloads": "./downloads",
-    "sonarr_config": "./config/sonarr",
-    "sonarr_qbittorrent_config": "./config/qbittorrent",
-    "sonarr_port": 8989,
-    "sonarr_qbittorent_port": 8080
+    "SQL_PORT": "3306",
+    "HTTP_PORT": "8080",
+    "MARIADB_ROOT_PASSWORD": "root_password",
+    "MARIADB_DATABASE": "database",
+    "MARIADB_USER": "user",
+    "MARIADB_PASSWORD": "user_password",
+    "API_TOKEN": "test_this_is_a_long_randon_token"
 }
+    
