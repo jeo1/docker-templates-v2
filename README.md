@@ -13,6 +13,7 @@
 | [jackett](https://github.com/jeo1/docker-templates-v2/tree/jackett) | ✅ | ✅ | ✅ |
 | [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin) | ✅ | ✅ | ✅ | 
 | [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma) | ✅ | ✅ |  |
+| [mariadb](https://github.com/jeo1/docker-templates-v2/tree/mariadb) | | | |
 | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx) | ✅ | ✅ | ✅ |
 | [node-exporter-alpine](https://github.com/jeo1/docker-templates-v2/tree/node-exporter-alpine) | ⚠️ |  |  | need to setup github-action to run on alpine (not ubuntu)
 | [node-exporter](https://github.com/jeo1/docker-templates-v2/tree/node-exporter) | ✅ | ✅ |  |
@@ -46,6 +47,8 @@
 | [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin)           | [jellyfin](https://github.com/jeo1/docker-templates-v2/blob/jellyfin/docker-compose.yml)            | 7359 | [None](https://github.com/jeo1/docker-templates-v2/blob/jellyfin/env.j2) |
 | [jellyfin](https://github.com/jeo1/docker-templates-v2/tree/jellyfin)           | [jellyfin](https://github.com/jeo1/docker-templates-v2/blob/jellyfin/docker-compose.yml)            | 1900 | [None](https://github.com/jeo1/docker-templates-v2/blob/jellyfin/env.j2) |
 | [kuma](https://github.com/jeo1/docker-templates-v2/tree/kuma)                   | [uptime-kuma](https://github.com/jeo1/docker-templates-v2/blob/kuma/docker-compose.yml)             | 3001 | [None](https://github.com/jeo1/docker-templates-v2/blob/kuma/env.j2) |
+| [mariadb](https://github.com/jeo1/docker-templates-v2/tree/mariadb)             | [mariadb](https://github.com/jeo1/docker-templates-v2/blob/mariadb/docker-compose.yml)              | 3306 | [3306](https://github.com/jeo1/docker-templates-v2/blob/mariadb/env.j2) |
+| [mariadb](https://github.com/jeo1/docker-templates-v2/tree/mariadb)             | [gateway](https://github.com/jeo1/docker-templates-v2/blob/mariadb/docker-compose.yml)              | 3000 | [8080](https://github.com/jeo1/docker-templates-v2/blob/mariadb/env.j2) |
 | [nginx](https://github.com/jeo1/docker-templates-v2/tree/nginx)                 | [nginx](https://github.com/jeo1/docker-templates-v2/blob/nginx/docker-compose.yml)                  | host | | 
 | [node-exporter](https://github.com/jeo1/docker-templates-v2/tree/node-exporter) | [node-exporter](https://github.com/jeo1/docker-templates-v2/blob/node-exporter/docker-compose.yml)  | 9100 | [9100](https://github.com/jeo1/docker-templates-v2/blob/node-exporter/env.j2) | 
 | [node-exporter-alpine](https://github.com/jeo1/docker-templates-v2/tree/node-exporter-alpine) | [node-exporter-alpine](https://github.com/jeo1/docker-templates-v2/blob/node-exporter-alpine/docker-compose.yml) | 9100 | [9100](https://github.com/jeo1/docker-templates-v2/blob/node-exporter-alpine/env.j2) |
