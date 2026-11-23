@@ -30,10 +30,16 @@ MARIADB_PASSWORD: change_me
 API_TOKEN: change_me
 ```
 
-Then create `.env` and `private/.env` from `env.j2` / `env-private.j2`:
+Then create `.env` and `private/.env` from `env.j2` / `env-private.j2` and start the containers:
 
 ```bash
 ansible-playbook setup.yml -e @/tmp/settings.yml
+```
+
+This needs the `community.docker` collection. It comes with the full `ansible` package; with only `ansible-core`, install it once:
+
+```bash
+ansible-galaxy collection install -r requirements.yml
 ```
 
 Override any other value with `-e`, e.g. `-e HTTP_PORT=9090`.

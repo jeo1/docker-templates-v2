@@ -8,6 +8,10 @@
 #   MARIADB_PASSWORD: ...
 #   API_TOKEN: ...
 #
+# Needs the community.docker collection (included in the full "ansible"
+# package; with ansible-core only, run once:
+#   ansible-galaxy collection install -r requirements.yml)
+#
 # Run from the repo root:
 #   ansible-playbook setup.yml -e @/tmp/settings.yml
 #
@@ -46,3 +50,12 @@
         dest: "{{ playbook_dir }}/private/.env"
         mode: "0600"
       no_log: true
+
+    - name: Start containers (docker compose up -d)
+      community.docker.docker_compose_v2:
+        project_src: "{{ playbook_dir }}"
+        env_files:
+          - .env
+          - private/.env
+        state: present
+        wait: true
