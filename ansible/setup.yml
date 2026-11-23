@@ -45,7 +45,7 @@
         state: present
         wait: true
 
-    - name: Create test_table (drops it first if it exists)
+    - name: Create VM Table (drops it first if it exists)
       community.docker.docker_compose_v2_exec:
         project_src: "{{ playbook_dir }}"
         service: mariadb
@@ -55,5 +55,5 @@
           - mariadb
           - --user={{ MARIADB_USER | default('user') }}
           - "{{ MARIADB_DATABASE | default('database') }}"
-          - --execute=DROP TABLE IF EXISTS test_table; CREATE TABLE test_table (a TEXT, b TEXT, c TEXT);
+          - --execute=DROP TABLE IF EXISTS vm_table; CREATE TABLE vm_table (name TEXT, ip TEXT, port INT);
       no_log: true
