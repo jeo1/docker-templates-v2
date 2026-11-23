@@ -1,0 +1,62 @@
+---
+# Prepare this repo for deployment:
+#   1. create .env (from env.j2)
+#   2. start the containers (docker compose up -d)
+#   3. create an empty test_table in the database
+#
+# Secrets come from a settings file, e.g. /tmp/settings.yml:
+#   MARIADB_ROOT_PASSWORD: ...
+#   MARIADB_PASSWORD: ...
+#   API_TOKEN: ...
+#
+# Needs the community.docker collection (included in the full "ansible"
+# package; with ansible-core only, run once:
+#   ansible-galaxy collection install -r requirements.yml)
+#
+# Run from the repo root:
+#   ansible-playbook ansible/setup.yml -e @/tmp/settings.yml
+#
+# Any other value can be overridden too, e.g. -e HTTP_PORT=9090
+
+- name: Set up repo for deployment
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    repo_dir: "{{ playbook_dir | dirname }}"  # this playbook lives in <repo>/ansible
+
+  tasks:
+    - name: Check that the secrets were provided
+      ansible.builtin.assert:
+        that:
+          - MARIADB_ROOT_PASSWORD is defined
+          - MARIADB_PASSWORD is defined
+          - API_TOKEN is defined
+        fail_msg: "Missing secrets. Run with: -e @/tmp/settings.yml"
+        quiet: true
+
+    - name: Create .env
+      ansible.builtin.template:
+        src: "{{ repo_dir }}/env.j2"
+        dest: "{{ repo_dir }}/.env"
+        mode: "0644"
+
+    - name: Start containers (docker compose up -d)
+      community.docker.docker_compose_v2:
+        project_src: "{{ repo_dir }}"
+        state: present
+        wait: true
+
+    - name: Create VM Table (drops it first if it exists)
+      community.docker.docker_compose_v2_exec:
+        project_src: "{{ repo_dir }}"
+        service: mariadb
+        env:
+          MYSQL_PWD: "{{ MARIADB_PASSWORD }}"  # keeps the password out of the process list
+        argv:
+          - mariadb
+          - --user={{ MARIADB_USER | default('user') }}
+          - "{{ MARIADB_DATABASE | default('database') }}"
+          - --execute=DROP TABLE IF EXISTS vm_table; CREATE TABLE vm_table (name TEXT, ip TEXT, port INT);
+      no_log: true
