@@ -35,3 +35,5 @@ services:
     image: lscr.io/linuxserver/plex@sha256:9a1325bf0b34a50993a04be0bdcc7fab841d2a78161bd11b4db4ff8478a7ac2a
   seerr:
     image: ghcr.io/seerr-team/seerr@sha256:aadee014b40e28cf9aa4928bc9d1183a6eb08f8c44d543cddc9efdcb16549be2
+  mariadb:
+    image: mariadb@sha256:54f493ea0d60b621a5bff84e5b20100f8b86b6efa6b79158e04756c5194a5e4d

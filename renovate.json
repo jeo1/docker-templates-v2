@@ -35,7 +35,8 @@
         "portainer/portainer-ce",
         "prom/prometheus",
         "quay.io/prometheus/node-exporter",
-        "tautulli/tautulli"
+        "tautulli/tautulli",
+        "mariadb"
       ]
     }
   ]

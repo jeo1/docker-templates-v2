@@ -126,5 +126,11 @@
       "branch": "seerr",
       "workflow_id": "github-actions-seerr.yml"
     }
+  ],
+  "mariadb": [
+    {
+      "branch": "mariadb",
+      "workflow_id": "github-actions-mariadb.yml"
+    }
   ]
 }
