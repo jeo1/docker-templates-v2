@@ -38,11 +38,11 @@
       ansible.builtin.file:
         path: "{{ playbook_dir }}/private"
         state: directory
-        mode: "0644"
+        mode: "0755"
 
     - name: Create private/.env
       ansible.builtin.template:
         src: env-private.j2
         dest: "{{ playbook_dir }}/private/.env"
-        mode: "0600"
+        mode: "0644"
       no_log: true
