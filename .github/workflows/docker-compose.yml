@@ -17,6 +17,7 @@ on:
         required: false
 
 env:
+  # Used as the ansible settings file (JSON is valid YAML)
   MANIFEST: .github/manifest.json
 
 jobs:
@@ -27,42 +28,54 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install jinja-cli
+      - name: Install Ansible
         run: |
-          pip3 install jinja-cli
+          pip3 install ansible-core
+          ansible-galaxy collection install -r requirements.yml
 
-      - name: Create .env
+      # Creates .env, starts the containers (waits for MariaDB to be healthy)
+      # and creates vm_table
+      - name: Run setup playbook
         run: |
-          jinja env.j2 --data $MANIFEST > .env
+          ansible-playbook ansible/setup.yml -e @$MANIFEST
 
-      - name: Validate compose file
+      - name: Check MariaDB is healthy
         run: |
-          docker compose config --quiet
+          STATUS=$(docker inspect --format '{{.State.Health.Status}}' $(docker compose ps -q mariadb))
+          if [[ "$STATUS" == "healthy" ]]; then
+            echo "✅ MariaDB is healthy"
+          else
+            echo "❌ MariaDB status: $STATUS"
+            exit 1
+          fi
 
-      - name: Docker Compose up
+      - name: Check vm_table was created
         run: |
-          docker compose up -d
+          MARIADB_USER=$(jq -r '.MARIADB_USER' $MANIFEST)
+          MARIADB_PASSWORD=$(jq -r '.MARIADB_PASSWORD' $MANIFEST)
+          MARIADB_DATABASE=$(jq -r '.MARIADB_DATABASE' $MANIFEST)
+          columns=$(docker compose exec -T -e MYSQL_PWD="$MARIADB_PASSWORD" mariadb \
+            mariadb --user="$MARIADB_USER" "$MARIADB_DATABASE" --skip-column-names \
+            --execute="SELECT GROUP_CONCAT(COLUMN_NAME ORDER BY ORDINAL_POSITION) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='vm_table';")
+          if [[ "$columns" == "name,ip,port" ]]; then
+            echo "✅ vm_table exists with columns: $columns"
+          else
+            echo "❌ Expected columns name,ip,port, Got: '$columns'"
+            exit 1
+          fi
 
-      - name: Wait for MariaDB to be healthy
+      # Simulate another machine: curl runs in its own container (separate
+      # network namespace) and reaches the gateway through the host's IP,
+      # not localhost.
+      - name: Set gateway URL
         run: |
-          MARIADB_CONTAINER=$(docker compose ps -q mariadb)
-          for i in {1..60}; do
-            STATUS=$(docker inspect --format '{{.State.Health.Status}}' $MARIADB_CONTAINER)
-            if [[ "$STATUS" == "healthy" ]]; then
-              echo "MariaDB is healthy!"
-              exit 0
-            fi
-            echo "Waiting for MariaDB... ($i) [$STATUS]"
-            sleep 2
-          done
-          echo "❌ MariaDB never became healthy"
-          docker compose logs mariadb
-          exit 1
+          HOST_IP=$(hostname -I | awk '{print $1}')
+          HTTP_PORT=$(jq -r '.HTTP_PORT' $MANIFEST)
+          echo "URL=http://$HOST_IP:$HTTP_PORT/sql" >> $GITHUB_ENV
+          echo "API_TOKEN=$(jq -r '.API_TOKEN' $MANIFEST)" >> $GITHUB_ENV
 
       - name: Wait for gateway
         run: |
-          HTTP_PORT=$(jq -r '.HTTP_PORT' $MANIFEST)
-          URL=http://localhost:$HTTP_PORT/sql
           for i in {1..60}; do
             # Any HTTP response (even 401) means the gateway is listening
             if curl --silent --output /dev/null $URL; then
@@ -73,26 +86,15 @@ jobs:
             sleep 2
           done
           echo "❌ Gateway never came up"
-          docker compose logs gateway
           exit 1
-
-      - name: Test direct SQL connection
-        run: |
-          MARIADB_USER=$(jq -r '.MARIADB_USER' $MANIFEST)
-          MARIADB_PASSWORD=$(jq -r '.MARIADB_PASSWORD' $MANIFEST)
-          MARIADB_DATABASE=$(jq -r '.MARIADB_DATABASE' $MANIFEST)
-          docker compose exec -T mariadb mariadb -u "$MARIADB_USER" -p"$MARIADB_PASSWORD" "$MARIADB_DATABASE" \
-            -e "DROP TABLE IF EXISTS test_table; CREATE TABLE test_table (a TEXT, b TEXT, c TEXT);"
-          echo "✅ Created test_table"
 
       - name: Test gateway rejects bad token
         run: |
-          HTTP_PORT=$(jq -r '.HTTP_PORT' $MANIFEST)
-          code=$(curl --silent --output /dev/null --write-out '%{http_code}' \
-            -X POST http://localhost:$HTTP_PORT/sql \
+          code=$(docker run --rm curlimages/curl --silent --output /dev/null --write-out '%{http_code}' \
+            -X POST $URL \
             -H "Authorization: Bearer wrong_token" \
             -H "Content-Type: application/json" \
-            -d '{"sql": "SELECT 1"}')
+            -d '{"sql": "SELECT * FROM vm_table"}')
           if [[ "$code" == "401" ]]; then
             echo "✅ Unauthorized request rejected"
           else
@@ -100,23 +102,27 @@ jobs:
             exit 1
           fi
 
-      - name: Test gateway insert and select
+      - name: Test write to vm_table from another machine
         run: |
-          HTTP_PORT=$(jq -r '.HTTP_PORT' $MANIFEST)
-          API_TOKEN=$(jq -r '.API_TOKEN' $MANIFEST)
-          URL=http://localhost:$HTTP_PORT/sql
-
-          curl --silent --show-error --fail -X POST $URL \
+          response=$(docker run --rm curlimages/curl --silent --show-error --fail -X POST $URL \
             -H "Authorization: Bearer $API_TOKEN" \
             -H "Content-Type: application/json" \
-            -d '{"sql": "INSERT INTO test_table (a, b, c) VALUES (?, ?, ?)", "params": ["AA", "BB", "CC"]}'
-          echo
+            -d '{"sql": "INSERT INTO vm_table (name, ip, port) VALUES (?, ?, ?)", "params": ["test-vm", "192.168.1.50", 22]}')
+          echo "$response"
+          if [[ $(echo "$response" | jq '.result.affectedRows') == "1" ]]; then
+            echo "✅ Row inserted"
+          else
+            echo "❌ Insert failed"
+            exit 1
+          fi
 
-          response=$(curl --silent --show-error --fail -X POST $URL \
+      - name: Test read from vm_table from another machine
+        run: |
+          response=$(docker run --rm curlimages/curl --silent --show-error --fail -X POST $URL \
             -H "Authorization: Bearer $API_TOKEN" \
             -H "Content-Type: application/json" \
-            -d '{"sql": "SELECT * FROM test_table"}')
-          expected='{"result":[{"a":"AA","b":"BB","c":"CC"}]}'
+            -d '{"sql": "SELECT * FROM vm_table"}')
+          expected='{"result":[{"name":"test-vm","ip":"192.168.1.50","port":22}]}'
           if [[ "$response" == "$expected" ]]; then
             echo "✅ Response matches"
           else
