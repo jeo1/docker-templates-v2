@@ -2,6 +2,7 @@
 # Prepare this repo for deployment:
 #   1. create .env (from env.j2)
 #   2. start the containers (docker compose up -d)
+#   3. create an empty test_table in the database
 #
 # Secrets come from a settings file, e.g. /tmp/settings.yml:
 #   MARIADB_ROOT_PASSWORD: ...
@@ -43,3 +44,16 @@
         project_src: "{{ playbook_dir }}"
         state: present
         wait: true
+
+    - name: Create test_table (drops it first if it exists)
+      community.docker.docker_compose_v2_exec:
+        project_src: "{{ playbook_dir }}"
+        service: mariadb
+        env:
+          MYSQL_PWD: "{{ MARIADB_PASSWORD }}"  # keeps the password out of the process list
+        argv:
+          - mariadb
+          - --user={{ MARIADB_USER | default('user') }}
+          - "{{ MARIADB_DATABASE | default('database') }}"
+          - --execute=DROP TABLE IF EXISTS test_table; CREATE TABLE test_table (a TEXT, b TEXT, c TEXT);
+      no_log: true
