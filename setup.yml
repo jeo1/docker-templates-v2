@@ -1,7 +1,7 @@
 ---
-# Prepare this repo for deployment by creating:
-#   .env          (from env.j2)
-#   private/.env  (from env-private.j2)
+# Prepare this repo for deployment:
+#   1. create .env (from env.j2)
+#   2. start the containers (docker compose up -d)
 #
 # Secrets come from a settings file, e.g. /tmp/settings.yml:
 #   MARIADB_ROOT_PASSWORD: ...
@@ -38,24 +38,8 @@
         dest: "{{ playbook_dir }}/.env"
         mode: "0644"
 
-    - name: Create private folder
-      ansible.builtin.file:
-        path: "{{ playbook_dir }}/private"
-        state: directory
-        mode: "0700"
-
-    - name: Create private/.env
-      ansible.builtin.template:
-        src: env-private.j2
-        dest: "{{ playbook_dir }}/private/.env"
-        mode: "0600"
-      no_log: true
-
     - name: Start containers (docker compose up -d)
       community.docker.docker_compose_v2:
         project_src: "{{ playbook_dir }}"
-        env_files:
-          - .env
-          - private/.env
         state: present
         wait: true

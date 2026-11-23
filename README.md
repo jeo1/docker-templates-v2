@@ -30,7 +30,7 @@ MARIADB_PASSWORD: change_me
 API_TOKEN: change_me
 ```
 
-Then create `.env` and `private/.env` from `env.j2` / `env-private.j2` and start the containers:
+Then create `.env` from `env.j2` and start the containers:
 
 ```bash
 ansible-playbook setup.yml -e @/tmp/settings.yml
