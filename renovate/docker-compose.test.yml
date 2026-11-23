@@ -1,6 +1,6 @@
 services:
   duckdns:
-    image: lscr.io/linuxserver/duckdns@sha256:8be3d2d20da2b4a3ec4d86eb456460ef79d791d6c7ceea865a9d01aa53ce1456
+    image: lscr.io/linuxserver/duckdns@sha256:b692b1584655661c952dafad7fb594a1e9422e48c5dfe1b3400bb5b293bdb9ab
   file-server:
     image: nginx@sha256:84f7876d21d154885f99554d7ae325d8c2213f9169726ea7ab60642f2573a787
   gitea:
@@ -8,7 +8,7 @@ services:
   grafana:
     image: grafana/grafana@sha256:0615ec4fbd4072004b7d86b46ded63013a74b7d6eb1119273dd89e8fa25c13cf
   jackett:
-    image: lscr.io/linuxserver/jackett@sha256:09b1091b9b6fa63c01c06eea9bb6b8156072fc78821619c252d183ddd73ed635
+    image: lscr.io/linuxserver/jackett@sha256:43933b53f09c01339348afcb2898c3436b26bb87d690b42458b45a2b369de875
   jellyfin:
     image: lscr.io/linuxserver/jellyfin@sha256:b10044530553b2506f06279bf0b5223f9534f434f87a277da4b8fa8ac386cb58
   node-exporter:
@@ -16,15 +16,15 @@ services:
   portainer:
     image: portainer/portainer-ce@sha256:18616fff2998f8ca0e8ebe7f028658ae1682859cf43f212f81a849c1093ad639
   radarr:
-    image: lscr.io/linuxserver/sonarr@sha256:c7d1df25e428da6c9ace05daea0d34e59522978a3843ea1944812f855af4086c
+    image: lscr.io/linuxserver/sonarr@sha256:339814bbf50599ac3b59077c252f29833d0138b59a062d0e82ce37bdc7f04f86
   sonarr:
-    image: lscr.io/linuxserver/sonarr@sha256:c7d1df25e428da6c9ace05daea0d34e59522978a3843ea1944812f855af4086c
+    image: lscr.io/linuxserver/sonarr@sha256:339814bbf50599ac3b59077c252f29833d0138b59a062d0e82ce37bdc7f04f86
   nginx:
     image: nginx@sha256:84f7876d21d154885f99554d7ae325d8c2213f9169726ea7ab60642f2573a787
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent@sha256:3d4c4545d51a690a0df15a2ff99038823a88a9822df8e794526447b9afbd7384
   tdarr:
-    image: ghcr.io/haveagitgat/tdarr@sha256:84743e5ae433a5b49cb463b2dff2679eb02f0cac24fb88c830f49bf8aa9f1c04
+    image: ghcr.io/haveagitgat/tdarr@sha256:5d340a7a603a9d1f55904ebca481fff5bb6222e741b636f798106a12ffd1f2ba
   tautulli:
     image: tautulli/tautulli@sha256:e2f9410116ffd6667c32875ba2f3038aa0a6acb6c4f64403f535ae435eeaab2a
   prometheus:
