@@ -17,6 +17,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+    env_file:
+      - ./private/.env
 
   gateway:
     image: node:20-alpine
