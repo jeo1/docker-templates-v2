@@ -14,7 +14,7 @@
 #   ansible-galaxy collection install -r requirements.yml)
 #
 # Run from the repo root:
-#   ansible-playbook setup.yml -e @/tmp/settings.yml
+#   ansible-playbook ansible/setup.yml -e @/tmp/settings.yml
 #
 # Any other value can be overridden too, e.g. -e HTTP_PORT=9090
 
@@ -22,6 +22,9 @@
   hosts: localhost
   connection: local
   gather_facts: false
+
+  vars:
+    repo_dir: "{{ playbook_dir | dirname }}"  # this playbook lives in <repo>/ansible
 
   tasks:
     - name: Check that the secrets were provided
@@ -35,19 +38,19 @@
 
     - name: Create .env
       ansible.builtin.template:
-        src: env.j2
-        dest: "{{ playbook_dir }}/.env"
+        src: "{{ repo_dir }}/env.j2"
+        dest: "{{ repo_dir }}/.env"
         mode: "0644"
 
     - name: Start containers (docker compose up -d)
       community.docker.docker_compose_v2:
-        project_src: "{{ playbook_dir }}"
+        project_src: "{{ repo_dir }}"
         state: present
         wait: true
 
     - name: Create VM Table (drops it first if it exists)
       community.docker.docker_compose_v2_exec:
-        project_src: "{{ playbook_dir }}"
+        project_src: "{{ repo_dir }}"
         service: mariadb
         env:
           MYSQL_PWD: "{{ MARIADB_PASSWORD }}"  # keeps the password out of the process list

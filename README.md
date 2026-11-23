@@ -33,7 +33,7 @@ API_TOKEN: change_me
 Then create `.env` from `env.j2` and start the containers:
 
 ```bash
-ansible-playbook setup.yml -e @/tmp/settings.yml
+ansible-playbook ansible/setup.yml -e @/tmp/settings.yml
 ```
 
 This needs the `community.docker` collection. It comes with the full `ansible` package; with only `ansible-core`, install it once:
