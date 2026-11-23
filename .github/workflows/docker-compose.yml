@@ -1,0 +1,137 @@
+name: Docker-compose (MariaDB)
+
+on:
+  push:
+    branches: [mariadb]
+    paths-ignore:
+      - README.md
+      - .gitignore
+  workflow_dispatch:
+    inputs:
+      triggered_by:
+        description: 'What triggered this workflow'
+        required: false
+        default: 'manual'
+      run_id:
+        description: 'Main workflow run ID'
+        required: false
+
+env:
+  MANIFEST: .github/manifest.json
+  # Compose only reads .env for ${VAR} interpolation, so pass both files explicitly
+  COMPOSE_ENV_FILES: .env,private/.env
+
+jobs:
+  docker-compose-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install jinja-cli
+        run: |
+          pip3 install jinja-cli
+
+      - name: Create .env and private/.env
+        run: |
+          jinja env.j2 --data $MANIFEST > .env
+          mkdir -p private
+          jinja env-private.j2 --data $MANIFEST > private/.env
+
+      - name: Validate compose file
+        run: |
+          docker compose config --quiet
+
+      - name: Docker Compose up
+        run: |
+          docker compose up -d
+
+      - name: Wait for MariaDB to be healthy
+        run: |
+          MARIADB_CONTAINER=$(docker compose ps -q mariadb)
+          for i in {1..60}; do
+            STATUS=$(docker inspect --format '{{.State.Health.Status}}' $MARIADB_CONTAINER)
+            if [[ "$STATUS" == "healthy" ]]; then
+              echo "MariaDB is healthy!"
+              exit 0
+            fi
+            echo "Waiting for MariaDB... ($i) [$STATUS]"
+            sleep 2
+          done
+          echo "❌ MariaDB never became healthy"
+          docker compose logs mariadb
+          exit 1
+
+      - name: Wait for gateway
+        run: |
+          HTTP_PORT=$(jq -r '.HTTP_PORT' $MANIFEST)
+          URL=http://localhost:$HTTP_PORT/sql
+          for i in {1..60}; do
+            # Any HTTP response (even 401) means the gateway is listening
+            if curl --silent --output /dev/null $URL; then
+              echo "Gateway is up!"
+              exit 0
+            fi
+            echo "Waiting for gateway... ($i)"
+            sleep 2
+          done
+          echo "❌ Gateway never came up"
+          docker compose logs gateway
+          exit 1
+
+      - name: Test direct SQL connection
+        run: |
+          MARIADB_USER=$(jq -r '.MARIADB_USER' $MANIFEST)
+          MARIADB_PASSWORD=$(jq -r '.MARIADB_PASSWORD' $MANIFEST)
+          MARIADB_DATABASE=$(jq -r '.MARIADB_DATABASE' $MANIFEST)
+          docker compose exec -T mariadb mariadb -u "$MARIADB_USER" -p"$MARIADB_PASSWORD" "$MARIADB_DATABASE" \
+            -e "DROP TABLE IF EXISTS test_table; CREATE TABLE test_table (a TEXT, b TEXT, c TEXT);"
+          echo "✅ Created test_table"
+
+      - name: Test gateway rejects bad token
+        run: |
+          HTTP_PORT=$(jq -r '.HTTP_PORT' $MANIFEST)
+          code=$(curl --silent --output /dev/null --write-out '%{http_code}' \
+            -X POST http://localhost:$HTTP_PORT/sql \
+            -H "Authorization: Bearer wrong_token" \
+            -H "Content-Type: application/json" \
+            -d '{"sql": "SELECT 1"}')
+          if [[ "$code" == "401" ]]; then
+            echo "✅ Unauthorized request rejected"
+          else
+            echo "❌ Expected 401, Got: $code"
+            exit 1
+          fi
+
+      - name: Test gateway insert and select
+        run: |
+          HTTP_PORT=$(jq -r '.HTTP_PORT' $MANIFEST)
+          API_TOKEN=$(jq -r '.API_TOKEN' $MANIFEST)
+          URL=http://localhost:$HTTP_PORT/sql
+
+          curl --silent --show-error --fail -X POST $URL \
+            -H "Authorization: Bearer $API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"sql": "INSERT INTO test_table (a, b, c) VALUES (?, ?, ?)", "params": ["AA", "BB", "CC"]}'
+          echo
+
+          response=$(curl --silent --show-error --fail -X POST $URL \
+            -H "Authorization: Bearer $API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"sql": "SELECT * FROM test_table"}')
+          expected='{"result":[{"a":"AA","b":"BB","c":"CC"}]}'
+          if [[ "$response" == "$expected" ]]; then
+            echo "✅ Response matches"
+          else
+            echo "❌ Expected: $expected, Got: $response"
+            exit 1
+          fi
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs
+
+      - name: Tear down Docker Compose
+        if: always()
+        run: docker compose down --volumes
