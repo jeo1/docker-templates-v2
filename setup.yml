@@ -3,14 +3,15 @@
 #   .env          (from env.j2)
 #   private/.env  (from env-private.j2)
 #
+# Secrets come from a settings file, e.g. /tmp/settings.yml:
+#   MARIADB_ROOT_PASSWORD: ...
+#   MARIADB_PASSWORD: ...
+#   API_TOKEN: ...
+#
 # Run from the repo root:
-#   ansible-playbook setup.yml
+#   ansible-playbook setup.yml -e @/tmp/settings.yml
 #
-# Override any value with -e, for example:
-#   ansible-playbook setup.yml -e MARIADB_DATABASE=app -e HTTP_PORT=9090
-#
-# Passwords and the API token are generated randomly unless you pass them.
-# An existing private/.env is never overwritten, so secrets stay the same.
+# Any other value can be overridden too, e.g. -e HTTP_PORT=9090
 
 - name: Set up repo for deployment
   hosts: localhost
@@ -18,12 +19,14 @@
   gather_facts: false
 
   tasks:
-    - name: Generate secrets that were not given with -e
-      ansible.builtin.set_fact:
-        MARIADB_ROOT_PASSWORD: "{{ MARIADB_ROOT_PASSWORD | default(lookup('ansible.builtin.password', '/dev/null length=32 chars=ascii_letters,digits')) }}"
-        MARIADB_PASSWORD: "{{ MARIADB_PASSWORD | default(lookup('ansible.builtin.password', '/dev/null length=32 chars=ascii_letters,digits')) }}"
-        API_TOKEN: "{{ API_TOKEN | default(lookup('ansible.builtin.password', '/dev/null length=32 chars=ascii_letters,digits')) }}"
-      no_log: true
+    - name: Check that the secrets were provided
+      ansible.builtin.assert:
+        that:
+          - MARIADB_ROOT_PASSWORD is defined
+          - MARIADB_PASSWORD is defined
+          - API_TOKEN is defined
+        fail_msg: "Missing secrets. Run with: -e @/tmp/settings.yml"
+        quiet: true
 
     - name: Create .env
       ansible.builtin.template:
@@ -37,10 +40,9 @@
         state: directory
         mode: "0700"
 
-    - name: Create private/.env (skipped if it already exists)
+    - name: Create private/.env
       ansible.builtin.template:
         src: env-private.j2
         dest: "{{ playbook_dir }}/private/.env"
         mode: "0600"
-        force: false
       no_log: true

@@ -22,12 +22,18 @@ curl -X POST http://192.168.1.123:8080/sql \
 
 ## Setup
 
-Create `.env` and `private/.env` from `env.j2` / `env-private.j2`:
+Put the secrets in a settings file, e.g. `/tmp/settings.yml`:
 
-```bash
-ansible-playbook setup.yml
+```yaml
+MARIADB_ROOT_PASSWORD: change_me
+MARIADB_PASSWORD: change_me
+API_TOKEN: change_me
 ```
 
-Override any value with `-e`, e.g. `-e HTTP_PORT=9090`.
-Passwords and the API token are generated randomly unless given.
-An existing `private/.env` is never overwritten.
+Then create `.env` and `private/.env` from `env.j2` / `env-private.j2`:
+
+```bash
+ansible-playbook setup.yml -e @/tmp/settings.yml
+```
+
+Override any other value with `-e`, e.g. `-e HTTP_PORT=9090`.
