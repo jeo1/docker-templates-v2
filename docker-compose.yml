@@ -33,7 +33,7 @@ services:
       DB_PASSWORD: ${MARIADB_PASSWORD}
       API_TOKEN: ${API_TOKEN}
     volumes:
-      - ./server.js:/app/server.js:ro
+      - ./files/server.js:/app/server.js:ro
     command: sh -c "npm install --no-audit --no-fund mysql2 && node server.js"
     ports:
       - "${HTTP_PORT}:3000"
