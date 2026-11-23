@@ -1,71 +1,46 @@
 ---
-# Prepares this repository for deployment on the local machine by rendering
-#   env.j2         -> .env
-#   env-private.j2 -> private/.env
+# Prepare this repo for deployment by creating:
+#   .env          (from env.j2)
+#   private/.env  (from env-private.j2)
 #
-# Usage (from the repo root):
+# Run from the repo root:
 #   ansible-playbook setup.yml
-#   ansible-playbook setup.yml -e MARIADB_DATABASE=app -e HTTP_PORT=9090
-#   ansible-playbook setup.yml -e @my-vars.json
-#   ansible-playbook setup.yml -e force=true   # re-render private/.env
 #
-# Secrets (MARIADB_ROOT_PASSWORD, MARIADB_PASSWORD, API_TOKEN) that are not
-# supplied are generated randomly. An existing private/.env is never
-# overwritten unless force=true, so generated secrets stay stable across runs.
+# Override any value with -e, for example:
+#   ansible-playbook setup.yml -e MARIADB_DATABASE=app -e HTTP_PORT=9090
+#
+# Passwords and the API token are generated randomly unless you pass them.
+# An existing private/.env is never overwritten, so secrets stay the same.
 
-- name: Set up repository for deployment
+- name: Set up repo for deployment
   hosts: localhost
   connection: local
   gather_facts: false
 
-  vars:
-    repo_dir: "{{ playbook_dir }}"
-    force: false
-    secret_length: 32
-
   tasks:
-    - name: Check for existing private/.env
-      ansible.builtin.stat:
-        path: "{{ repo_dir }}/private/.env"
-      register: private_env
-
-    - name: Generate secrets that were not supplied
+    - name: Generate secrets that were not given with -e
       ansible.builtin.set_fact:
-        "{{ item }}": "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits'], length=secret_length | int) }}"
-      loop:
-        - MARIADB_ROOT_PASSWORD
-        - MARIADB_PASSWORD
-        - API_TOKEN
-      when: lookup('ansible.builtin.vars', item, default='') | string | length == 0
+        MARIADB_ROOT_PASSWORD: "{{ MARIADB_ROOT_PASSWORD | default(lookup('ansible.builtin.password', '/dev/null length=32 chars=ascii_letters,digits')) }}"
+        MARIADB_PASSWORD: "{{ MARIADB_PASSWORD | default(lookup('ansible.builtin.password', '/dev/null length=32 chars=ascii_letters,digits')) }}"
+        API_TOKEN: "{{ API_TOKEN | default(lookup('ansible.builtin.password', '/dev/null length=32 chars=ascii_letters,digits')) }}"
       no_log: true
 
-    - name: Render .env
+    - name: Create .env
       ansible.builtin.template:
-        src: "{{ repo_dir }}/env.j2"
-        dest: "{{ repo_dir }}/.env"
+        src: env.j2
+        dest: "{{ playbook_dir }}/.env"
         mode: "0644"
 
-    - name: Create private directory
+    - name: Create private folder
       ansible.builtin.file:
-        path: "{{ repo_dir }}/private"
+        path: "{{ playbook_dir }}/private"
         state: directory
         mode: "0700"
 
-    - name: Render private/.env
+    - name: Create private/.env (skipped if it already exists)
       ansible.builtin.template:
-        src: "{{ repo_dir }}/env-private.j2"
-        dest: "{{ repo_dir }}/private/.env"
+        src: env-private.j2
+        dest: "{{ playbook_dir }}/private/.env"
         mode: "0600"
-        force: "{{ force | bool }}"
+        force: false
       no_log: true
-
-    - name: Note that private/.env was left unchanged
-      ansible.builtin.debug:
-        msg: "private/.env already exists and was left unchanged (pass -e force=true to re-render it)."
-      when: private_env.stat.exists and not (force | bool)
-
-    - name: Create data directory
-      ansible.builtin.file:
-        path: "{{ (DATA | default('./data')) if (DATA | default('./data')) is abs else repo_dir ~ '/' ~ (DATA | default('./data')) }}"
-        state: directory
-        mode: "0755"

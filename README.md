@@ -22,12 +22,12 @@ curl -X POST http://192.168.1.123:8080/sql \
 
 ## Setup
 
-Render `.env` and `private/.env` from `env.j2` / `env-private.j2` (requires `ansible-core`):
+Create `.env` and `private/.env` from `env.j2` / `env-private.j2`:
 
 ```bash
 ansible-playbook setup.yml
 ```
 
-Override any template variable with `-e`, e.g. `-e HTTP_PORT=9090` or `-e @vars.json`.
-Missing secrets (`MARIADB_ROOT_PASSWORD`, `MARIADB_PASSWORD`, `API_TOKEN`) are generated randomly.
-An existing `private/.env` is kept unless you pass `-e force=true`.
+Override any value with `-e`, e.g. `-e HTTP_PORT=9090`.
+Passwords and the API token are generated randomly unless given.
+An existing `private/.env` is never overwritten.
