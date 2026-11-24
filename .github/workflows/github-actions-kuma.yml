@@ -44,3 +44,20 @@ jobs:
           service_url: ${{ env.URL }}
  
       - uses: ./.github/actions/docker-compose-down
+
+  vulnerability-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/generate-env-file
+        with:
+          manifest: ${{ env.MANIFEST }}
+          env_template: env.j2
+
+      - uses: ./.github/actions/vulnerability-scan
+        with:
+          report_severity: HIGH,CRITICAL
+          fail_severity: CRITICAL
