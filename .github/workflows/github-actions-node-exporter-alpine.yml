@@ -18,58 +18,92 @@ on:
 
 env:
   MANIFEST: .github/manifest.json
-  
+
 jobs:
   docker-compose-test:
     runs-on: ubuntu-latest
-    
+
+    # Every step runs inside an Alpine container instead of directly on Ubuntu.
     container:
       image: alpine:latest
+      env:
+        # Point the docker CLI at the dind service below (TLS disabled).
+        DOCKER_HOST: tcp://docker:2375
 
     services:
+      # Alpine-based Docker daemon. The compose stack runs here, so node-exporter
+      # sees an Alpine /proc, /sys and rootfs. dind needs --privileged.
       docker:
         image: docker:dind
+        env:
+          DOCKER_TLS_CERTDIR: ""
+        options: --privileged
 
     steps:
       - name: Install dependencies
         run: |
-          apk update
-          apk add \
-            docker-cli \
-            docker-compose \
+          apk add --no-cache \
             bash \
             curl \
-            python3 \
+            docker-cli \
+            docker-cli-compose \
+            git \
+            jq \
             py3-pip \
-            jq
+            python3
 
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
+      - name: Show OS info
+        run: |
+          cat /etc/os-release
+
+      - name: Install jinja-cli
+        run: |
+          python3 -m venv /opt/venv
+          /opt/venv/bin/pip install jinja-cli
+
       - name: Create .env
         run: |
-          python3 -m venv .venv
-          . .venv/bin/activate
-          pip3 install jinja-cli
-          jinja env.j2 --data ${{ env.MANIFEST }} > .env
+          /opt/venv/bin/jinja env.j2 --data ${{ env.MANIFEST }} > .env
+
+      - name: Wait for Docker daemon
+        run: |
+          for i in $(seq 1 30); do
+            if docker info > /dev/null 2>&1; then
+              echo "Docker is ready: $(docker info --format '{{.OperatingSystem}}')"
+              exit 0
+            fi
+            echo "Waiting for Docker... ($i)"
+            sleep 1
+          done
+          echo "Docker daemon did not start" && exit 1
 
       - name: Docker Compose up
         run: |
           docker compose up -d
 
-      #- name: Test HTTP response
-      #  run: |
-      #    NODE_EXPORTER_PORT=$(cat ${{ env.MANIFEST }} | jq -r '.NODE_EXPORTER_PORT')
-      #    URL=http://localhost:$NODE_EXPORTER_PORT
-      #    for i in {1..30}; do
-      #      if curl --silent --fail $URL > /dev/null; then
-      #        echo "Service is up!"
-      #        break
-      #      fi
-      #      echo "Waiting for Service... ($i)"
-      #      sleep 1
-      #    done
-      #    curl --fail $URL || (echo "Service did not respond" && exit 1)
+      - name: Test HTTP response
+        shell: bash
+        run: |
+          NODE_EXPORTER_PORT=$(jq -r '.NODE_EXPORTER_PORT' ${{ env.MANIFEST }})
+          # Ports are published on the dind service, not localhost.
+          URL=http://docker:$NODE_EXPORTER_PORT
+          for i in {1..30}; do
+            if curl --silent --fail $URL > /dev/null; then
+              echo "Service is up!"
+              break
+            fi
+            echo "Waiting for Service... ($i)"
+            sleep 1
+          done
+          curl --fail $URL || (echo "Service did not respond" && exit 1)
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs
 
       - name: Tear down Docker Compose
+        if: always()
         run: docker compose down --volumes
